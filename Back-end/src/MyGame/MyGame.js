@@ -7,7 +7,7 @@ function  MyGame(htmlCanvasID) {
 
   this.mShader = new SimpleShader(
     "src/GLSLShaders/SimpleVS.glsl",
-    "src/GLSLShaders/WhiteFS.glsl");
+    "src/GLSLShaders/SimpleFS.glsl");
 
 
   // Clearing the canvas
