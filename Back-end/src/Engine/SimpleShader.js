@@ -2,6 +2,10 @@ function SimpleShader(vertexShaderID, fragmentShaderID) {
   //instance variables (Convention: all instance variables: mVariables)
   this.mCompileShader = null;
 
+  // variable to hold the reference to the uModelTransform matrix in te vertex shader
+  this.mModelTransform = null;
+
+
   //reference to the pixelColor uniform in the fragment shader
   this.mPixelColor = null;
 
@@ -47,6 +51,8 @@ function SimpleShader(vertexShaderID, fragmentShaderID) {
 
   // Gets a ref to the uniform variable uPixelColor in the fragment shader
   this.mPixelColor = gl.getUniformLocation(this.mCompileShader, "uPixelColor");
+
+  this.mModelTransform = gl.getUniformLocation(this.mCompiledShader, "uModelTransform");
 
 }
 
@@ -99,3 +105,12 @@ SimpleShader.prototype.activateShader = function(pixelColor) {
 };
 
 
+
+// Loads per-object model transform to the vertex shader
+SimpleShader.prototype.loadObjectTransform = function(modelTransform) {
+  var gl = gEngine.Core.getGL();
+  gl.uniformMatrix4fv(this.mModelTransform, false, modelTransform);
+  //The gl.uniformMatrix4fv() function copies modelTransform to the vertex shader location identified by
+  // mModelTransform or the uModelTransform operator in the vertex shader
+
+}
