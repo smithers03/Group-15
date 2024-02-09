@@ -17,7 +17,7 @@
   // Draw with the currently activated geometry and the activated shader
   var gl = gEngine.Core.getGL();
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-}
+
  */
 function MyGame(htmlCanvasID) {
   // Step A :  initialize the webGL Context
@@ -26,7 +26,7 @@ function MyGame(htmlCanvasID) {
   // Step B: Create the shader
   this.mConstColorShader = new SimpleShader(
       "src/GLSLShaders/SimpleVS.glsl",
-      "src/GLSLShaders/SimpleVS.glsl");
+      "src/GLSLShaders/SimpleFS.glsl");
   // Step C: Create the Renderable objects:
   this.mWhiteSq = new Renderable(this.mConstColorShader);
   this.mWhiteSq.setColor([1,1,1,1]);
@@ -36,10 +36,10 @@ function MyGame(htmlCanvasID) {
   gEngine.Core.clearCanvas([0.3,0.2,0,1]); // clear canvas
 
   // Step d1: draw Renderable object with the white shader
-  //this.mWhiteSq.draw();
+  this.mWhiteSq.draw();
 
   // Step d2: Draw Renderable objects with red shader
-  //this.mRedSq.draw();
+  this.mRedSq.draw();
 };
 
 

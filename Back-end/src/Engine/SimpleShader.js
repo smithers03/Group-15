@@ -83,7 +83,7 @@ SimpleShader.prototype._loadAndCompileShader = function(filePath, shaderType) {
   // This is useful for debugging the shaders.
   if (!gl.getShaderParameter(compiledShader, gl.COMPILE_STATUS)) {
     alert("A shader compiling error occurred: " +
-      gl.getShaderInfoLog(compiledShader));
+        gl.getShaderInfoLog(compiledShader));
   }
   return compiledShader;
 };
