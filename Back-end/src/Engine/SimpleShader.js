@@ -61,7 +61,7 @@ SimpleShader.prototype._loadAndCompileShader = function(filePath, shaderType) {
   var shaderText, shaderSource, compiledShader;
   var gl = gEngine.Core.getGL();
 
-  // Step A: Get the shader source from index.html
+  // Step A: Get the shader source from game.html
   //shaderText = document.getElementById(id);
   // shaderSource = shaderText.firstChild.textContent;
   xmlReq = new XMLHttpRequest();
