@@ -1,4 +1,4 @@
-/* spec tests gl-matrix.js when embedded into a Web Worker */
+/* spec tests toji-gl-matrix-2534c9d when embedded into a Web Worker */
 
 // only test with workers if workers are available
 if (typeof(Worker) !== 'undefined') {

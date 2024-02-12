@@ -25,7 +25,7 @@ ${license}
 export default [
   {
     input,
-    output: { file: 'dist/gl-matrix.js.js', format: 'umd', name },
+    output: { file: 'dist/toji-gl-matrix-2534c9d.js', format: 'umd', name },
     plugins: [
       bannerPlugin,
       babel()
@@ -33,7 +33,7 @@ export default [
   },
   {
     input,
-    output: { file: 'dist/gl-matrix.js-min.js', format: 'umd', name },
+    output: { file: 'dist/toji-gl-matrix-2534c9d-min.js', format: 'umd', name },
     plugins: [
       bannerPlugin,
       babel(),

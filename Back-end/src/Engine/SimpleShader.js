@@ -52,7 +52,7 @@ function SimpleShader(vertexShaderID, fragmentShaderID) {
   // Gets a ref to the uniform variable uPixelColor in the fragment shader
   this.mPixelColor = gl.getUniformLocation(this.mCompileShader, "uPixelColor");
 
-  this.mModelTransform = gl.getUniformLocation(this.mCompiledShader, "uModelTransform");
+  this.mModelTransform = gl.getUniformLocation(this.mCompileShader, "uModelTransform");
 
 }
 

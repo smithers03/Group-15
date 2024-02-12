@@ -1,6 +1,6 @@
 
 /*!
-@fileoverview gl-matrix.js - High performance matrix and vector operations
+@fileoverview toji-gl-matrix-2534c9d - High performance matrix and vector operations
 @author Brandon Jones
 @author Colin MacKenzie IV
 @version 3.4.0

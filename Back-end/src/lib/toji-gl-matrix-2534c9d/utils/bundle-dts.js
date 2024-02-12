@@ -33,7 +33,7 @@ typings = typings.replace(/declare module "([^"]+?)" {/g, "export module $1 {");
 // Add types
 typings = "\n" + sourceTypings.replace(/declare/g, "export") + "\n" + typings;
 
-// Wrap them in a "gl-matrix.js module"
-typings = 'declare module "gl-matrix.js" {\n' + typings + "\n}";
+// Wrap them in a "toji-gl-matrix-2534c9d module"
+typings = 'declare module "toji-gl-matrix-2534c9d" {\n' + typings + "\n}";
 
 fs.writeFileSync(sourcePath, typings, "utf-8");
