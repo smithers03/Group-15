@@ -6,7 +6,7 @@ var gEngine = gEngine || { };
 gEngine.Core = (function() {
 
 // instance variable: the graphical context for drawing
-    var  mGL = null;
+   var  mGL = null;
 // Accessor of the webgl context
    var getGL = function() { return mGL; };
 

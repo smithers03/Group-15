@@ -32,7 +32,7 @@ gEngine.VertexBuffer = (function () {
 
 
 
-  };
+  }
 
   var mPublic = {
     initialize: initialize,
