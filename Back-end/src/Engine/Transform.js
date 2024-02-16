@@ -1,3 +1,4 @@
+"use strict"
 function Transform() {
     this.mPosition = vec2.fromValues(0, 0); // translation operator
     this.mScale = vec2.mScale = vec2.fromValues(1,1); // scaling operator
@@ -71,5 +72,3 @@ Transform.prototype.getXform = function() {
     mat4.scale(matrix, matrix, vec3.fromValues(this.getWidth(), this.getHeight(), 1.0))
     return matrix;
 }
-
-
