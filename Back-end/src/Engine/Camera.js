@@ -25,7 +25,7 @@ function Camera(wcCenter, wcWidth, viewportArray) {
     this.mVPMatrix = mat4.create();
 
     // background color
-    this.mBgColor = [0.8, 0.8, 0.8, 1]; // RGB and Alpha
+    this.mBgColor = [0, 0, 0, 1]; // RGB and Alpha
 }
 
 // <editor-fold desc="Public Methods">
