@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+  <title>2.5: The Shader Source Files Project</title>
+</head>
+
+<body onload = "new MyGame('GLCanvas');">
+<div style="text-align:center">
+  <canvas id="GLCanvas" width="1280" height="720">
+    Your browser does not support the HTML5 canvas.
+  </canvas>
+</div>
+
+<script src="src/lib/gl-matrix.js"></script>
+<!--Engine -->
+<script src="src/Engine/Camera.js"></script>
+<script src="src/Engine/Engine_Core.js"></script>
+<script src="src/Engine/Engine_VertexBuffer.js"></script>
+<script src="src/Engine/Renderable.js"></script>
+<script src="src/Engine/SimpleShader.js"></script>
+<script src="src/Engine/Transform.js"></script>
+<!--Logic -->
+<script src="src/MyGame/MyGame.js"></script>
+
+<!-- Lib -->
+</body>
+</html>
