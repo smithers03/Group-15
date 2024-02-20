@@ -1,7 +1,7 @@
 "use strict"
 
-var gEngine = gEnging || {};
-gEngine.GameLoop = function(){
+var gEngine = gEngine || {};
+gEngine.GameLoop = (function(){
 
     var kFPS = 60;
     var kMPF = 1000/kFPS;
@@ -35,10 +35,8 @@ gEngine.GameLoop = function(){
                 this.update();
                 mLagTime -= kMPF;
             }
+            this.draw(); // call Renderable.draw()
         }
-
-        // drawing again
-        this.draw(); // call Renderable.draw()
     }
 
 
@@ -61,7 +59,4 @@ gEngine.GameLoop = function(){
 
 
     return mPublic;
-}();
-
-
-
+}());

@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    app: './src/app.src',
+    app: '.game.html',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: './src/app.src',
+    filename: '.game.html'
   },
 };
