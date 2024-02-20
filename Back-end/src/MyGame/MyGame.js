@@ -40,6 +40,7 @@ function MyGame(htmlCanvasID) {
   this.mBlueSq = new Renderable(this.mConstColorShader);
   this.mBlueSq.setColor([0.25, 0.25, 0.95, 1]);
   this.mRedSq = new Renderable(this.mConstColorShader);
+
   this.mRedSq.setColor([1, 0.25, 0.25, 1]);
   this.mTLSq = new Renderable(this.mConstColorShader);
   this.mTLSq.setColor([0.9, 0.1, 0.1, 1]);
