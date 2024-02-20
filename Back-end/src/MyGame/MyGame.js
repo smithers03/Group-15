@@ -1,22 +1,35 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame(htmlCanvasID) {
-  // variables of the shader for drawing: one shader to be shared by two renderables
-  this.mConstColorShader = null;
+    this.mConstColorShader = null;
+    this.mwhiteSq = null;
+    this.mRedSq = null;
+    this.mCamera = null;
 
-  // variables for the squares
-  this.mBlueSq = null;        // these are the Renderable objects
-  this.mRedSq = null;
+    gEngine.Core.initializeWebGL(htmlCanvasID);
 
-  // Step A: Initialize the webGL Context
-  gEngine.Core.initializeWebGL(htmlCanvasID);
-
-  // Step B: Setup the camera
-  this.mCamera = new Camera(
-      vec2.fromValues(20, 60),   // center of the WC
-      20,                        // width of WC
-      [20, 40, 600, 300]         // viewport (orgX, orgY, width, height)
+    this.initialize();
   );
+
+
+  MyGame.prototype.initialize = function() {
+    this.mCamera = new Camera(
+        vec2.fromValues(20, 60),
+        20,
+        [20,40,600,300]
+    );
+    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+    this.mConstColorShader = new SimpleShader(
+        "src/GLSLShaders/SimpleVS.glsl",
+        "src/GLSLShaders/SimpleFS.glsl"); // Path to the FragmentShader
+
+    this.mWhiteSq = new Renderable(this.mConstColorShader);
+    this.mWhiteSq.setColor([1, 1, 1, 1]);
+    this.mRedSq = new Renderable(this.mConstColorShader);
+    this.mRedSq.setColor([1, 0, 0, 1]);
+
+
+  }
 
   // Step C: Create the shader
   this.mConstColorShader = new SimpleShader(
