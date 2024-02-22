@@ -5,11 +5,10 @@ function MyGame(htmlCanvasID) {
   this.mWhiteSq = null;
   this.mRedSq = null;
   this.mCamera = null;
+  gEngine.Core.initializeEngineCore(htmlCanvasID);
 
-  gEngine.Core.initializeWebGL(htmlCanvasID);
 
   this.initialize();
-
 }
 
 
@@ -39,25 +38,30 @@ MyGame.prototype.initialize = function() {
   // Launch the game loop
   gEngine.GameLoop.start(this);
 }
+
 MyGame.prototype.update = function(){
   var whiteXform = this.mWhiteSq.getXform();
-  var deltaX = 0.1;
-  if(whiteXform.getXPos() > 30)
-    whiteXform.setPosition(10,60);
-  whiteXform.incXPos(deltaX);
-  whiteXform.incRotationByDegree(1);
+  var deltaX = 0.05;
 
-  var redXform = this.mRedSq. getXform();
+  if(gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)){
+    if(whiteXform.getXPos()> 30) // right bounf of the border
+      whiteXform.setPosition(10,60);
+    whiteXform.incXPos(deltaX);
+  }
+  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up))
+    whiteXform.incRotationByDegree(1);
 
-  if(redXform.getWidth() > 5)
-    redXform.setSize(2,2);
-  redXform.incSizeBy(0.05);
+  var redXform = this.mRedSq.getXform();
+  if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+    if (redXform.getWidth() > 5)
+      redXform.setSize(2, 2);
+    redXform.incSizeBy(0.05);
+  }
 }
+
 MyGame.prototype.draw = function(){
   gEngine.Core.clearCanvas([0.9, 0.9,0.3,1.0]);
   this.mCamera.setupViewProjection();
   this.mWhiteSq.draw(this.mCamera.getVPMatrix());
   this.mRedSq.draw(this.mCamera.getVPMatrix());
 }
-
-

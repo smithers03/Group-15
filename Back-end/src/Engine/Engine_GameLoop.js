@@ -9,8 +9,6 @@ gEngine.GameLoop = (function(){
     //Variables for timing loop
     var mPreviousTime;
     var mLagTime;
-    var mCurrentTime;
-    var mElapsedTime;
 
     //The current loop state
     var mIsLoopRunning = false;
@@ -25,13 +23,14 @@ gEngine.GameLoop = (function(){
             });
 
             //Computing elapsed time
-            mCurrentTime = Date.now();
-            mElapsedTime = mCurrentTime - mPreviousTime;
-            mPreviousTime = mCurrentTime;
-            mLagTime += mElapsedTime;
+            var currentTime = Date.now();
+            var elapsedTime = currentTime - mPreviousTime;
+            mPreviousTime = currentTime;
+            mLagTime += elapsedTime;
 
             // updating the game n number of times.
             while ((mLagTime >= kMPF) && mIsLoopRunning) {
+                gEngine.Input.update();
                 this.update();
                 mLagTime -= kMPF;
             }

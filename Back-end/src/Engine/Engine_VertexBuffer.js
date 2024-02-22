@@ -6,6 +6,9 @@ var gEngine = gEngine ||{};
 // The VertexBuffer object
 
 gEngine.VertexBuffer = (function () {
+    // reference to the vertex positions for the square in the gl context
+    var mSquareVertexBuffer = null;
+
     var verticesOfSquare = [
         0.5, 0.5, 0.0,
         -0.5, 0.5, 0.0,
@@ -14,9 +17,6 @@ gEngine.VertexBuffer = (function () {
     ];
 
 
-    // reference to the vertex positions for the square in the gl context
-    var mSquareVertexBuffer = null;
-    var getGLVertexRef = function () {return mSquareVertexBuffer;};
 
     var initialize = function () {
         var gl = gEngine.Core.getGL();
@@ -29,10 +29,9 @@ gEngine.VertexBuffer = (function () {
 
         // Step C: Loads verticesOfSquare into hte vertexBuffer
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesOfSquare), gl.STATIC_DRAW);
-
-
-
     }
+
+    var getGLVertexRef = function () {return mSquareVertexBuffer;}
 
     var mPublic = {
         initialize: initialize,
