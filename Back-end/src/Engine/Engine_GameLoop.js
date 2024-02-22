@@ -7,7 +7,7 @@ gEngine.GameLoop = (function(){
     var kMPF = 1000/kFPS;
 
     //Variables for timing loop
-    var mPreviousTime;
+    var mPreviousTime = Date.now();
     var mLagTime;
 
     //The current loop state

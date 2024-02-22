@@ -1,9 +1,8 @@
-"use strict"
+"use strict";
 
 var gEngine = gEngine || { };
 
 gEngine.Input = (function() {
-
 
     var kKeys = {
         //arrows
@@ -74,7 +73,8 @@ gEngine.Input = (function() {
     };
 
     var update = function(){
-        for (let i = 0; i<kLastKeyCode; i++){
+        var i
+        for ( i = 0; i< kKeys.LastKeyCode; i++){
             mIsKeyClicked[i] = (!mKeyPreviousState[i]&& mIsKeyPressed[i]);
             mKeyPreviousState[i] = mIsKeyPressed[i];
         }
@@ -98,6 +98,7 @@ gEngine.Input = (function() {
         isKeyClicked: isKeyClicked,
         keys: kKeys
     }
+
     return mPublic;
 
 }());
