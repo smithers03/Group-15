@@ -28,7 +28,10 @@ Transform.prototype.setSize = function(width, height) {
 }
 
 Transform.prototype.getSize = function(){ return this.mScale; };
-
+Transform.prototype.incSizeBy = function (delta) {
+    this.incWidthBy(delta);
+    this.incHeightBy(delta);
+};
 
 
 // Setting/getting width and height of the object

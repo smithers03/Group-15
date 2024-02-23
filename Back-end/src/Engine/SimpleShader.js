@@ -81,16 +81,7 @@ SimpleShader.prototype.loadObjectTransform = function (modelTransform) {
   gl.uniformMatrix4fv(this.mModelTransform, false, modelTransform);
 };
 
-//-- end of public methods
-// </editor-fold>
 
-// <editor-fold desc="Private Methods">
-//**-----------------------------------
-// Private methods not mean to call by outside of this object
-//    naming convention: starts with an "_"
-// **------------------------------------
-
-// 
 // Returns a compiled shader from a shader in the dom.
 // The id is the id of the script in the html tag.
 SimpleShader.prototype._loadAndCompileShader = function (filePath, shaderType) {

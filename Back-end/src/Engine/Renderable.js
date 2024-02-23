@@ -1,9 +1,9 @@
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict";  //
 
 function Renderable(shader) {
     this.mShader = shader; // the shader for shading this object
-    this.mColor = [1, 1, 1, 1];// Color for fragment shader
     this.mXform = new Transform();
+    this.mColor = [1, 1, 1, 1];// Color for fragment shader
 }
 
 Renderable.prototype.draw = function(vpMatrix) {
