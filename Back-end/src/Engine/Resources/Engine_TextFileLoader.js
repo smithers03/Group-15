@@ -3,7 +3,7 @@
 var gEngine = gEngine || {};
 
 gEngine.TextFileLoader = (function(){
-    var eTextFileType =  Object.freeze({
+    var TextFileType =  Object.freeze({
         eXMLFile: 0,
         eTextFile: 1
     });
