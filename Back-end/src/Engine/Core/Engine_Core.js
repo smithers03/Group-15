@@ -25,8 +25,8 @@ gEngine.Core = (function () {
 
     var startScene = function (scene) {
 
-        scene.loadScene.call(scene); // Calling this way to ensure the correct context
-        gEngine.GameLoop.start(scene);
+        scene.loadScene.call(scene); // Calling this way to ensure the correct context  of the loading function
+        gEngine.GameLoop.start(scene); //
     }
 
     var initializeEngineCore = function (htmlCanvasID, myGame) {
@@ -35,6 +35,12 @@ gEngine.Core = (function () {
         gEngine.Input.initialize();
         gEngine.DefaultResources.initialize(function () { startScene(myGame); });
 
+    }
+
+    var inheritPrototype = function(subClass, superClass) {
+        var prototype = Object.create(superClass.prototype);
+        prototype.constructor = subClass;
+        subClass.prototype = prototype;
     }
 
     // Clears the draw area and draws one square
@@ -49,6 +55,7 @@ gEngine.Core = (function () {
         getGL: getGL,
         initializeEngineCore: initializeEngineCore,
         clearCanvas: clearCanvas,
+        inheritPrototype: inheritPrototype,
         startScene: startScene
     };
 

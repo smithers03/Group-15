@@ -35,6 +35,8 @@ gEngine.GameLoop = (function(){
                 mLagTime -= kMPF;
             }
             this.draw(); // call Renderable.draw()
+        }else{
+            mMyGame.unloadScene();
         }
     }
 
@@ -65,8 +67,13 @@ gEngine.GameLoop = (function(){
 
     }
 
+    var stop = function() {
+        mIsLoopRunning = false;
+    }
+
     var mPublic = {
-        start: start
+        start: start,
+        stop: stop
     }
 
 

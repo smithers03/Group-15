@@ -28,7 +28,7 @@ MyGame.prototype.initialize = function() {
 
     // Step B: Parse for all the squares
   sceneParser.parseSquares(this.mSqSet);
-};
+}
 
 
 MyGame.prototype.draw = function(){
@@ -41,7 +41,7 @@ MyGame.prototype.draw = function(){
     for (i = 0; i < this.mSqSet.length; i++) {
     this.mSqSet[i].draw(this.mCamera.getVPMatrix());
   }
-};
+}
 
 
 MyGame.prototype.update = function(){
