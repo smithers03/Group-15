@@ -1,16 +1,10 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function MyGame(htmlCanvasID) {
-  this.mConstColorShader = null;
+function MyGame() {
   this.mWhiteSq = null;
   this.mRedSq = null;
   this.mCamera = null;
-  gEngine.Core.initializeEngineCore(htmlCanvasID);
-
-
-  this.initialize();
 }
-
 
 MyGame.prototype.initialize = function() {
   this.mCamera = new Camera(
@@ -19,13 +13,13 @@ MyGame.prototype.initialize = function() {
       [20,40,600,300]
   );
   this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-  this.mConstColorShader = new SimpleShader(
-      "src/GLSLShaders/SimpleVS.glsl",
-      "src/GLSLShaders/SimpleFS.glsl"); // Path to the FragmentShader
 
-  this.mWhiteSq = new Renderable(this.mConstColorShader);
+  // creating renderable objects
+  var constColorShader = gEngine.DefaultResources.getConstColorShader();
+
+  this.mWhiteSq = new Renderable(constColorShader);
   this.mWhiteSq.setColor([1, 1, 1, 1]);
-  this.mRedSq = new Renderable(this.mConstColorShader);
+  this.mRedSq = new Renderable(constColorShader);
   this.mRedSq.setColor([1, 0, 0, 1]);
 
   this.mWhiteSq.getXform().setPosition(20,60);

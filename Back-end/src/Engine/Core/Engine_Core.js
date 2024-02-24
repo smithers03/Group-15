@@ -3,6 +3,7 @@
 var gEngine = gEngine || { };
 
 gEngine.Core = (function () {
+    //instance variables
     // The graphical context to draw to
     var mGL = null;
 
@@ -22,12 +23,17 @@ gEngine.Core = (function () {
 
     var getGL = function () { return mGL; };
 
+    var startScene = function (myGame) {
+        myGame.initialize.call(myGame);
+        gEngine.GameLoop.start(myGame);
+    }
+
     var initializeEngineCore = function (htmlCanvasID) {
         _initializeWebGL(htmlCanvasID);
         gEngine.VertexBuffer.initialize();
         gEngine.Input.initialize();
+        gEngine.DefaultResources.initialize(function () { startScene(myGame); });
     };
-
 
     // Clears the draw area and draws one square
     var clearCanvas = function (color) {
@@ -40,7 +46,8 @@ gEngine.Core = (function () {
     var mPublic = {
         getGL: getGL,
         initializeEngineCore: initializeEngineCore,
-        clearCanvas: clearCanvas
+        clearCanvas: clearCanvas,
+        startScene: startScene
     };
 
     return mPublic;

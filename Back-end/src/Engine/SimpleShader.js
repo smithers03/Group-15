@@ -16,8 +16,8 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
   // start of constructor code
   //
   // Step A: load and compile vertex and fragment shaders
-  var vertexShader = this._loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
-  var fragmentShader = this._loadAndCompileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
+  var vertexShader = this._compileShader(vertexShaderPath, gl.VERTEX_SHADER);
+  var fragmentShader = this._compileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
   // Step B: Create and link the shaders into a program.
   this.mCompiledShader = gl.createProgram();
@@ -84,21 +84,13 @@ SimpleShader.prototype.loadObjectTransform = function (modelTransform) {
 
 // Returns a compiled shader from a shader in the dom.
 // The id is the id of the script in the html tag.
-SimpleShader.prototype._loadAndCompileShader = function (filePath, shaderType) {
+SimpleShader.prototype._compileShader = function (filePath, shaderType) {
   var gl = gEngine.Core.getGL();
   var xmlReq, shaderSource = null, compiledShader = null;
 
   // Step A: Request the text from the given file location.
-  xmlReq = new XMLHttpRequest();
-  xmlReq.open('GET', filePath, false);
-  try {
-    xmlReq.send();
-  } catch (error) {
-    alert("Failed to load shader: " + filePath + " [Hint: you cannot double click index.html to run this project. " +
-        "The index.html file must be loaded by a web-server.]");
-    return null;
-  }
-  shaderSource = xmlReq.responseText;
+  shaderSource = gEngine.ResourceMap.retrieveAsset(filePath);
+
 
   if (shaderSource === null) {
     alert("WARNING: Loading of:" + filePath + " Failed!");
