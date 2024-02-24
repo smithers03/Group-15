@@ -38,17 +38,30 @@ gEngine.GameLoop = (function(){
         }
     }
 
+    var _startLoop = function () {
+        // Step A: reset frame time
+        mPreviousTime = Date.now();
+        mLagTime = 0.0;
+
+        // Step B: remember that loop is now running
+        mIsLoopRunning = true;
+
+        // Step C: request _runLoop to start when loading is done
+        requestAnimationFrame(function () { _runLoop.call(mMyGame); });
+    };
+
 
     var start = function (myGame) {
         mMyGame = myGame;
 
-        //reset frame time
-        mPreviousTime = Date.now();
-        mLagTime = 0.0;
 
-        mIsLoopRunning = true;
-        //requesting  _runLoop to start when loading is done
-        requestAnimationFrame(function () {_runLoop.call(mMyGame)})
+        mMyGame = myGame;
+        gEngine.ResourceMap.setLoadCompleteCallback(
+            function () {
+                mMyGame.initialize();
+                _startLoop();
+            }
+        );
 
     }
 

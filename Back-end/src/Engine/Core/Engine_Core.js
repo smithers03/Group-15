@@ -24,7 +24,8 @@ gEngine.Core = (function () {
     var getGL = function () { return mGL; };
 
     var startScene = function (myGame) {
-        myGame.initialize.call(myGame);
+        myGame.loadScene.call(myGame); // Calling this way to ensure the correct context
+        myGame.initialize.call(myGame); // Call initialize only after async
         gEngine.GameLoop.start(myGame);
     }
 
@@ -33,7 +34,8 @@ gEngine.Core = (function () {
         gEngine.VertexBuffer.initialize();
         gEngine.Input.initialize();
         gEngine.DefaultResources.initialize(function () { startScene(myGame); });
-    };
+
+    }
 
     // Clears the draw area and draws one square
     var clearCanvas = function (color) {
