@@ -23,10 +23,10 @@ gEngine.Core = (function () {
 
     var getGL = function () { return mGL; };
 
-    var startScene = function (myGame) {
-        myGame.loadScene.call(myGame); // Calling this way to ensure the correct context
-        myGame.initialize.call(myGame); // Call initialize only after async
-        gEngine.GameLoop.start(myGame);
+    var startScene = function (scene) {
+
+        scene.loadScene.call(scene); // Calling this way to ensure the correct context
+        gEngine.GameLoop.start(scene);
     }
 
     var initializeEngineCore = function (htmlCanvasID, myGame) {
