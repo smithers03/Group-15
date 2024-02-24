@@ -3,7 +3,7 @@
 var gEngine = gEngine || {};
 
 gEngine.TextFileLoader = (function(){
-    var TextFileType =  Object.freeze({
+    var eTextFileType =  Object.freeze({
         eXMLFile: 0,
         eTextFile: 1
     });
@@ -56,7 +56,7 @@ gEngine.TextFileLoader = (function(){
         gEngine.ResourceMap.unloadAsset(fileName);
     }
 
-    var mPulic = {
+    var mPublic = {
         loadTextFile: loadTextFile,
         unloadTextFile: unloadTextFile,
         eTextFileType: eTextFileType
