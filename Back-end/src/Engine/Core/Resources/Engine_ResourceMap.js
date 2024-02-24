@@ -12,6 +12,7 @@ var gEngine = gEngine || { };
 gEngine.ResourceMap = (function () {
     var MapEntry = function (rName) {
         this.mAsset = rName;
+        this.mRefCount = 1;
     };
 
     // Number of outstanding load operations
@@ -22,6 +23,23 @@ gEngine.ResourceMap = (function () {
 
     // Resource storage
     var mResourceMap = {};
+
+    //Keeping track of reference to a resource
+    var incAssetRefCount = function (rName) {
+        mResourceMap[rName].mRefCount += 1;
+    }
+
+    var unloadAsset = function(rName) {
+        var c = 0;
+        if (rName in mResourceMap) {
+            mResourceMap[rName].mRefCount -= 1;
+            c = mResourceMap[rName].mRefCount;
+            if (c === 0){
+                delete mResourceMap[rName];
+            }
+        }
+        return c;
+    }
 
     /*
      * Register one more resource to load
