@@ -24,23 +24,6 @@ gEngine.ResourceMap = (function () {
     // Resource storage
     var mResourceMap = {};
 
-    //Keeping track of reference to a resource
-    var incAssetRefCount = function (rName) {
-        mResourceMap[rName].mRefCount += 1;
-    }
-
-    var unloadAsset = function(rName) {
-        var c = 0;
-        if (rName in mResourceMap) {
-            mResourceMap[rName].mRefCount -= 1;
-            c = mResourceMap[rName].mRefCount;
-            if (c === 0){
-                delete mResourceMap[rName];
-            }
-        }
-        return c;
-    }
-
     /*
      * Register one more resource to load
      */
@@ -89,10 +72,20 @@ gEngine.ResourceMap = (function () {
         return (rName in mResourceMap);
     };
 
+    var incAssetRefCount = function (rName) {
+        mResourceMap[rName].mRefCount += 1;
+    };
+
     var unloadAsset = function (rName) {
+        var c = 0;
         if (rName in mResourceMap) {
-            delete mResourceMap[rName];
+            mResourceMap[rName].mRefCount -= 1;
+            c = mResourceMap[rName].mRefCount;
+            if (c === 0) {
+                delete mResourceMap[rName];
+            }
         }
+        return c;
     };
     //</editor-fold>
 
@@ -104,10 +97,11 @@ gEngine.ResourceMap = (function () {
         asyncLoadCompleted: asyncLoadCompleted,
         setLoadCompleteCallback: setLoadCompleteCallback,
         //</editor-fold>
-        //<editor-fold desc="resource storage support">
+        //<editor-fold desc="resource storage and reference count support">
         retrieveAsset: retrieveAsset,
         unloadAsset: unloadAsset,
-        isAssetLoaded: isAssetLoaded
+        isAssetLoaded: isAssetLoaded,
+        incAssetRefCount: incAssetRefCount
         //</editor-fold>
     };
     return mPublic;
