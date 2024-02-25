@@ -84,7 +84,7 @@ BlueLevel.prototype.update = function () {
     /// Move right and swap ovre
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
         gEngine.AudioClips.playACue(this.kCue);
-        xform.incXPosBy(deltaX);
+        xform.incXPos(deltaX);
         if (xform.getXPos() > 30) { // this is the right-bound of the window
             xform.setPosition(12, 60);
         }
@@ -93,7 +93,7 @@ BlueLevel.prototype.update = function () {
     // Step A: test for white square movement
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
         gEngine.AudioClips.playACue(this.kCue);
-        xform.incXPosBy(-deltaX);
+        xform.incXPos(-deltaX);
         if (xform.getXPos() < 11) { // this is the left-boundary
             gEngine.GameLoop.stop();
         }

@@ -98,7 +98,7 @@ MyGame.prototype.update = function () {
   // Support hero movements
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
     gEngine.AudioClips.playACue(this.kCue);
-    xform.incXPosBy(deltaX);
+    xform.incXPos(deltaX);
     if (xform.getXPos() > 30) { // this is the right-bound of the window
       xform.setPosition(12, 60);
     }
@@ -106,7 +106,7 @@ MyGame.prototype.update = function () {
 
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
     gEngine.AudioClips.playACue(this.kCue);
-    xform.incXPosBy(-deltaX);
+    xform.incXPos(-deltaX);
     if (xform.getXPos() < 11) {  // this is the left-bound of the window
       gEngine.GameLoop.stop();
     }
