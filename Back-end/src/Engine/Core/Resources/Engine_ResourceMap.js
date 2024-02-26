@@ -1,3 +1,10 @@
+/*
+ * File: Engine_ResourceMap.js
+ */
+/*jslint node: true, vars: true, evil: true */
+/*global gEngine: false, alert: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 var gEngine = gEngine || { };
@@ -5,6 +12,7 @@ var gEngine = gEngine || { };
 gEngine.ResourceMap = (function () {
     var MapEntry = function (rName) {
         this.mAsset = rName;
+        this.mRefCount = 1;
     };
 
     // Number of outstanding load operations
@@ -63,26 +71,33 @@ gEngine.ResourceMap = (function () {
     var isAssetLoaded = function (rName) {
         return (rName in mResourceMap);
     };
+
     var incAssetRefCount = function (rName) {
         mResourceMap[rName].mRefCount += 1;
     };
 
     var unloadAsset = function (rName) {
+        var c = 0;
         if (rName in mResourceMap) {
-            delete mResourceMap[rName];
+            mResourceMap[rName].mRefCount -= 1;
+            c = mResourceMap[rName].mRefCount;
+            if (c === 0) {
+                delete mResourceMap[rName];
+            }
         }
+        return c;
     };
     //</editor-fold>
 
     // Public interface for this object. Anything not in here will
-    // not be accessible.
+    // not be accessable.
     var mPublic = {
         //<editor-fold desc="asynchronous resource loading support">
         asyncLoadRequested: asyncLoadRequested,
         asyncLoadCompleted: asyncLoadCompleted,
         setLoadCompleteCallback: setLoadCompleteCallback,
         //</editor-fold>
-        //<editor-fold desc="resource storage support">
+        //<editor-fold desc="resource storage and reference count support">
         retrieveAsset: retrieveAsset,
         unloadAsset: unloadAsset,
         isAssetLoaded: isAssetLoaded,
