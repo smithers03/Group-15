@@ -1,19 +1,18 @@
 
-attribute vec3 aSquareVertexPosition; // ecpect one vertex Poition
-attribute vec2 aTextureCoordinate;
+//
+attribute vec3 aSquareVertexPosition;   // Vertex shader expects one vertex position
+attribute vec2 aTextureCoordinate;      // This is the texture coordinate attribute
 
+// texture coordinate that maps image to the square
+varying vec2 vTexCoord;
 
-// texture coordinate that well map the entire image to the entire square
-varying vec2 vTextCoord;
-
-// to thransform the vetex position
+// to transform the vertex position
 uniform mat4 uModelTransform;
 uniform mat4 uViewProjTransform;
 
 void main(void) {
-    gl_Position = uViewProjTransform * uModelTransform *
-            vec4(aSquareVertexPosition, 1.0);
+    gl_Position = uViewProjTransform * uModelTransform * vec4(aSquareVertexPosition, 1.0);
 
-    // the texture coordinate to the fragment shader
-    vTextCoord = aTextureCoordinate;
+    // pass the texture coordinate to the fragment shader
+    vTexCoord = aTextureCoordinate;
 }
