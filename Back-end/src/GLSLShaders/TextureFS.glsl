@@ -5,18 +5,17 @@ precision mediump float;
 uniform sampler2D uSampler;
 
 
-// coloe of pixel
+// Color of pixel
 uniform vec4 uPixelColor;
 
-// The "varying" keyword is for singnifing that the texture coordinate will be interpolated and thus varies
-varying vec2 vTextCoord;
+// The "varying" keyword is for signifying that the texture coordinate will be
+// interpolated and thus varies.
+varying vec2 vTexCoord;
 
-
-
-
-void main (void) {
+void main(void) {
     // texel color look up based on interpolated UV value in vTexCoord
-    vec4 c = texture2D(uSampler, vec2(vTextCoord.s, vTextCoord.t));
+    vec4 c = texture2D(uSampler, vec2(vTexCoord.s, vTexCoord.t));
+    //
 
 
     //tint  the textured area and leave the trasparent area outside the texture
