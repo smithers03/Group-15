@@ -12,8 +12,8 @@
 
 function MyGame() {
   // textures:
-  this.kPortal = "assets/minion_portal.png";      // supports png with transparency
-  this.kCollector = "assets/minion_collector.png";
+  this.kPortal = "assets/minion_collector.png";      // supports png with transparency
+  this.kCollector = "assets/pacMan.png";
 
   // The camera to view the scene
   this.mCamera = null;
