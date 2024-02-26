@@ -91,4 +91,12 @@ BlueLevel.prototype.update = function () {
             gEngine.GameLoop.stop();
         }
     }
+
+    // continuously change texture tinting
+    var c = this.mSqSet[1].getColor();
+    var ca = c[3] + deltaX;
+    if(ca > 1) {
+        ca = 0;
+    }
+    c[3] = ca;
 };

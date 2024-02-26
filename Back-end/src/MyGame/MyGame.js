@@ -1,26 +1,33 @@
-/*
- * File: MyGame.js 
- * This is the logic of our game. 
- */
-/*jslint node: true, vars: true */
-/*global gEngine, Scene, SceneFileParser, BlueLevel, Camera, vec2, Renderable */
-/* find out more about jslint: http://www.jslint.com/help.html */
 
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict";  //
 
 function MyGame() {
+  // textures: png supports transparency
+  this.kPortal = "assets/minion_portal.png";
+  this.kCollector = "assets/minion_collector.png";
   // The camera to view the scene
   this.mCamera = null;
 
   // the hero and the support objects
   this.mHero = null;
-  this.mSupport = null;
+  this.mCollector = null;
+  this.mPortal = null
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
+
+
+MyGame.prototype.loadScene = function () {
+  // loads the Textures
+  gEngine.Textures.loadTexture(this.kPortal);
+  gEngine.Textures.loadTexture(this.kCollector);
+}
+
 MyGame.prototype.unloadScene = function () {
+
   // Step A: Game loop not running, unload all assets
-  //          nothing for this level
+  gEngine.Textures.unloadTexture(this.kPortal);
+  gEngine.Textures.unloadTexture(this.kCollector);
 
   // Step B: starts the next level
   var nextLevel = new BlueLevel();  // next level to be loaded
@@ -34,17 +41,25 @@ MyGame.prototype.initialize = function () {
       20,                        // width of camera
       [20, 40, 600, 300]         // viewport (orgX, orgY, width, height)
   );
+
+  // sets background to gray
   this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-  // sets the background to gray
 
-  // Step B: Create the support object in red
-  this.mSupport = new Renderable(gEngine.DefaultResources.getConstColorShader());
-  this.mSupport.setColor([0.8, 0.2, 0.2, 1]);
-  this.mSupport.getXform().setPosition(20, 60);
-  this.mSupport.getXform().setSize(5, 5);
+  // Step B: Create the game objects
+  this.mPortal = new TextureRenderable(this.kPortal);
+  this.mPortal.setColor([1, 0, 0, 0.2]);  // tints red
+  this.mPortal.getXform().setPosition(25, 60);
+  this.mPortal.getXform().setSize(3, 3);
 
-  // Setp C: Create the hero object in blue
-  this.mHero = new Renderable(gEngine.DefaultResources.getConstColorShader());
+  this.mCollector = new TextureRenderable(this.kCollector);
+  this.mCollector.setColor([0, 0, 0, 0]);  // No tinting
+  this.mCollector.getXform().setPosition(15, 60);
+  this.mCollector.getXform().setSize(3, 3);
+
+
+
+  // Step C: Create the hero object in blue
+  this.mHero = new Renderable();
   this.mHero.setColor([0, 0, 1, 1]);
   this.mHero.getXform().setPosition(20, 60);
   this.mHero.getXform().setSize(2, 3);
