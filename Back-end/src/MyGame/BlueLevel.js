@@ -15,7 +15,7 @@ function BlueLevel() {
 
     // textures: (Note: jpg does not support transparency)
     this.kPortal = "assets/minion_portal.jpg";
-    this.kCollector = "assets/minion_collector.jpg";
+    this.kCollector = "assets/pacMan.png";
 
     // all squares
     this.mSqSet = [];        // these are the Renderable objects

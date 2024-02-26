@@ -23,7 +23,7 @@
 
     <TextureSquare PosX="25" PosY="60" Width="3" Height="3" Rotation="5"
                    Color="0 0 0 0"
-                   Texture="assets/pacManOpen.jpg"/>
+                   Texture="assets/pacMan.png"/>
     <!-- without tinting, alpha should be 0 -->
 
 </MyGameLevel>
