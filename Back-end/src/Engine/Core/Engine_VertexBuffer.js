@@ -58,9 +58,6 @@ gEngine.VertexBuffer = (function () {
 
     var getGLTexCoordRef = function () { return mTextureCoordBuffer;}
 
-
-
-
     var getGLVertexRef = function () {return mSquareVertexBuffer;}
 
     var mPublic = {

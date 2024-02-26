@@ -40,7 +40,7 @@ BlueLevel.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kPortal);
     gEngine.Textures.unloadTexture(this.kCollector);
 
-    var nextLevel = new MyGame();  // load the next level
+    var nextLevel = new MyGame2();  // load the next level
     gEngine.Core.startScene(nextLevel);
 };
 
