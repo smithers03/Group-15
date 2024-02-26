@@ -1,35 +1,43 @@
+/*
+ * File: MyGame.js
+ * This is the logic of our game.
+ */
 
-"use strict";  //
+/*jslint node: true, vars: true */
+/*global gEngine: false, Scene: false, BlueLevel:false, Camera: false, vec2: false,
+  TextureRenderable: false, Renderable: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame() {
-  // textures: png supports transparency
-  this.kPortal = "assets/minion_portal.png";
+  // textures:
+  this.kPortal = "assets/minion_portal.png";      // supports png with transparency
   this.kCollector = "assets/minion_collector.png";
+
   // The camera to view the scene
   this.mCamera = null;
 
   // the hero and the support objects
   this.mHero = null;
+  this.mPortal = null;
   this.mCollector = null;
-  this.mPortal = null
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
-
-
 MyGame.prototype.loadScene = function () {
-  // loads the Textures
+  // loads the textures
   gEngine.Textures.loadTexture(this.kPortal);
   gEngine.Textures.loadTexture(this.kCollector);
-}
+};
 
 MyGame.prototype.unloadScene = function () {
+  // Game loop not running, unload all assets
 
-  // Step A: Game loop not running, unload all assets
   gEngine.Textures.unloadTexture(this.kPortal);
   gEngine.Textures.unloadTexture(this.kCollector);
 
-  // Step B: starts the next level
+  // starts the next level
   var nextLevel = new BlueLevel();  // next level to be loaded
   gEngine.Core.startScene(nextLevel);
 };
@@ -41,9 +49,8 @@ MyGame.prototype.initialize = function () {
       20,                        // width of camera
       [20, 40, 600, 300]         // viewport (orgX, orgY, width, height)
   );
-
-  // sets background to gray
   this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+  // sets the background to gray
 
   // Step B: Create the game objects
   this.mPortal = new TextureRenderable(this.kPortal);
@@ -55,8 +62,6 @@ MyGame.prototype.initialize = function () {
   this.mCollector.setColor([0, 0, 0, 0]);  // No tinting
   this.mCollector.getXform().setPosition(15, 60);
   this.mCollector.getXform().setSize(3, 3);
-
-
 
   // Step C: Create the hero object in blue
   this.mHero = new Renderable();
@@ -74,12 +79,13 @@ MyGame.prototype.draw = function () {
   // Step  B: Activate the drawing Camera
   this.mCamera.setupViewProjection();
 
-  // Step  C: draw everything
-  this.mSupport.draw(this.mCamera.getVPMatrix());
+  // Step  C: Draw everything
+  this.mPortal.draw(this.mCamera.getVPMatrix());
   this.mHero.draw(this.mCamera.getVPMatrix());
+  this.mCollector.draw(this.mCamera.getVPMatrix());
 };
 
-// The Update function, updates the application state. Make sure to _NOT_ draw
+// The update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
   // let's only allow the movement of hero,
@@ -103,4 +109,11 @@ MyGame.prototype.update = function () {
     }
   }
 
+  // continously change texture tinting
+  var c = this.mPortal.getColor();
+  var ca = c[3] + deltaX;
+  if (ca > 1) {
+    ca = 0;
+  }
+  c[3] = ca;
 };
