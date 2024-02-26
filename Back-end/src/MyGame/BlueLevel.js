@@ -11,8 +11,13 @@
 function BlueLevel() {
     // scene file name
     this.kSceneFile = "assets/BlueLevel.xml";
+
+    //textures
+    this.kPortal = "assets/minion_portal.jpg";
+    this.kCollector = "assets/pacManOpen.jpg";
     // all squares
     this.mSqSet = [];        // these are the Renderable objects
+
 
     // The camera to view the scene
     this.mCamera = null;
@@ -22,11 +27,16 @@ gEngine.Core.inheritPrototype(BlueLevel, Scene);
 BlueLevel.prototype.loadScene = function () {
     // load the scene file
     gEngine.TextFileLoader.loadTextFile(this.kSceneFile, gEngine.TextFileLoader.eTextFileType.eXMLFile);
+
+    gEngine.Textures.loadTexture(this.kPortal);
+    gEngine.Textures.loadTexture(this.kCollector);
 };
 
 BlueLevel.prototype.unloadScene = function () {
     // unload the scene flie
     gEngine.TextFileLoader.unloadTextFile(this.kSceneFile);
+    gEngine.Textures.unloadTexture(this.kPortal);
+    gEngine.Textures.unloadTexture(this.kCollector);
 
     var nextLevel = new MyGame();  // load the next level
     gEngine.Core.startScene(nextLevel);
@@ -40,6 +50,7 @@ BlueLevel.prototype.initialize = function () {
 
     // Step B: Read all the squares
     sceneParser.parseSquares(this.mSqSet);
+    sceneParser.parseTextureSquares(this.mSqSet);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more

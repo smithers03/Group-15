@@ -13,11 +13,19 @@ gEngine.Core = (function () {
 
         // Get the standard or experimental webgl and binds to the Canvas area
         // store the results to the instance variable mGL
-        mGL = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        mGL = canvas.getContext("webgl" , {alpha: false})||
+            canvas.getContext("experimental-webgl", {alpha: false});
+
+        // Allows transparency around the textures
+        mGL.blendFunc(mGL.SRC_ALPHA, mGL.ONE_MINUS_SRC_ALPHA);
+        mGL.enable(mGL.BLEND);
+
+        // set images to flip the y-axis to match te texture coordinate space
+        // defines the origin of the uv coordinate to be in the lower-left corner
+        mGL.pixelStorei(mGL.UNPACK_FLIP_Y_WEBGL, true);
 
         if (mGL === null) {
             document.write("<br><b>WebGL is not supported!</b>");
-            return;
         }
     };
 
