@@ -34,6 +34,7 @@
   <script src="src/Engine/Renderables/Renderable.js"></script>
   <script src="src/Engine/Renderables/TextureRenderable.js"></script>
   <script src="src/Engine/Renderables/SpriteRenderable.js"></script>
+  <script src="src/Engine/Renderables/SpriteAnimateRenderable.js"></script>
 
 
   <!--Shaders -->
@@ -49,25 +50,24 @@
   <script src="src/Engine/Core/Resources/Engine_DefaultResources.js"></script>
   <script src="src/Engine/Core/Resources/Engine_Textures.js"></script>
 
-
-
+  <script src="src/Engine/Scene.js"></script>
   <script src="src/Engine/Transform.js"></script>
   <script src="src/Engine/Camera.js"></script>
-  <script src="src/Engine/Scene.js"></script>
+
  <!--______________________Engine end________________-->
 
 
+
+  <!-- Utilities -->
+  <script src="src/MyGame/Util/SceneFileParser.js"></script>
 
 
  <!--Logic -->
   <script src="src/MyGame/MyGame.js"></script>
   <script src="src/MyGame/BlueLevel.js"></script>
 
- <!-- Utilities -->
-  <script src="src/MyGame/Util/SceneFileParser.js"></script>
 
-
-</headj>
+</head>
 
 <body onload = " var myGame = new MyGame();
     gEngine.Core.initializeEngineCore('GLCanvas', myGame);
