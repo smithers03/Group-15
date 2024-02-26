@@ -132,14 +132,14 @@ MyGame.prototype.update = function () {
 
   // Support hero movements
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-    xform.incXPosBy(deltaX);
+    xform.incXPos(deltaX);
     if (xform.getXPos() > 30) { // this is the right-bound of the window
       xform.setPosition(12, 60);
     }
   }
 
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-    xform.incXPosBy(-deltaX);
+    xform.incXPos(-deltaX);
     if (xform.getXPos() < 11) {  // this is the left-bound of the window
       xform.setXPos(20);
     }
