@@ -9,8 +9,9 @@ function TextureRenderable(myTexture){
     Renderable.prototype._setShader.call(this, gEngine.DefaultResources.getTextureShader())
     this.mTexture = myTexture; // the Objects texture can't be null
 }
+gEngine.Core.inheritPrototype(TextureRenderable, Renderable);
 
-TextureRenderable.prototype.draw = function () {
+TextureRenderable.prototype.draw = function (vpMatrix) {
      // activate the texture
     gEngine.Textures.activateTexture(this.mTexture);
     Renderable.prototype.draw.call(this, vpMatrix);
@@ -20,6 +21,5 @@ TextureRenderable.prototype.getTexture = function() {return this.mTexture;}
 TextureRenderable.prototype.setTexture = function(texture) {this.mTexture = t;}
 
 
-gEngine.Core.inheritPrototype(TextureRenderable, Renderable);
 
 
