@@ -8,12 +8,11 @@ gEngine.DefaultResources = (function () {
     var kSimpleFS = "src/GLSLShaders/SimpleFS.glsl";
     var mConstColorShader = null;
 
-    var kTextureVS = "src/GLSLShader/TextureVS.glsl";
-    var kTextureFS = "src/GLSLShader/TextureFS.glsl";
+    var kTextureVS = "src/GLSLShaders/TextureVS.glsl";
+    var kTextureFS = "src/GLSLShaders/TextureFS.glsl";
     var mTextureShader = null;
 
 
-    var getConstColorShader = function () { return mConstColorShader;}
 
 
 
@@ -27,7 +26,8 @@ gEngine.DefaultResources = (function () {
     };
 
 
-    var getTextureShader = function () {return mTextureShader};
+    var getConstColorShader = function () { return mConstColorShader;};
+    var getTextureShader = function () {return mTextureShader;};
 
 
 
@@ -41,7 +41,7 @@ gEngine.DefaultResources = (function () {
 
         // texture shader
         gEngine.TextFileLoader.loadTextFile(kTextureVS,
-            gEngine.TextFileLoader.eTextFileType.eTextFilel);
+            gEngine.TextFileLoader.eTextFileType.eTextFile);
         gEngine.TextFileLoader.loadTextFile(kTextureFS,
             gEngine.TextFileLoader.eTextFileType.eTextFile);
 
