@@ -63,6 +63,9 @@ gEngine.ResourceMap = (function () {
     var isAssetLoaded = function (rName) {
         return (rName in mResourceMap);
     };
+    var incAssetRefCount = function (rName) {
+        mResourceMap[rName].mRefCount += 1;
+    };
 
     var unloadAsset = function (rName) {
         if (rName in mResourceMap) {
@@ -72,7 +75,7 @@ gEngine.ResourceMap = (function () {
     //</editor-fold>
 
     // Public interface for this object. Anything not in here will
-    // not be accessable.
+    // not be accessible.
     var mPublic = {
         //<editor-fold desc="asynchronous resource loading support">
         asyncLoadRequested: asyncLoadRequested,
@@ -82,7 +85,8 @@ gEngine.ResourceMap = (function () {
         //<editor-fold desc="resource storage support">
         retrieveAsset: retrieveAsset,
         unloadAsset: unloadAsset,
-        isAssetLoaded: isAssetLoaded
+        isAssetLoaded: isAssetLoaded,
+        incAssetRefCount: incAssetRefCount
         //</editor-fold>
     };
     return mPublic;

@@ -102,12 +102,14 @@ gEngine.Textures = (function () {
         return gEngine.ResourceMap.retrieveAsset(textureName);
     };
 
+
+
     var mPublic = {
         loadTexture: loadTexture,
         unloadTexture: unloadTexture,
         activateTexture: activateTexture,
         deactivateTexture: deactivateTexture,
-        getTextureInfo: getTextureInfo
+        getTextureInfo: getTextureInfo,
     };
     return mPublic;
 }());
