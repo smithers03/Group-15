@@ -1,10 +1,3 @@
-/*
- * File: Engine_ResourceMap.js 
- */
-/*jslint node: true, vars: true, evil: true */
-/*global gEngine: false, alert: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
-
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 var gEngine = gEngine || { };
