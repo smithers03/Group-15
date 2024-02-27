@@ -28,6 +28,9 @@ MyGame.prototype.loadScene = function () {
 MyGame.prototype.unloadScene = function () {
   gEngine.Textures.unloadTexture(this.kFontImage);
   gEngine.Textures.unloadTexture(this.kMinionSprite);
+  var nextLevel = new BlueLevel();  // next level to be loaded
+  gEngine.Core.startScene(nextLevel);
+
 };
 
 MyGame.prototype.initialize = function () {
@@ -65,7 +68,7 @@ MyGame.prototype.initialize = function () {
   this.mRightMinion.getXform().setPosition(26, 56.5);
   this.mRightMinion.getXform().setSize(4, 3.2);
   this.mRightMinion.setSpriteSequence(512, 0,     // first element pixel position: top-left 512 is top of image, 0 is left of image
-      204, 164,       // widthxheight in pixels
+      204, 164,       // width height in pixels
       5,              // number of elements in this sequence
       0);             // horizontal padding in between
   this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
@@ -79,7 +82,7 @@ MyGame.prototype.initialize = function () {
   this.mLeftMinion.getXform().setSize(4, 3.2);
   this.mLeftMinion.setSpriteSequence(348, 0,      // first element pixel position: top-left 164 from 512 is top of image, 0 is left of image
       204, 164,       // widthxheight in pixels
-      5,              // number of elements in this sequence
+      3,         // number of elements in this sequence
       0);             // horizontal padding in between
   this.mLeftMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
   this.mLeftMinion.setAnimationSpeed(50);
@@ -119,19 +122,28 @@ MyGame.prototype.update = function () {
   // load the next level
   var deltaX = 0.05;
   var xform = this.mHero.getXform();
-
   // Support hero movements
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
+    xform.setRotationInDegree(180);
     xform.incXPos(deltaX);
     if (xform.getXPos() > 30) { // this is the right-bound of the window
       xform.setPosition(12, 60);
     }
   }
+  if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
+    xform.setRotationInDegree(270);
+    xform.incYPos(deltaX);
+  }
 
-  if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+  if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+    xform.setRotationInDegree(90);
+    xform.incYPos(-deltaX);
+  }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
+    xform.setRotationInDegree(0);
     xform.incXPos(-deltaX);
     if (xform.getXPos() < 11) {  // this is the left-bound of the window
-      xform.setXPos(20);
+      gEngine.GameLoop.stop();
     }
   }
 

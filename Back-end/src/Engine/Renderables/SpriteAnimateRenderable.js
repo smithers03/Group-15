@@ -61,11 +61,6 @@ SpriteAnimateRenderable.prototype._setSpriteElement = function () {
 };
 
 
-//<editor-fold desc="Public Methods">
-//**-----------------------------------------
-// Public methods
-//**-----------------------------------------
-
 // Assumption is that the first sprite in an animation is always the left-most element.
 SpriteAnimateRenderable.eAnimationType = Object.freeze({
     eAnimateRight: 0,     // Animate from first (left) towards right, when hit the end, start from the left again
@@ -76,8 +71,8 @@ SpriteAnimateRenderable.eAnimationType = Object.freeze({
 
 // Always set the left-most element to be the first
 SpriteAnimateRenderable.prototype.setSpriteSequence = function (
-    topPixel,   // offset from top-left
-    leftPixel, // offset from top-left
+    topPixel,   // offset from bottom-left
+    leftPixel,  // offset from top-left
     elmWidthInPixel,
     elmHeightInPixel,
     numElements,      // number of elements in sequence
