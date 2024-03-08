@@ -3,30 +3,32 @@
 
 function MyGame() {
   // textures:
-  this.kFontImage = "assets/Consolas-72.png";
-  this.kPacManSprite = "assets/minion_sprite.png";  // Portal and Collector are embedded here
+  //this.kFontImage = "assets/Consolas-72.png";
+  //this.kPacManSprite = "assets/minion_sprite.png";  // Portal and Collector are embedded
+  this.kPacManSprite = "assets/all-pac-man.png";  // Portal and Collector are embedded here
 
   // The camera to view the scene
   this.mCamera = null;
 
   // the hero and the support objects
-  this.mHero = null;
+  //this.mHero = null;
   this.mPortal = null;
   this.mCollector = null;
+  this.mCollector = null;
   this.mFontImage = null;
-  this.mRightMinion = null;
+  //this.mRightMinion = null;
   this.mPacMan = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
   // loads the textures
-  gEngine.Textures.loadTexture(this.kFontImage);
+  //gEngine.Textures.loadTexture(this.kFontImage);
   gEngine.Textures.loadTexture(this.kPacManSprite);
 };
 
 MyGame.prototype.unloadScene = function () {
-  gEngine.Textures.unloadTexture(this.kFontImage);
+  //gEngine.Textures.unloadTexture(this.kFontImage);
   gEngine.Textures.unloadTexture(this.kPacManSprite);
   var nextLevel = new BlueLevel();  // next level to be loaded
   gEngine.Core.startScene(nextLevel);
@@ -57,7 +59,7 @@ MyGame.prototype.initialize = function () {
   this.mCollector.setElementPixelPositions(315, 495, 0, 180);
 
   // Step C: Create the font and minion images using sprite
-  this.mFontImage = new SpriteRenderable(this.kFontImage);
+  /*this.mFontImage = new SpriteRenderable(this.kFontImage);
   this.mFontImage.setColor([1, 1, 1, 0]);
   this.mFontImage.getXform().setPosition(13, 62);
   this.mFontImage.getXform().setSize(4, 4);
@@ -73,28 +75,29 @@ MyGame.prototype.initialize = function () {
       0);             // horizontal padding in between
   this.mRightMinion.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
   this.mRightMinion.setAnimationSpeed(50);
-  // show each element for mAnimSpeed updates
+  // show each element for mAnimSpeed updates*/
 
   // the left minion
   this.mPacMan = new SpriteAnimateRenderable(this.kPacManSprite);
-  this.mPacMan.setColor([1, 1, 1, 0]);
-  this.mPacMan.getXform().setPosition(15, 56.5);
+  this.mPacMan.setColor([1, 1, 1, 1]);
+  this.mPacMan.getXform().setPosition(15, 56.7);
   this.mPacMan.getXform().setSize(4, 3.2);
-  this.mPacMan.setSpriteSequence(348, 0,      // first element pixel position: top-left 164 from 512 is top of image, 0 is left of image
-      204, 164,       // widthxheight in pixels
-      3,         // number of elements in this sequence
-      0);             // horizontal padding in between
+  //this.mPacMan.getXform().setSize(4, 4); // Set both width and height equally
+  this.mPacMan.setSpriteSequence(0, 0,      // first element pixel position: top-left 164 from 512 is top of image, 0 is left of image
+      126, 126,       // widthxheight in pixels
+      4,         // number of elements in this sequence
+      1);             // horizontal padding in between
   this.mPacMan.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateRight);
-  this.mPacMan.setAnimationSpeed(15);
+  this.mPacMan.setAnimationSpeed(20);
   // show each element for mAnimSpeed updates
 
   // Step D: Create the hero object with texture from the lower-left corner
-  this.mHero = new SpriteRenderable(this.kPacManSprite);
+  /*this.mHero = new SpriteRenderable(this.kPacManSprite);
   this.mHero.setColor([1, 1, 1, 0]);
   this.mHero.getXform().setPosition(20, 60);
   this.mHero.getXform().setSize(2, 3);
   this.mHero.setElementPixelPositions(0, 120, 0, 180);
-};
+};*/
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
@@ -106,11 +109,11 @@ MyGame.prototype.draw = function () {
   this.mCamera.setupViewProjection();
 
   // Step  C: Draw everything
-  this.mPortal.draw(this.mCamera.getVPMatrix());
-  this.mCollector.draw(this.mCamera.getVPMatrix());
-  this.mHero.draw(this.mCamera.getVPMatrix());
-  this.mFontImage.draw(this.mCamera.getVPMatrix());
-  this.mRightMinion.draw(this.mCamera.getVPMatrix());
+  //this.mPortal.draw(this.mCamera.getVPMatrix());
+  //this.mCollector.draw(this.mCamera.getVPMatrix());
+  //this.mHero.draw(this.mCamera.getVPMatrix());
+  //this.mFontImage.draw(this.mCamera.getVPMatrix());
+  //this.mRightMinion.draw(this.mCamera.getVPMatrix());
   this.mPacMan.draw(this.mCamera.getVPMatrix());
 };
 
@@ -161,13 +164,14 @@ MyGame.prototype.update = function () {
   // <editor-fold desc="The font image:">
   // zoom into the texture by updating texture coordinate
   // For font: zoom to the upper left corner by changing bottom right
-  var texCoord = this.mFontImage.getElementUVCoordinateArray();
+  //var texCoord = this.mFontImage.getElementUVCoordinateArray();
   // The 8 elements:
   //      mTexRight,  mTexTop,          // x,y of top-right
   //      mTexLeft,   mTexTop,
   //      mTexRight,  mTexBottom,
   //      mTexLeft,   mTexBottom
-  var b = texCoord[SpriteRenderable.eTexCoordArray.eBottom] + deltaT;
+  //
+  /*var b = texCoord[SpriteRenderable.eTexCoordArray.eBottom] + deltaT;
   var r = texCoord[SpriteRenderable.eTexCoordArray.eRight] - deltaT;
   if (b > 1.0) {
     b = 0;
@@ -180,13 +184,13 @@ MyGame.prototype.update = function () {
       r,
       b,
       texCoord[SpriteRenderable.eTexCoordArray.eTop]
-  );
+  );*/
   // </editor-fold>
 
   // New code for controlling the sprite animation
   // <editor-fold desc="controlling the sprite animation:">
   // remember to update the minion's animation
-  this.mRightMinion.updateAnimation();
+  //this.mRightMinion.updateAnimation();
   this.mPacMan.updateAnimation();
 
   // Animate left on the sprite sheet
