@@ -1,3 +1,14 @@
+/*
+ * File: MyGame.js
+ * This is the logic of our game.
+ */
+
+/*jslint node: true, vars: true */
+/*global gEngine, Scene, GameObjectSet, TextureObject, Camera, vec2,
+  FontRenderable, DyePack, Hero, Minion, Brain,
+  GameObject */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame() {
@@ -70,14 +81,14 @@ MyGame.prototype.update = function () {
   var msg = "No Collision";
 
   this.mCollector.update(gEngine.Input.keys.W, gEngine.Input.keys.S,
-      gEngine.Input.keys.A, gEngine.Input.keys.D);
+      gEngine.Input.keys.A, gEngine.Input.keys.D, gEngine.Input.keys.E);
   this.mPortal.update(gEngine.Input.keys.Up, gEngine.Input.keys.Down,
-      gEngine.Input.keys.Left, gEngine.Input.keys.Right);
+      gEngine.Input.keys.Left, gEngine.Input.keys.Right, gEngine.Input.keys.P);
 
   var h = [];
 
   // Portal's resolution is 1/16 x 1/16 that of Collector!
-  // if (this.mCollector.pixelTouches(this.mPortal, h)) {  // <-- VERY EXPENSIVE check the smaller picture!!
+  // if (this.mCollector.pixelTouches(this.mPortal, h)) {  // <-- VERY EXPENSIVE!!
   if (this.mPortal.pixelTouches(this.mCollector, h)) {
     msg = "Collided!: (" + h[0].toPrecision(4) + " " + h[1].toPrecision(4) + ")";
     this.mDyePack.setVisibility(true);
