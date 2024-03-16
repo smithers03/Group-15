@@ -10,6 +10,7 @@ GameObject.prototype.getXform = function () { return this.mRenderComponent.getXf
 GameObject.prototype.setVisibility = function (f) { this.mVisible = f; };
 GameObject.prototype.isVisible = function () { return this.mVisible; };
 
+
 GameObject.prototype.setSpeed = function (s) { this.mSpeed = s; };
 GameObject.prototype.getSpeed = function () { return this.mSpeed; };
 GameObject.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
@@ -77,3 +78,10 @@ GameObject.prototype.draw = function (aCamera) {
     if (this.isVisible())
         this.mRenderComponent.draw(aCamera);
 };
+
+
+GameObject.prototype.getBBox = function () {
+    var xform = this.getXform();
+    var b = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
+    return b;
+}
