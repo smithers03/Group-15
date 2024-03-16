@@ -41,9 +41,9 @@ gEngine.Core.inheritPrototype(SpriteShader, TextureShader);
 // <editor-fold desc="Public Methods">
 
 // Overriding the Activation of the shader for rendering
-SpriteShader.prototype.activateShader = function (pixelColor, vpMatrix) {
+SpriteShader.prototype.activateShader = function (pixelColor, aCamera) {
     // first call the super class's activate
-    SimpleShader.prototype.activateShader.call(this, pixelColor, vpMatrix);
+    SimpleShader.prototype.activateShader.call(this, pixelColor, aCamera);
 
     // now binds the proper texture coordinate buffer
     var gl = gEngine.Core.getGL();
@@ -62,4 +62,11 @@ SpriteShader.prototype.setTextureCoordinate = function (texCoord) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.mTexCoordBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(texCoord));
 };
-//</editor-fold>
+
+
+SpriteShader.prototype.cleanUp = function () {
+    var gl = gEngine.Core.getGL();
+    gl.deleteBuffer(this.mTexCoordBuffer);
+    // now call super class's clean up ...
+    SimpleShader.prototype.cleanUp.call(this);
+};

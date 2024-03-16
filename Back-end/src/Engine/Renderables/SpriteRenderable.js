@@ -59,12 +59,12 @@ SpriteRenderable.prototype.getElementUVCoordinateArray = function () {
     ];
 };
 
-SpriteRenderable.prototype.draw = function (vpMatrix) {
+SpriteRenderable.prototype.draw = function (aCamera) {
     // set the current texture coordinate
-    // 
+    //
     // activate the texture
     this.mShader.setTextureCoordinate(this.getElementUVCoordinateArray());
-    TextureRenderable.prototype.draw.call(this, vpMatrix);
+    TextureRenderable.prototype.draw.call(this, aCamera);
 };
 //--- end of Public Methods
 //
