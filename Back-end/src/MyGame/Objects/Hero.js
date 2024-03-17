@@ -1,3 +1,14 @@
+/* File: Hero.js
+ *
+ * Creates and initializes the Hero (Dye)
+ * overrides the update function of GameObject to define
+ * simple Dye behavior
+ */
+
+/*jslint node: true, vars: true */
+/*global gEngine: false, GameObject: false, SpriteRenderable: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Hero(spriteTexture) {

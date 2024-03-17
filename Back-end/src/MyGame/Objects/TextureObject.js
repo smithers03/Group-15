@@ -1,7 +1,8 @@
-"use strict";
+"use strict";  //
 
 function TextureObject(texture, x, y, w, h) {
     this.kDelta = 0.2;
+    this.kRDelta = 0.1; // radian
 
     this.mRenderable = new TextureRenderable(texture);
     this.mRenderable.setColor([1, 1, 1, 0.1]);

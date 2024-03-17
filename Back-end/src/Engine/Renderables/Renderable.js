@@ -1,9 +1,9 @@
-"use strict";
+"use strict";  //
 
-function Renderable(shader) {
-    this.mShader = gEngine.DefaultResources.getConstColorShader();
-    this.mXform = new Transform();
-    this.mColor = [1, 1, 1, 1];// Color for fragment shader
+function Renderable() {
+    this.mShader = gEngine.DefaultResources.getConstColorShader();  // this is the default
+    this.mXform = new Transform(); // transform that moves this object around
+    this.mColor = [1, 1, 1, 1];    // color of pixel
 }
 
 Renderable.prototype.draw = function (aCamera) {
@@ -13,9 +13,9 @@ Renderable.prototype.draw = function (aCamera) {
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 };
 
-Renderable.prototype._setShader = function (s) {this.mShader = s;}
-Renderable.prototype.setColor = function(color) { this.mColor = color;}
-Renderable.prototype.getColor = function() { return this.mColor;}
+Renderable.prototype.getXform = function () { return this.mXform; };
+Renderable.prototype.setColor = function (color) { this.mColor = color; };
+Renderable.prototype.getColor = function () { return this.mColor; };
 
-// getter for mXform
-Renderable.prototype.getXform = function() {return this.mXform;}
+
+Renderable.prototype._setShader = function (s) { this.mShader = s; };

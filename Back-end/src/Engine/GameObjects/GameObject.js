@@ -1,15 +1,28 @@
+/* File: GameObject.js 
+ *
+ * Abstracts a game object's behavior and apparance
+ */
+
+/*jslint node: true, vars: true */
+/*global vec2, vec3, BoundingBox */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function GameObject(renderableObj) {
     this.mRenderComponent = renderableObj;
     this.mVisible = true;
     this.mCurrentFrontDir = vec2.fromValues(0, 1);  // this is the current front direction of the object
-    this.mSpeed = 0;}
-
+    this.mSpeed = 0;
+}
 GameObject.prototype.getXform = function () { return this.mRenderComponent.getXform(); };
+GameObject.prototype.getBBox = function () {
+    var xform = this.getXform();
+    var b = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
+    return b;
+};
 GameObject.prototype.setVisibility = function (f) { this.mVisible = f; };
 GameObject.prototype.isVisible = function () { return this.mVisible; };
-
 
 GameObject.prototype.setSpeed = function (s) { this.mSpeed = s; };
 GameObject.prototype.getSpeed = function () { return this.mSpeed; };
@@ -20,6 +33,8 @@ GameObject.prototype.getCurrentFrontDir = function () { return this.mCurrentFron
 
 GameObject.prototype.getRenderable = function () { return this.mRenderComponent; };
 
+// Orientate the entire object to point towards point p
+// will rotate Xform() accordingly
 GameObject.prototype.rotateObjPointTo = function (p, rate) {
     // Step A: determine if reach the destination position p
     var dir = [];
@@ -38,7 +53,8 @@ GameObject.prototype.rotateObjPointTo = function (p, rate) {
         return;
     }
 
-    // Step C: clamp the cosTheda to -1 to 1
+    // Step C: clamp the cosTheda to -1 to 1 
+    // in a perfect world, this would never happen! BUT ...
     if (cosTheta > 1) {
         cosTheta = 1;
     } else {
@@ -64,24 +80,14 @@ GameObject.prototype.rotateObjPointTo = function (p, rate) {
     this.getXform().incRotationByRad(rad);
 };
 
-
-GameObject.prototype.getXform = function () { return this.mRenderComponent.getXform(); };
-
 GameObject.prototype.update = function () {
+    // simple default behavior
     var pos = this.getXform().getPosition();
     vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed());
 };
 
-GameObject.prototype.getRenderable = function () { return this.mRenderComponent; };
-
 GameObject.prototype.draw = function (aCamera) {
-    if (this.isVisible())
+    if (this.isVisible()) {
         this.mRenderComponent.draw(aCamera);
+    }
 };
-
-
-GameObject.prototype.getBBox = function () {
-    var xform = this.getXform();
-    var b = new BoundingBox(xform.getPosition(), xform.getWidth(), xform.getHeight());
-    return b;
-}

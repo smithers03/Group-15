@@ -48,6 +48,8 @@ TextureRenderable.prototype.setColorArray = function () {
 };
 
 TextureRenderable.prototype._pixelAlphaValue = function (x, y) {
+    y += this.mTexBottomIndex;
+    x += this.mTexLeftIndex;
     x = x * 4;
     y = y * 4;
     return this.mColorArray[(y * this.mTextureInfo.mWidth) + x  + 3];
@@ -84,3 +86,6 @@ TextureRenderable.prototype._indexToWCPosition = function (returnWCPos, i, j, xD
     vec2.add(returnWCPos, this.mXform.getPosition(), xDirDisp);
     vec2.add(returnWCPos, returnWCPos, yDirDisp);
 };
+
+//--- end of Public Methods
+//</editor-fold>

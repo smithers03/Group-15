@@ -1,16 +1,24 @@
-"use strict";
+/*
+ * File: Engine_DefaultResources.js 
+ */
+/*jslint node: true, vars: true, evil: true */
+/*global gEngine: false, SimpleShader: false, TextureShader: false,
+  SpriteShader: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
 
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 var gEngine = gEngine || { };
 
 gEngine.DefaultResources = (function () {
     // Simple Shader
-    var kSimpleVS = "src/GLSLShaders/SimpleVS.glsl";  // Path to the VertexShader
+    var kSimpleVS = "src/GLSLShaders/SimpleVS.glsl";  // Path to the VertexShader 
     var kSimpleFS = "src/GLSLShaders/SimpleFS.glsl";  // Path to the simple FragmentShader
     var mConstColorShader = null;
 
     // Texture Shader
-    var kTextureVS = "src/GLSLShaders/TextureVS.glsl";  // Path to the VertexShader
+    var kTextureVS = "src/GLSLShaders/TextureVS.glsl";  // Path to the VertexShader 
     var kTextureFS = "src/GLSLShaders/TextureFS.glsl";  // Path to the texture FragmentShader
     var mTextureShader = null;
     var mSpriteShader = null;
@@ -36,7 +44,7 @@ gEngine.DefaultResources = (function () {
         gEngine.TextFileLoader.loadTextFile(kSimpleVS, gEngine.TextFileLoader.eTextFileType.eTextFile);
         gEngine.TextFileLoader.loadTextFile(kSimpleFS, gEngine.TextFileLoader.eTextFileType.eTextFile);
 
-        // texture shader:
+        // texture shader: 
         gEngine.TextFileLoader.loadTextFile(kTextureVS, gEngine.TextFileLoader.eTextFileType.eTextFile);
         gEngine.TextFileLoader.loadTextFile(kTextureFS, gEngine.TextFileLoader.eTextFileType.eTextFile);
 
@@ -55,7 +63,7 @@ gEngine.DefaultResources = (function () {
         gEngine.TextFileLoader.unloadTextFile(kSimpleVS);
         gEngine.TextFileLoader.unloadTextFile(kSimpleFS);
 
-        // texture shader:
+        // texture shader: 
         gEngine.TextFileLoader.unloadTextFile(kTextureVS);
         gEngine.TextFileLoader.unloadTextFile(kTextureFS);
 
@@ -75,4 +83,3 @@ gEngine.DefaultResources = (function () {
     };
     return mPublic;
 }());
-

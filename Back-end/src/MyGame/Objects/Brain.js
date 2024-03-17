@@ -1,5 +1,13 @@
-"use strict"
+/* File: Brain.js
+ *
+ * Creates and initializes a simple Brain object
+ */
 
+/*jslint node: true, vars: true */
+/*global gEngine: false, GameObject: false, SpriteRenderable: false, vec2: false */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Brain(spriteTexture) {
     this.kDeltaDegree = 1;
@@ -13,7 +21,7 @@ function Brain(spriteTexture) {
 
     GameObject.call(this, this.mBrain);
 
-    this.setSpeed(0.05);
+    this.setSpeed(0.3);
 }
 gEngine.Core.inheritPrototype(Brain, GameObject);
 

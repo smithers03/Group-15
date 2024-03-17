@@ -1,19 +1,29 @@
-"use strict"
+/*
+ * File: EngineCore_Texture.js 
+ * Provides support for loading and unloading of textures (images)
+ */
+
+/*jslint node: true, vars: true */
+/*global Image, Uint8Array, alert */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 var gEngine = gEngine || { };
-function TextureInfo(name, w, h, id){
-    //For an efficient implementation,
-    //many graphics hardware only supports
-    //texture with image resolutions in powers of 2
-    // thats also the case for this webGL configuration
+
+function TextureInfo(name, w, h, id) {
     this.mName = name;
     this.mWidth = w;
     this.mHeight = h;
-    this.mGLTexID = id
+    this.mGLTexID = id;
     this.mColorArray = null;
 }
 
 gEngine.Textures = (function () {
+    /*
+     * This converts an image to the webGL texture format. 
+     * This should only be called once the texture is loaded.
+     */
     var _processLoadedImage = function (textureName, image) {
         var gl = gEngine.Core.getGL();
 
@@ -43,7 +53,7 @@ gEngine.Textures = (function () {
         gEngine.ResourceMap.asyncLoadCompleted(textureName, texInfo);
     };
 
-    // Loads a texture so that it can be drawn.
+    // Loads an texture so that it can be drawn.
     // If already in the map, will do nothing.
     var loadTexture = function (textureName) {
         if (!(gEngine.ResourceMap.isAssetLoaded(textureName))) {
@@ -64,7 +74,7 @@ gEngine.Textures = (function () {
         }
     };
 
-    // Remove the reference to allow associated memory
+    // Remove the reference to allow associated memory 
     // be available for subsequent garbage collection
     var unloadTexture = function (textureName) {
         var gl = gEngine.Core.getGL();
@@ -106,7 +116,7 @@ gEngine.Textures = (function () {
         var texInfo = getTextureInfo(textureName);
         if (texInfo.mColorArray === null) {
             // create a framebuffer bind it to the texture, and read the color content
-            // Hint from: http://stackoverflow.com/questions/13626606/read-pixels-from-a-webgl-texture
+            // Hint from: http://stackoverflow.com/questions/13626606/read-pixels-from-a-webgl-texture 
             var gl = gEngine.Core.getGL();
             var fb = gl.createFramebuffer();
             gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
@@ -124,8 +134,8 @@ gEngine.Textures = (function () {
         return texInfo.mColorArray;
     };
 
-
-
+    // Public interface for this object. Anything not in here will
+    // not be accessable.
     var mPublic = {
         loadTexture: loadTexture,
         unloadTexture: unloadTexture,
@@ -136,7 +146,3 @@ gEngine.Textures = (function () {
     };
     return mPublic;
 }());
-
-
-
-

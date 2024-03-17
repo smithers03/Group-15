@@ -1,4 +1,13 @@
-"use strict"
+/* File: GameObjectSet.js 
+ *
+ * Support for working with a set of GameObjects
+ */
+
+/*jslint node: true, vars: true */
+/*global  */
+/* find out more about jslint: http://www.jslint.com/help.html */
+
+"use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 
 function GameObjectSet() {
