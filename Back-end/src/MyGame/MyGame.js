@@ -73,7 +73,7 @@ MyGame.prototype.initialize = function () {
 
   this.mMsg = new FontRenderable("Status Message");
   this.mMsg.setColor([1, 1, 1, 1]);
-  this.mMsg.getXform().setPosition(2, 4);
+  this.mMsg.getXform().setPosition(1, 2);
   this.mMsg.setTextHeight(3);
 };
 
@@ -81,7 +81,7 @@ MyGame.prototype.initialize = function () {
 // importantly, make sure to _NOT_ change any state.
 MyGame.prototype.draw = function () {
   // Step A: clear the canvas
-  gEngine.Core.clearCanvas([0, 1, 0, 1.0]); // clear to bright green
+  gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 
   // Step  B: Activate the drawing Camera
   this.mCamera.setupViewProjection();
@@ -101,6 +101,8 @@ MyGame.prototype.draw = function () {
 MyGame.prototype.update = function () {
   var zoomDelta = 0.05;
   var msg = "L/R: Left or Right Minion; H: Dye; P: Portal]: ";
+
+  this.mCamera.update();  // for smoother camera movements
 
   this.mLMinion.update();  // for sprite animation
   this.mRMinion.update();
@@ -158,6 +160,10 @@ MyGame.prototype.update = function () {
   this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
   this.mCamera.clampAtBoundary(this.mPortal.getXform(), 0.8);
   this.mCamera.panWith(this.mHero.getXform(), 0.9);
+
+  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
+    this.mCamera.shake(-2, -2, 20, 30);
+  }
 
   this.mMsg.setText(msg + this.mChoice);
 };

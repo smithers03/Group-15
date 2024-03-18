@@ -1,19 +1,17 @@
-/*
- * File: Camera_Manipulation.js
- * Defines the functions that supports camera manipulations
- */
-
-/*jslint node: true, vars: true, bitwise: true */
-/*global gEngine, Camera, BoundingBox, vec2 */
-/* find out more about jslint: http://www.jslint.com/help.html */
 "use strict";
 
-Camera.prototype.panBy = function (dx, dy) {
-    this.mWCCenter[0] += dx;
-    this.mWCCenter[1] += dy;
+
+Camera.prototype.update = function () {
+    this.mCameraState.updateCameraState();
 };
 
-// pan the camera to ensure aXform is within camera bounds
+Camera.prototype.panBy = function (dx, dy) {
+    var newC = vec2.clone(this.getWCCenter());
+    this.mWCCenter[0] += dx;
+    this.mWCCenter[1] += dy;
+    this.mCameraState.setCenter(newC);
+};
+
 // this is complementary to the ClampAtBound: instead of clamping aXform, now, move the camera
 Camera.prototype.panWith = function (aXform, zone) {
     var status = this.collideWCBound(aXform, zone);
@@ -34,7 +32,6 @@ Camera.prototype.panWith = function (aXform, zone) {
         }
     }
 };
-
 
 Camera.prototype.panTo = function (cx, cy) {
     this.setWCCenter(cx, cy);
@@ -62,3 +59,6 @@ Camera.prototype.zoomTowards = function (pos, zoom) {
     this.zoomBy(zoom);
 };
 
+Camera.prototype.configInterpolation = function (stiffness, duration) {
+    this.mCameraState.configInterpolation(stiffness, duration);
+};

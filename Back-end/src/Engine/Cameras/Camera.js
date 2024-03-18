@@ -1,28 +1,10 @@
-/* 
- * File: Camera.js
- * Encapsulates the user define WC and Viewport functionality
- */
 
-/*jslint node: true, vars: true, bitwise: true */
-/*global gEngine, SimpleShader, Renderable, mat4, vec3, BoundingBox */
-/* find out more about jslint: http://www.jslint.com/help.html */
 "use strict";
 
-// wcCenter: is a vec2
-// wcWidth: is the width of the user defined WC
-//      Height of the user defined WC is implicitly defined by the viewport aspect ratio
-//      Please refer to the following
-// viewportRect: an array of 4 elements
-//      [0] [1]: (x,y) position of lower left corner on the canvas (in pixel)
-//      [2]: width of viewport
-//      [3]: height of viewport
-//      
-//  wcHeight = wcWidth * viewport[3]/viewport[2]
-//
+
 function Camera(wcCenter, wcWidth, viewportArray) {
-    // WC and viewport position and size
-    this.mWCCenter = wcCenter;
-    this.mWCWidth = wcWidth;
+    // WC is the center
+    this.mCameraState = new CameraState(wcCenter,wcWidth);
     this.mViewport = viewportArray;  // [x, y, width, height]
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
@@ -36,13 +18,11 @@ function Camera(wcCenter, wcWidth, viewportArray) {
     this.mBgColor = [0.8, 0.8, 0.8, 1]; // RGB and Alpha
 }
 
-// <editor-fold desc="Public Methods">
-// <editor-fold desc="Getter/Setter">
-// <editor-fold desc="setter/getter of WC and viewport">
 Camera.prototype.setWCCenter = function (xPos, yPos) {
     this.mWCCenter[0] = xPos;
     this.mWCCenter[1] = yPos;
 };
+
 Camera.prototype.getWCCenter = function () { return this.mWCCenter; };
 Camera.prototype.setWCWidth = function (width) { this.mWCWidth = width; };
 Camera.prototype.getWCWidth = function () { return this.mWCWidth; };
@@ -51,24 +31,16 @@ Camera.prototype.getWCHeight = function () { return this.mWCWidth * this.mViewpo
 
 Camera.prototype.setViewport = function (viewportArray) { this.mViewport = viewportArray; };
 Camera.prototype.getViewport = function () { return this.mViewport; };
-//</editor-fold>
-
-//<editor-fold desc="setter/getter of wc background color">
 Camera.prototype.setBackgroundColor = function (newColor) { this.mBgColor = newColor; };
 Camera.prototype.getBackgroundColor = function () { return this.mBgColor; };
 
-// Getter for the View-Projection transform operator
 Camera.prototype.getVPMatrix = function () {
     return this.mVPMatrix;
 };
-// </editor-fold>
-// </editor-fold>
 
 // Initializes the camera to begin drawing
 Camera.prototype.setupViewProjection = function () {
     var gl = gEngine.Core.getGL();
-    //<editor-fold desc="Step A: Set up and clear the Viewport">
-    // Step A1: Set up the viewport: area on canvas to be drawn
     gl.viewport(this.mViewport[0],  // x position of bottom-left corner of the area to be drawn
         this.mViewport[1],  // y position of bottom-left corner of the area to be drawn
         this.mViewport[2],  // width of the area to be drawn
@@ -107,7 +79,6 @@ Camera.prototype.setupViewProjection = function () {
 
     // Step B3: concatenate view and project matrices
     mat4.multiply(this.mVPMatrix, this.mProjMatrix, this.mViewMatrix);
-    //</editor-fold>
 };
 
 Camera.prototype.collideWCBound = function (aXform, zone) {
@@ -139,4 +110,3 @@ Camera.prototype.clampAtBoundary = function (aXform, zone) {
     }
     return status;
 };
-//</editor-fold>
