@@ -5,6 +5,7 @@
 function Camera(wcCenter, wcWidth, viewportArray) {
     // WC is the center
     this.mCameraState = new CameraState(wcCenter,wcWidth);
+    this.mCameraShake = null;
     this.mViewport = viewportArray;  // [x, y, width, height]
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
@@ -56,10 +57,14 @@ Camera.prototype.setupViewProjection = function () {
     gl.enable(gl.SCISSOR_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.disable(gl.SCISSOR_TEST);
-    //</editor-fold>
 
-    //<editor-fold desc="Step  B: Set up the View-Projection transform operator"> 
     // Step B1: define the view matrix
+    var center = [];
+    if (this.mCameraShake !== null) {
+        center = this.mCameraShake.getCenter();
+    } else{
+        center = thyis.getWCCenter();
+    }
     mat4.lookAt(this.mViewMatrix,
         [this.mWCCenter[0], this.mWCCenter[1], 10],   // WC center
         [this.mWCCenter[0], this.mWCCenter[1], 0],    // 

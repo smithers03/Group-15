@@ -2,6 +2,14 @@
 
 
 Camera.prototype.update = function () {
+    if (this.mCameraShake !== null) {
+        if (this.mCameraShake.shakeDone()) {
+            this.mCameraShake = null;
+        } else {
+            this.mCameraShake.setRefCenter(this.getWCCenter());
+            this.mCameraShake.updateShakeState();
+        }
+    }
     this.mCameraState.updateCameraState();
 };
 
@@ -53,12 +61,18 @@ Camera.prototype.zoomBy = function (zoom) {
 // zoom < 0 is ignored
 Camera.prototype.zoomTowards = function (pos, zoom) {
     var delta = [];
-    vec2.sub(delta, pos, this.mWCCenter);
+    var newC = [];
+    vec2.sub(delta, pos, this.getWCCenter());
     vec2.scale(delta, delta, zoom - 1);
-    vec2.sub(this.mWCCenter, this.mWCCenter, delta);
+    vec2.sub(newC, this.getWCCenter(), delta);
     this.zoomBy(zoom);
+    this.mCameraState.setCenter(newC);
 };
 
 Camera.prototype.configInterpolation = function (stiffness, duration) {
     this.mCameraState.configInterpolation(stiffness, duration);
 };
+
+Camera.prototype.shake = function (xDelta, yDelta, shakeFrequency, duration) {
+    this.mCameraShake = new CameraShake(this.mCameraState, xDelta, yDelta, shakeFrequency, duration);
+}

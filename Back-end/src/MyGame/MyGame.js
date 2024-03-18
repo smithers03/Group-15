@@ -103,7 +103,8 @@ MyGame.prototype.update = function () {
   var msg = "L/R: Left or Right Minion; H: Dye; P: Portal]: ";
 
   this.mCamera.update();  // for smoother camera movements
-
+  if(gEngine.Input.isKeyClicked(gEngine.Input.keys.Q))
+    this.mCamera.shake(-2, -2, 20, 30);
   this.mLMinion.update();  // for sprite animation
   this.mRMinion.update();
 
