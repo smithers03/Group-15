@@ -284,45 +284,75 @@ this.mBorder = [];
  
  
  
-//////////////// MIDDLE BOX TOP AND BOTTOM ///////////////////
+//////////////// MIDDLE BOX TOP LEFT AND BOTTOM  ///////////////////
  
   var yLower = 380;
   var xLeft = 518;
   var yUpper = 430;
+  var xRight = 518;
   
-  for (let i = 0; i <= 25; i++){
-    let mbt = new Renderable(this.mConstColorShader);
-    mbt.setColor([0.4, 0.7, 0.8, 1]);
-    mbt.getXform().setPosition(xLeft, yUpper);
-    mbt.getXform().setSize(15, 15);
+  for (let i = 0; i <= 10; i++){
+    let mbtl = new Renderable(this.mConstColorShader);
+    mbtl.setColor([0.4, 0.7, 0.8, 1]);
+    mbtl.getXform().setPosition(xLeft, yUpper);
+    mbtl.getXform().setSize(15, 15);
     
-    let mbb = new Renderable(this.mConstColorShader);
-    mbb.setColor([0.4, 0.7, 0.8, 1]);
-    mbb.getXform().setPosition(xLeft, yLower);
-    mbb.getXform().setSize(15, 15);
 
-    this.mBorder.push(mbt);
-    this.mBorder.push(mbb);
+    this.mBorder.push(mbtl);
     
-    let mbtb = new Renderable(this.mConstColorShader);
-    mbtb.setColor([0.0, 0.0, 0.0, 1]);
-    mbtb.getXform().setPosition(xLeft, yUpper);
-    mbtb.getXform().setSize(5, 5);
-    
-    let mbbb = new Renderable(this.mConstColorShader);
-    mbbb.setColor([0.0, 0.0, 0.0, 1]);
-    mbbb.getXform().setPosition(xLeft, yLower);
-    mbbb.getXform().setSize(5, 5);
+    let mbtlb = new Renderable(this.mConstColorShader);
+    mbtlb.setColor([0.0, 0.0, 0.0, 1]);
+    mbtlb.getXform().setPosition(xLeft, yUpper);
+    mbtlb.getXform().setSize(5, 5);
 
-    this.mBorder.push(mbtb);
-    this.mBorder.push(mbbb);
+    this.mBorder.push(mbtlb);
     
     xLeft += 10;
   }
   
+  for (let i = 0; i <= 25; i++){  
+    
+    let mbb = new Renderable(this.mConstColorShader);
+    mbb.setColor([0.4, 0.7, 0.8, 1]);
+    mbb.getXform().setPosition(xRight, yLower);
+    mbb.getXform().setSize(15, 15);
+
+    this.mBorder.push(mbb);
+    
+    let mbbb = new Renderable(this.mConstColorShader);
+    mbbb.setColor([0.0, 0.0, 0.0, 1]);
+    mbbb.getXform().setPosition(xRight, yLower);
+    mbbb.getXform().setSize(5, 5);
+
+    this.mBorder.push(mbbb);
+    
+    xRight += 10;
+  }
   
   
+  //////////////////////// MIDDLE BOX TOP RIGHT  /////////////
+  var xLeft = 668;
+  var yUpper = 430;
   
+  for (let i = 0; i <= 10; i++){
+    let mbtr = new Renderable(this.mConstColorShader);
+    mbtr.setColor([0.4, 0.7, 0.8, 1]);
+    mbtr.getXform().setPosition(xLeft, yUpper);
+    mbtr.getXform().setSize(15, 15);
+
+    this.mBorder.push(mbtr);
+    
+    let mbtrb = new Renderable(this.mConstColorShader);
+    mbtrb.setColor([0.0, 0.0, 0.0, 1]);
+    mbtrb.getXform().setPosition(xLeft, yUpper);
+    mbtrb.getXform().setSize(5, 5);
+
+    this.mBorder.push(mbtrb);
+    
+    xLeft += 10;
+  }
+  
+
   
   
 /////////////////// TOP LEFT EXIT //////////////////////////
@@ -330,7 +360,7 @@ this.mBorder = [];
   var xLeft = 300;
   var yUpper = 620;
   
-  for (let i = 0; i <= 8; i++){
+  for (let i = 0; i <= 11; i++){
     let tleb = new Renderable(this.mConstColorShader);
     tleb.setColor([0.4, 0.7, 0.8, 1]);
     tleb.getXform().setPosition(xLeft, yUpper);
@@ -353,10 +383,10 @@ this.mBorder = [];
   
   
 //////////////////// TOP RIGHT EXIT ///////////////////////////// 
-  var xLeft = 900;
+  var xLeft = 872;
   var yUpper = 620;
   
-  for (let i = 0; i <= 8; i++){
+  for (let i = 0; i <= 11; i++){
     let treb = new Renderable(this.mConstColorShader);
     treb.setColor([0.4, 0.7, 0.8, 1]);
     treb.getXform().setPosition(xLeft, yUpper);
@@ -442,7 +472,7 @@ this.mBorder = [];
   var xLeft = 300;
   var yUpper = 450;
   
-  for (let i = 0; i <= 8; i++){
+  for (let i = 0; i <= 10; i++){
     let mlhb = new Renderable(this.mConstColorShader);
     mlhb.setColor([0.4, 0.7, 0.8, 1]);
     mlhb.getXform().setPosition(xLeft, yUpper);
@@ -468,10 +498,10 @@ this.mBorder = [];
 //
    //Middle Right Rectangle
   var yLower = 380;
-  var xLeft = 900;
+  var xLeft = 884;
   var yUpper = 450;
   
-  for (let i = 0; i <= 8; i++){
+  for (let i = 0; i <= 10; i++){
     let mrhb = new Renderable(this.mConstColorShader);
     mrhb.setColor([0.4, 0.7, 0.8, 1]);
     mrhb.getXform().setPosition(xLeft, yUpper);
@@ -534,7 +564,7 @@ this.mBorder = [];
   var xLeft = 940;
   var yUpper = 315;
   
-  for (let i = 0; i <= 5; i++){
+  for (let i = 0; i <= 7; i++){
     let rmelb = new Renderable(this.mConstColorShader);
     rmelb.setColor([0.4, 0.7, 0.8, 1]);
     rmelb.getXform().setPosition(xLeft, yUpper);
@@ -560,7 +590,7 @@ this.mBorder = [];
 /////////////////// RIGHT MIDDLE EXIT BOTTOM RECTANGLE BORDER ///////////////
   var yLower = 380;
   var xLeft = 940;
-  var yUpper = 250;
+  var yUpper = 235;
   
   for (let i = 0; i <= 6; i++){
     let rmebb = new Renderable(this.mConstColorShader);
@@ -649,7 +679,7 @@ this.mBorder = [];
   var xLeft = 340;
   var yUpper = 315;
   
-  for (let i = 0; i <= 5; i++){
+  for (let i = 0; i <= 7; i++){
     let lmerb = new Renderable(this.mConstColorShader);
     lmerb.setColor([0.4, 0.7, 0.8, 1]);
     lmerb.getXform().setPosition(xLeft, yUpper);
@@ -680,7 +710,7 @@ this.mBorder = [];
 //////////////// LEFT MIDDLE  EXIT BOTTOM RECTANGLE BORDER /////////////////
   var yLower = 380;
   var xLeft = 280;
-  var yUpper = 250;
+  var yUpper = 235;
   
   for (let i = 0; i <= 6; i++){
     let lmebb = new Renderable(this.mConstColorShader);
@@ -770,7 +800,7 @@ this.mBorder = [];
     
     
     this.mObstacles = [];
-  
+
 
  ///////////////////////////////Top Right Corner///////////////////
 
@@ -820,14 +850,14 @@ this.mBorder = [];
  //Bottom Right L Side 
     let trbrSide = new Renderable(this.mConstColorShader);
     trbrSide.setColor([0.4, 0.7, 0.8, 1]);
-    trbrSide.getXform().setPosition(833.5, 445);
-    trbrSide.getXform().setSize(40, 100);
+    trbrSide.getXform().setPosition(826, 458);
+    trbrSide.getXform().setSize(25, 100);
     this.mObstacles.push(trbrSide);
 
     let trbrSideB = new Renderable(this.mConstColorShader);
     trbrSideB.setColor([0.0, 0.0, 0.0, 1]);
-    trbrSideB.getXform().setPosition(833.5, 445);
-    trbrSideB.getXform().setSize(28, 88);
+    trbrSideB.getXform().setPosition(826, 447);
+    trbrSideB.getXform().setSize(13, 70);
     this.mObstacles.push(trbrSideB);
 
 
@@ -849,8 +879,8 @@ this.mBorder = [];
   // Bottom Right L Gap
   let trbrTopGap= new Renderable(this.mConstColorShader);
   trbrTopGap.setColor([0.0, 0.0, 0.0, 1]);
-  trbrTopGap.getXform().setPosition(833.5, 490);
-  trbrTopGap.getXform().setSize(28, 20);
+  trbrTopGap.getXform().setPosition(826, 490);
+  trbrTopGap.getXform().setSize(13, 20);
   this.mObstacles.push(trbrTopGap); 
 
 
@@ -1004,14 +1034,14 @@ this.mBorder = [];
 //Bottom Left L Side
   let tlbrLSide = new Renderable(this.mConstColorShader);
   tlbrLSide.setColor([0.4, 0.7, 0.8, 1]);
-  tlbrLSide.getXform().setPosition(447.5, 445);
-  tlbrLSide.getXform().setSize(40, 100);
+  tlbrLSide.getXform().setPosition(455.5, 450);
+  tlbrLSide.getXform().setSize(24, 86);
   this.mObstacles.push(tlbrLSide);
   
     let tlbrLSideB = new Renderable(this.mConstColorShader);
     tlbrLSideB.setColor([0.0, 0.0, 0.0, 1]);
-    tlbrLSideB.getXform().setPosition(447.5, 445);
-    tlbrLSideB.getXform().setSize(28, 88);
+    tlbrLSideB.getXform().setPosition(455, 447);
+    tlbrLSideB.getXform().setSize(13, 68);
     this.mObstacles.push(tlbrLSideB);
 
 
@@ -1036,10 +1066,25 @@ this.mBorder = [];
   // Bottom Left L Gap
   let tlbrLGap= new Renderable(this.mConstColorShader);
   tlbrLGap.setColor([0.0, 0.0, 0.0, 1]);
-  tlbrLGap.getXform().setPosition(447.5, 490);
-  tlbrLGap.getXform().setSize(28, 20);
+  tlbrLGap.getXform().setPosition(455, 490);
+  tlbrLGap.getXform().setSize(13, 20);
   this.mObstacles.push(tlbrLGap); 
 
+
+ 
+ 
+
+////////////////^^^^^^^^^^ MAAHEEN PART ^^^^^^^^^^^^////////////////////
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   MyGame.prototype.drawObstacles = function()
   {
@@ -1050,13 +1095,4 @@ this.mBorder = [];
   };
   
   this.drawObstacles(vpMatrix);
-  
-  
- 
- 
-
-////////////////^^^^^^^^^^ MAAHEEN PART ^^^^^^^^^^^^////////////////////
-
-  
-
   }
