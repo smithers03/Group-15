@@ -1,17 +1,21 @@
 /*
- * File: MyGame.js 
- * This is the logic of our game. 
+ * File: MyGame.js
+ * This is the logic of our game.
  */
 /*jslint node: true, vars: true */
 /*global gEngine: false, Scene: false, BlueLevel: false, Camera: false, Renderable: false, vec2: false */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict"; // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame() {
   // audio clips: supports both mp3 and wav formats
   this.kBgClip = "assets/sounds/BGClip.mp3";
   this.kCue = "assets/sounds/MyGame_cue.wav";
+  this.kPelletChomp = "assets/sounds/Pacman_chomp.wav";
+  this.kPacmanDeath = "assets/sounds/Pacman_death.wav";
+  this.kEatFruit = "assets/sounds/Pacman_eatfruit.wav";
+  this.kEatGhost = "assets/sounds/Pacman_eatghost.wav";
 
   // The camera to view the scene
   this.mCamera = null;
@@ -26,10 +30,13 @@ MyGame.prototype.loadScene = function () {
   // loads the audios
   gEngine.AudioClips.loadAudio(this.kBgClip);
   gEngine.AudioClips.loadAudio(this.kCue);
+  gEngine.AudioClips.loadAudio(this.kPelletChomp);
+  gEngine.AudioClips.loadAudio(this.kPacmanDeath);
+  gEngine.AudioClips.loadAudio(this.kEatFruit);
+  gEngine.AudioClips.loadAudio(this.kEatGhost);
 };
 
-
-MyGame.prototype.unloadScene = function() {
+MyGame.prototype.unloadScene = function () {
   // Step A: Game loop not running, unload all assets
   // stop the background audio
   gEngine.AudioClips.stopBackgroundAudio();
@@ -42,22 +49,24 @@ MyGame.prototype.unloadScene = function() {
 
   // Step B: starts the next level
   // starts the next level
-  var nextLevel = new BlueLevel();  // next level to be loaded
+  var nextLevel = new BlueLevel(); // next level to be loaded
   gEngine.Core.startScene(nextLevel);
 };
 
 MyGame.prototype.initialize = function () {
   // Step A: set up the cameras
   this.mCamera = new Camera(
-      vec2.fromValues(20, 60),   // position of the camera
-      20,                        // width of camera
-      [20, 40, 600, 300]         // viewport (orgX, orgY, width, height)
+    vec2.fromValues(20, 60), // position of the camera
+    20, // width of camera
+    [20, 40, 600, 300] // viewport (orgX, orgY, width, height)
   );
   this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
   // sets the background to gray
 
   // Step B: Create the support object in red
-  this.mSupport = new Renderable(gEngine.DefaultResources.getConstColorShader());
+  this.mSupport = new Renderable(
+    gEngine.DefaultResources.getConstColorShader()
+  );
   this.mSupport.setColor([0.8, 0.2, 0.2, 1]);
   this.mSupport.getXform().setPosition(20, 60);
   this.mSupport.getXform().setSize(5, 5);
@@ -99,7 +108,8 @@ MyGame.prototype.update = function () {
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
     gEngine.AudioClips.playACue(this.kCue);
     xform.incXPos(deltaX);
-    if (xform.getXPos() > 30) { // this is the right-bound of the window
+    if (xform.getXPos() > 30) {
+      // this is the right-bound of the window
       xform.setPosition(12, 60);
     }
   }
@@ -107,7 +117,8 @@ MyGame.prototype.update = function () {
   if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
     gEngine.AudioClips.playACue(this.kCue);
     xform.incXPos(-deltaX);
-    if (xform.getXPos() < 11) {  // this is the left-bound of the window
+    if (xform.getXPos() < 11) {
+      // this is the left-bound of the window
       gEngine.GameLoop.stop();
     }
   }
