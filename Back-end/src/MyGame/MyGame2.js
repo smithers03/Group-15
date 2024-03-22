@@ -1238,21 +1238,6 @@ this.mBorder = [];
   BottomTblackvert.getXform().setPosition(650,155);
   BottomTblackvert.getXform().setSize(10, 56);
   this.mObstacles.push(BottomTblackvert);
-  
-
-  
-  //bigBox
-  let bigBox = new Renderable(this.mConstColorShader);
-  bigBox.setColor([0.4, 0.7, 0.8, 1]);
-  bigBox.getXform().setPosition(647,277);
-  bigBox.getXform().setSize(130, 120);
-  this.mObstacles.push(bigBox);
-
-  let bigBoxFill = new Renderable(this.mConstColorShader);
-  bigBoxFill.setColor([0.0, 0.0, 0.0, 1]);
-  bigBoxFill.getXform().setPosition(647,277);
-  bigBoxFill.getXform().setSize(100, 100);
-  this.mObstacles.push(bigBoxFill);
 
   
 
