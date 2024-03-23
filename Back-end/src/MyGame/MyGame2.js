@@ -828,7 +828,7 @@ this.mBorder = [];
   trtrLSide.getXform().setPosition(882, 561);
   trtrLSide.getXform().setSize(135, 25);
   this.mObstacles.push(trtrLSide);
-  
+//  
    let trtrLSideB= new Renderable(this.mConstColorShader);
   trtrLSideB.setColor([0.0, 0.0, 0.0, 1]);
   trtrLSideB.getXform().setPosition(882, 560);
@@ -842,7 +842,7 @@ this.mBorder = [];
   trtrLGap.getXform().setPosition(933, 555);
   trtrLGap.getXform().setSize(20, 20);
   this.mObstacles.push(trtrLGap); 
-  
+//  
   
   
   
@@ -874,8 +874,8 @@ this.mBorder = [];
     trbrTopB.getXform().setPosition(846.5, 503);
     trbrTopB.getXform().setSize(54, 10);
     this.mObstacles.push(trbrTopB);
-    
-    
+//    
+//    
   // Bottom Right L Gap
   let trbrTopGap= new Renderable(this.mConstColorShader);
   trbrTopGap.setColor([0.0, 0.0, 0.0, 1]);
@@ -917,7 +917,7 @@ this.mBorder = [];
   tmTTailB.getXform().setSize(51, 65);
   this.mObstacles.push(tmTTailB);
   
-  
+//  
   //Middle T Gap
     let tmTGap = new Renderable(this.mConstColorShader);
   tmTGap.setColor([0.0, 0.0, 0.0, 1]);
@@ -1213,7 +1213,138 @@ this.mBorder = [];
   this.mObstacles.push(BottomupdownLaboveSideBlack);
   
   
+<<<<<<< Updated upstream
   //Bottom T
+=======
+//Tony Part
+
+  //bigBox
+  let bigBox = new Renderable(this.mConstColorShader);
+  bigBox.setColor([0.4, 0.7, 0.8, 1]);
+  bigBox.getXform().setPosition(647,283.5);
+  bigBox.getXform().setSize(130, 107);
+  this.mObstacles.push(bigBox);
+
+  let bigBoxFill = new Renderable(this.mConstColorShader);
+  bigBoxFill.setColor([0.0, 0.0, 0.0, 1]);
+  bigBoxFill.getXform().setPosition(647,284);
+  bigBoxFill.getXform().setSize(100, 83);
+  this.mObstacles.push(bigBoxFill);
+
+
+// bottom left upside down L
+  let BottomUpDownLLeftSideBlue = new Renderable(this.mConstColorShader);
+  BottomUpDownLLeftSideBlue.setColor([0.4, 0.7, 0.8, 1]); // Adjusted color
+  BottomUpDownLLeftSideBlue.getXform().setPosition(393, 356); // Adjusted position
+  BottomUpDownLLeftSideBlue.getXform().setSize(20, 100);
+  this.mObstacles.push(BottomUpDownLLeftSideBlue);
+
+  let BottomUpDownLAboveSideBlue = new Renderable(this.mConstColorShader);
+  BottomUpDownLAboveSideBlue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomUpDownLAboveSideBlue.getXform().setPosition(366, 390); // Adjusted position
+  BottomUpDownLAboveSideBlue.getXform().setSize(75, 34);
+  this.mObstacles.push(BottomUpDownLAboveSideBlue);
+
+  let BottomUpDownLLeftSideBlack = new Renderable(this.mConstColorShader);
+  BottomUpDownLLeftSideBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomUpDownLLeftSideBlack.getXform().setPosition(393, 356); // Adjusted position
+  BottomUpDownLLeftSideBlack.getXform().setSize(10, 90);
+  this.mObstacles.push(BottomUpDownLLeftSideBlack);
+
+  let BottomUpDownLAboveSideBlack = new Renderable(this.mConstColorShader);
+  BottomUpDownLAboveSideBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomUpDownLAboveSideBlack.getXform().setPosition(366, 390); // Adjusted position
+  BottomUpDownLAboveSideBlack.getXform().setSize(58, 25);
+  this.mObstacles.push(BottomUpDownLAboveSideBlack);
+// bottom rect
+  // needs to be moved down with the T
+  let bottomRect = new Renderable(this.mConstColorShader);
+  bottomRect.setColor([0.4, 0.7, 0.8, 1]);
+  bottomRect.getXform().setPosition(534, 130);
+  bottomRect.getXform().setSize(140, 13);
+  this.mObstacles.push(bottomRect);
+
+  let bottomRectGap = new Renderable(this.mConstColorShader);
+  bottomRectGap.setColor([0.0, 0.0, 0.0, 1.0]);
+  bottomRectGap.getXform().setPosition(534, 130);
+  bottomRectGap.getXform().setSize(120, 5);
+  this.mObstacles.push(bottomRectGap);
+
+  // very bottom left corner L
+  let bottomLeftLVert = new Renderable(this.mConstColorShader);
+  bottomLeftLVert.setColor([0.4, 0.7, 0.8, 1]);
+  bottomLeftLVert.getXform().setPosition(380, 133);
+  bottomLeftLVert.getXform().setSize(100, 19);
+  this.mObstacles.push(bottomLeftLVert);
+
+  let bottomLeftHor = new Renderable(this.mConstColorShader);
+  bottomLeftHor.setColor([0.4, 0.7, 0.8, 1]);
+  bottomLeftHor.getXform().setPosition(406.5, 160);
+  bottomLeftHor.getXform().setSize(47, 65);
+  this.mObstacles.push(bottomLeftHor);
+
+  let bottomLeftLVertGap = new Renderable(this.mConstColorShader);
+  bottomLeftLVertGap.setColor([0.0, 0.0, 0.0, 1.0]);
+  bottomLeftLVertGap.getXform().setPosition(380, 133);
+  bottomLeftLVertGap.getXform().setSize( 90, 12);
+  this.mObstacles.push(bottomLeftLVertGap);
+
+  let bottomLeftHorGap = new Renderable(this.mConstColorShader);
+  bottomLeftHorGap.setColor([0.0, 0.0, 0.0, 1.0]);
+  bottomLeftHorGap.getXform().setPosition(406.5, 160);
+  bottomLeftHorGap.getXform().setSize(37, 58);
+  this.mObstacles.push(bottomLeftHorGap);
+   //Bottom left corner T
+
+  let bottomLeftT1 = new Renderable(this.mConstColorShader)
+  bottomLeftT1.setColor([0.4, 0.7, 0.8, 1]);
+  bottomLeftT1.getXform().setPosition(464.5, 250);
+  bottomLeftT1.getXform().setSize(163, 45);
+  this.mObstacles.push(bottomLeftT1);
+
+  let bottomLeftT2 = new Renderable(this.mConstColorShader)
+  bottomLeftT2.setColor([0.4, 0.7, 0.8, 1]);
+  bottomLeftT2.getXform().setPosition(472, 200);
+  bottomLeftT2.getXform().setSize(20, 56);
+  this.mObstacles.push(bottomLeftT2);
+
+  let bottomLeftT1Black = new Renderable(this.mConstColorShader)
+  bottomLeftT1Black.setColor([0.0, 0.0, 0.0, 1.0]);
+  bottomLeftT1Black.getXform().setPosition(464.5, 250);
+  bottomLeftT1Black.getXform().setSize(140, 30);
+  this.mObstacles.push(bottomLeftT1Black);
+
+  let bottomLeftT2Black = new Renderable(this.mConstColorShader)
+  bottomLeftT2Black.setColor([0.0, 0.0, 0.0, 1.0]);
+  bottomLeftT2Black.getXform().setPosition(472, 210);
+  bottomLeftT2Black.getXform().setSize(10, 50);
+  this.mObstacles.push(bottomLeftT2Black);
+
+  // small L
+  let smallLBot =new Renderable(this.mConstColorShader)
+  smallLBot.setColor([0.4, 0.7, 0.8, 1]);
+  smallLBot.getXform().setPosition(454, 334);
+  smallLBot.getXform().setSize(30, 50);
+  this.mObstacles.push(smallLBot);
+
+  let smallLTop = new Renderable(this.mConstColorShader)
+  smallLTop.setColor([0.4, 0.7, 0.8, 1]);
+  smallLTop.getXform().setPosition(507, 323);
+  smallLTop.getXform().setSize(76, 28);
+  this.mObstacles.push(smallLTop);
+
+  let smallLBotBlack =new Renderable(this.mConstColorShader)
+  smallLBotBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  smallLBotBlack.getXform().setPosition(454, 334);
+  smallLBotBlack.getXform().setSize(20, 40);
+  this.mObstacles.push(smallLBotBlack);
+
+  let smallLTopBlack = new Renderable(this.mConstColorShader)
+  smallLTopBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  smallLTopBlack.getXform().setPosition(497, 323);
+  smallLTopBlack.getXform().setSize(80, 18);
+  this.mObstacles.push(smallLTopBlack);
+>>>>>>> Stashed changes
   
    let BottomTbluehoriz = new Renderable(this.mConstColorShader);
   BottomTbluehoriz.setColor([0.4, 0.7, 0.8, 1]);
@@ -1240,7 +1371,174 @@ this.mBorder = [];
   this.mObstacles.push(BottomTblackvert);
 
   
+  
+  
+  ///////////////////HETANSH PART////////////////////
+  //this.mObstacles = [];
+  
 
+  
+  //Bottom Right L
+  let BottomLLeftSideblue = new Renderable(this.mConstColorShader);
+  BottomLLeftSideblue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomLLeftSideblue.getXform().setPosition(887.5,158);
+  BottomLLeftSideblue.getXform().setSize(20, 70);
+  this.mObstacles.push(BottomLLeftSideblue);
+   
+   
+  let BottomLLeftSideblack = new Renderable(this.mConstColorShader);
+  BottomLLeftSideblack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomLLeftSideblack.getXform().setPosition(887.5,158);
+  BottomLLeftSideblack.getXform().setSize(10, 60);
+  this.mObstacles.push(BottomLLeftSideblack);
+  
+  
+  let BottomLdownSideblue = new Renderable(this.mConstColorShader);
+  BottomLdownSideblue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomLdownSideblue.getXform().setPosition(925,133);
+  BottomLdownSideblue.getXform().setSize(55, 20);
+  this.mObstacles.push(BottomLdownSideblue);
+   
+  let BottomLdownSideblack = new Renderable(this.mConstColorShader);
+  BottomLdownSideblack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomLdownSideblack.getXform().setPosition(915,133);
+  BottomLdownSideblack.getXform().setSize(60, 10);
+  this.mObstacles.push(BottomLdownSideblack);
+  
+  // Bottom Right horizontal
+  
+  let BottomRightHorizontalblue = new Renderable(this.mConstColorShader);
+  BottomRightHorizontalblue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomRightHorizontalblue.getXform().setPosition(770,132);
+  BottomRightHorizontalblue.getXform().setSize(143, 20);
+  this.mObstacles.push(BottomRightHorizontalblue);
+   
+  let BottomRightHorizontalblack = new Renderable(this.mConstColorShader);
+  BottomRightHorizontalblack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomRightHorizontalblack.getXform().setPosition(770,132);
+  BottomRightHorizontalblack.getXform().setSize(133, 10);
+  this.mObstacles.push(BottomRightHorizontalblack);
+  
+   
+  
+  //bottom right middle T
+  
+  let BottomRightMiddleTbluehoriz = new Renderable(this.mConstColorShader);
+  BottomRightMiddleTbluehoriz.setColor([0.4, 0.7, 0.8, 1]);
+  BottomRightMiddleTbluehoriz.getXform().setPosition(823,238);
+  BottomRightMiddleTbluehoriz.getXform().setSize(147, 20);
+  this.mObstacles.push(BottomRightMiddleTbluehoriz);
+   
+  let BottomRightMiddleTblackhoriz = new Renderable(this.mConstColorShader);
+  BottomRightMiddleTblackhoriz.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomRightMiddleTblackhoriz.getXform().setPosition(823,238);
+  BottomRightMiddleTblackhoriz.getXform().setSize(137, 10);
+  this.mObstacles.push(BottomRightMiddleTblackhoriz);
+  
+  let BottomRightMiddleTbluevert = new Renderable(this.mConstColorShader);
+  BottomRightMiddleTbluevert.setColor([0.4, 0.7, 0.8, 1]);
+  BottomRightMiddleTbluevert.getXform().setPosition(832,208);
+  BottomRightMiddleTbluevert.getXform().setSize(20, 50);
+  this.mObstacles.push(BottomRightMiddleTbluevert);
+   
+  let BottomRightMiddleTblackvert = new Renderable(this.mConstColorShader);
+  BottomRightMiddleTblackvert.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomRightMiddleTblackvert.getXform().setPosition(832,213);
+  BottomRightMiddleTblackvert.getXform().setSize(10, 50);
+  this.mObstacles.push(BottomRightMiddleTblackvert);
+       
+  
+ // Bottom Right Backward L
+  
+   let BottombackwardLRightSideblue = new Renderable(this.mConstColorShader);
+  BottombackwardLRightSideblue.setColor([0.4, 0.7, 0.8, 1]);
+  BottombackwardLRightSideblue.getXform().setPosition(826,328.5);
+  BottombackwardLRightSideblue.getXform().setSize(25, 87);
+  this.mObstacles.push(BottombackwardLRightSideblue);
+   
+   
+  let BottombackwardLRightSideblack = new Renderable(this.mConstColorShader);
+  BottombackwardLRightSideblack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottombackwardLRightSideblack.getXform().setPosition(826,328.5);
+  BottombackwardLRightSideblack.getXform().setSize(15, 77);
+  this.mObstacles.push(BottombackwardLRightSideblack);
+  
+  
+  let BottombackwardLdownSideblue = new Renderable(this.mConstColorShader);
+  BottombackwardLdownSideblue.setColor([0.4, 0.7, 0.8, 1]);
+  BottombackwardLdownSideblue.getXform().setPosition(782,310);
+  BottombackwardLdownSideblue.getXform().setSize(66, 50);
+  this.mObstacles.push(BottombackwardLdownSideblue);
+   
+  let BottombackwardLdownSideblack = new Renderable(this.mConstColorShader);
+  BottombackwardLdownSideblack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottombackwardLdownSideblack.getXform().setPosition(793,310);
+  BottombackwardLdownSideblack.getXform().setSize(79, 40);
+  this.mObstacles.push(BottombackwardLdownSideblack);
+  
+   
+  
+  
+  
+  // bottom right upside down L
+  
+  
+ 
+  
+  let BottomupdownLleftSideBlue = new Renderable(this.mConstColorShader);
+  BottomupdownLleftSideBlue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomupdownLleftSideBlue.getXform().setPosition(887,343);
+  BottomupdownLleftSideBlue.getXform().setSize(20, 120);
+  this.mObstacles.push(BottomupdownLleftSideBlue);
+   
+  let BottomupdownLleftSideBlack = new Renderable(this.mConstColorShader);
+  BottomupdownLleftSideBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomupdownLleftSideBlack.getXform().setPosition(887,343);
+  BottomupdownLleftSideBlack.getXform().setSize(10, 110);
+  this.mObstacles.push(BottomupdownLleftSideBlack);
+  
+  let BottomupdownLaboveSideBlue = new Renderable(this.mConstColorShader);
+  BottomupdownLaboveSideBlue.setColor([0.4, 0.7, 0.8, 1]);
+  BottomupdownLaboveSideBlue.getXform().setPosition(920,388);
+  BottomupdownLaboveSideBlue.getXform().setSize(47, 30);
+  this.mObstacles.push(BottomupdownLaboveSideBlue);
+  
+  let BottomupdownLaboveSideBlack = new Renderable(this.mConstColorShader);
+  BottomupdownLaboveSideBlack.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomupdownLaboveSideBlack.getXform().setPosition(915,388);
+  BottomupdownLaboveSideBlack.getXform().setSize(47, 20);
+  this.mObstacles.push(BottomupdownLaboveSideBlack);
+  
+  
+  //Bottom T
+  
+   let BottomTbluehoriz = new Renderable(this.mConstColorShader);
+  BottomTbluehoriz.setColor([0.4, 0.7, 0.8, 1]);
+  BottomTbluehoriz.getXform().setPosition(650,185);
+  BottomTbluehoriz.getXform().setSize(265, 20);
+  this.mObstacles.push(BottomTbluehoriz);
+   
+  let BottomTblackhoriz = new Renderable(this.mConstColorShader);
+  BottomTblackhoriz.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomTblackhoriz.getXform().setPosition(650,185);
+  BottomTblackhoriz.getXform().setSize(255, 10);
+  this.mObstacles.push(BottomTblackhoriz);
+  
+  let BottomTbluevert = new Renderable(this.mConstColorShader);
+  BottomTbluevert.setColor([0.4, 0.7, 0.8, 1]);
+  BottomTbluevert.getXform().setPosition(650,150);
+  BottomTbluevert.getXform().setSize(20, 56);
+  this.mObstacles.push(BottomTbluevert);
+   
+  let BottomTblackvert = new Renderable(this.mConstColorShader);
+  BottomTblackvert.setColor([0.0, 0.0, 0.0, 1.0]);
+  BottomTblackvert.getXform().setPosition(650,155);
+  BottomTblackvert.getXform().setSize(10, 56);
+  this.mObstacles.push(BottomTblackvert);
+  
+  
+  
+ 
   MyGame.prototype.drawObstacles = function()
   {
     for (let i = 0; i< this.mObstacles.length; i++)
