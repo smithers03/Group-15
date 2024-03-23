@@ -132,8 +132,7 @@ this.mBorder = [];
   //////////////////// BOTTOM MAZE BORDER ///////////////////////
   
   var xBound = 138;
-  var yUpper = 680;
-  var yLower = 40;
+  var yLower = 80;
 
   for (let i = 0; i <= 150; i++){
     let bb = new Renderable(this.mConstColorShader);
@@ -159,9 +158,9 @@ this.mBorder = [];
   
   ///////////////////////// LEFT TOP BORDER ////////////////
   var xLeft = 138;
-  var yUpper = 671;
+  var yUpper = 665;
   
-  for (let i = 0; i <= 29; i++){
+  for (let i = 0; i <= 26; i++){
     let ltb = new Renderable(this.mConstColorShader);
     ltb.setColor([0.0, 0.5, 0.8, 1]);
     ltb.getXform().setPosition(xLeft, yUpper);
@@ -184,9 +183,9 @@ this.mBorder = [];
 
 //  /////////////// LEFT BOTTOM BORDER ///////////////////  
   var xLeft = 138;
-  var yUpper = 49;
+  var yUpper = 85;
   
-  for (let i = 0; i <= 28; i++){
+  for (let i = 0; i <= 27; i++){
     let lbb = new Renderable(this.mConstColorShader);
     lbb.setColor([0.0, 0.5, 0.8, 1]);
     lbb.getXform().setPosition(xLeft, yUpper);
@@ -208,9 +207,9 @@ this.mBorder = [];
   
     ///////////////////////// RIGHT TOP BORDER ////////////////
   var xLeft = 1143;
-  var yUpper = 671;
+  var yUpper = 673.5;
   
-  for (let i = 0; i <= 29; i++){
+  for (let i = 0; i <= 27; i++){
     let rtb = new Renderable(this.mConstColorShader);
     rtb.setColor([0.0, 0.5, 0.8, 1]);
     rtb.getXform().setPosition(xLeft, yUpper);
@@ -233,9 +232,9 @@ this.mBorder = [];
 
 //  /////////////// RIGHT BOTTOM BORDER ///////////////////  
   var xLeft = 1143;
-  var yUpper = 49;
+  var yUpper = 85;
   
-  for (let i = 0; i <= 28; i++){
+  for (let i = 0; i <= 27; i++){
     let rbb = new Renderable(this.mConstColorShader);
     rbb.setColor([0.0, 0.5, 0.8, 1]);
     rbb.getXform().setPosition(xLeft, yUpper);
@@ -266,18 +265,80 @@ this.mBorder = [];
   
   this.drawBorders(vpMatrix);
     
+
   
   
-      this.mObstacles = [];
+  
+  
+  
+  
+    
+  
+   this.mObstacles = [];
+
+
+
+// P LEFT SIDE /////
+
+
+
+
+
+
+
+
+
+
+/// P TOP ////
+
+
+
+
+
+
+
+
+
+
+
+/// P RIGHT SIDE /////
+
+
+
+
+
+
+//// P BOTTOM  ///////
+
+
+
+
+
+
+
+
+
+/////// P LEFT BOTTOM SIDE ///////////
+
+
+
+
+
+
+
+
+
+
+
 
     
-//    var x = 1140;
-//    var y = 355;
+//    var x = 160;
+//    var y = 219;
 //    
 //    let a = new Renderable(this.mConstColorShader);
 //    a.setColor([0.0, 7.0, 0.0, 1.0]);
 //    a.getXform().setPosition(x, y);
-//    a.getXform().setSize(35, 35);
+//    a.getXform().setSize(35, 290.5);
 //    this.mObstacles.push(a);
     
        MyGame.prototype.drawObstacles = function ()
