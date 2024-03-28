@@ -9,7 +9,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 function AnimatedPacman(originalSpriteTexture, flippedSpriteTexture , atX, atY) {
-    this.kDelta = 0.2; // Define the speed of movement
+    this.kDelta = 0.3; // Define the speed of movement
 
     this.originalSpriteTexture = originalSpriteTexture;
     this.flippedSpriteTexture = flippedSpriteTexture;
@@ -24,10 +24,12 @@ function AnimatedPacman(originalSpriteTexture, flippedSpriteTexture , atX, atY) 
         3,          // number of elements in this sequence
         0);         // horizontal padding in between
     this.mPacman.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateSwing);
-    this.mPacman.setAnimationSpeed(20);
+    this.mPacman.setAnimationSpeed(10);
     // show each element for mAnimSpeed updates
 
     GameObject.call(this, this.mPacman);
+
+    this.lastDirection = null; // 'Right', 'Left', 'Up', 'Down'
 }
 gEngine.Core.inheritPrototype(AnimatedPacman, GameObject);
 
@@ -36,29 +38,50 @@ AnimatedPacman.prototype.update = function () {
     var xform = this.getXform();
     xform.setRotationInRad(0);
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        // Change to the flipped sprite
-            this.mPacman.setTexture(this.flippedSpriteTexture);
-    } else if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        // Change back to the original sprite
-            this.mPacman.setTexture(this.originalSpriteTexture);
-    }
 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
-        this.mPacman.setTexture(this.originalSpriteTexture);
-        xform.setRotationInRad(-Math.PI / 2);
-        xform.incYPos(this.kDelta);
+        this.lastDirection = 'Up';
+        //this.mPacman.setTexture(this.originalSpriteTexture);
+        this.mPacman.setTexture(this.flippedSpriteTexture);
+        //xform.setRotationInRad(-Math.PI / 2);
+        //xform.incYPos(this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
-        xform.setRotationInRad(-Math.PI / 2);
+        this.lastDirection = 'Down';
+        //xform.setRotationInRad(-Math.PI / 2);
         this.mPacman.setTexture(this.flippedSpriteTexture);
-        xform.incYPos(-this.kDelta);
+
+        //xform.incYPos(-this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
-        xform.incXPos(-this.kDelta);
+        this.lastDirection = 'Left';
+        this.mPacman.setTexture(this.originalSpriteTexture);
+        //xform.incXPos(-this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
-        xform.incXPos(this.kDelta);
+        this.lastDirection = 'Right';
+        this.mPacman.setTexture(this.flippedSpriteTexture);
+        //xform.incXPos(this.kDelta);
+    }
+
+
+    switch (this.lastDirection) {
+        case 'Right':
+            xform.incXPos(this.kDelta);
+            xform.setRotationInRad(0);
+            break;
+        case 'Left':
+            xform.incXPos(-this.kDelta);
+            //xform.setRotationInRad(Math.PI);
+            break;
+        case 'Up':
+            xform.incYPos(this.kDelta);
+            xform.setRotationInRad(Math.PI / 2);
+            break;
+        case 'Down':
+            xform.incYPos(-this.kDelta);
+            xform.setRotationInRad(-Math.PI / 2);
+            break;
     }
 
     this.mPacman.updateAnimation();
