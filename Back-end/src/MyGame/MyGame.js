@@ -12,9 +12,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function MyGame() {
-  this.kMinionSprite = "assets/minion_sprite.png";
-  this.kMinionPortal = "assets/minion_portal.png";
-  this.kStaticPacman = "assets/pacMan.png";
+
   this.kMovingPacman = "assets/allPacman.png";
   this.kMovingPacmanRight = "assets/allPacManFlipped.png";
   this.kBg = "assets/bg.png";
@@ -26,13 +24,7 @@ function MyGame() {
   this.mMsg = null;
 
   // the hero and the support objects
-  this.mHero = null;
-  this.mBrain = null;
-  this.mPortal = null;
-  this.mLMinion = null;
-  this.mRMinion = null;
-  this.mFocusObj = null;
-  this.mStaticPacman = null; // The new static sprite object
+
   this.mAnimatedPacman = null; // The animated Pac-Man object
 
   this.mChoice = 'D';
@@ -40,18 +32,14 @@ function MyGame() {
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
-  gEngine.Textures.loadTexture(this.kMinionSprite);
-  gEngine.Textures.loadTexture(this.kMinionPortal);
-  gEngine.Textures.loadTexture(this.kStaticPacman);
+
   gEngine.Textures.loadTexture(this.kMovingPacman);
   gEngine.Textures.loadTexture(this.kMovingPacmanRight);
   gEngine.Textures.loadTexture(this.kBg);
 };
 
 MyGame.prototype.unloadScene = function () {
-  gEngine.Textures.unloadTexture(this.kMinionSprite);
-  gEngine.Textures.unloadTexture(this.kMinionPortal);
-  gEngine.Textures.unloadTexture(this.kStaticPacman);
+
   gEngine.Textures.unloadTexture(this.kMovingPacman);
   gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
   gEngine.Textures.unloadTexture(this.kBg);
@@ -74,27 +62,10 @@ MyGame.prototype.initialize = function () {
   bgR.getXform().setPosition(50, 35);
   this.mBg = new GameObject(bgR);
 
-  //static pacman set up
-  var staticObjRenderable = new SpriteRenderable(this.kStaticPacman);
-  //staticObjRenderable.setColor([1, 1, 1, 1]); // Set color if needed
-  staticObjRenderable.getXform().setPosition(20, 30); // Position of your new sprite
-  staticObjRenderable.getXform().setSize(10, 15); // Size of your new sprite
-  staticObjRenderable.setElementPixelPositions(0, 512, 0, 512); // Texture positions, adjust as needed
-  this.mStaticPacman = new GameObject(staticObjRenderable);
 
   // Objects in the scene
-  this.mBrain = new Brain(this.kMinionSprite);
-  this.mHero = new Hero(this.kMinionSprite);
-  this.mPortal = new TextureObject(this.kMinionPortal, 50, 30, 10, 10);
-  this.mLMinion = new Minion(this.kMinionSprite, 30, 30);
-  this.mRMinion = new Minion(this.kMinionSprite, 70, 30);
   this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 50, 60);
-  this.mFocusObj = this.mHero;
 
-  this.mMsg = new FontRenderable("Status Message");
-  this.mMsg.setColor([1, 1, 1, 1]);
-  this.mMsg.getXform().setPosition(1, 2);
-  this.mMsg.setTextHeight(3);
 };
 
 // This is the draw function, make sure to set-up proper drawing environment, and more
@@ -108,90 +79,15 @@ MyGame.prototype.draw = function () {
 
   // Step  C: Draw everything
   this.mBg.draw(this.mCamera);
-  // Draw the new static sprite
-  this.mStaticPacman.draw(this.mCamera);
   this.mAnimatedPacman.draw(this.mCamera);
-  this.mHero.draw(this.mCamera);
-  this.mBrain.draw(this.mCamera);
-  this.mPortal.draw(this.mCamera);
-  this.mLMinion.draw(this.mCamera);
-  this.mRMinion.draw(this.mCamera);
-  this.mMsg.draw(this.mCamera);
 
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
-  var zoomDelta = 0.05;
-  var msg = "L/R: Left or Right Minion; H: Dye; P: Portal]: ";
 
   this.mCamera.update();  // for smoother camera movements
-
-  this.mLMinion.update();  // for sprite animation
-  this.mRMinion.update();
-  //this.mAnimatedPacman.update();
-
-  this.mHero.update();     // for WASD movement
-
-  this.mPortal.update(     // for arrow movement
-      gEngine.Input.keys.Up,
-      gEngine.Input.keys.Down,
-      gEngine.Input.keys.Left,
-      gEngine.Input.keys.Right
-  );
-
   this.mAnimatedPacman.update();
 
-  // Brain chasing the hero
-  var h = [];
-  if (!this.mHero.pixelTouches(this.mBrain, h)) {
-    this.mBrain.rotateObjPointTo(this.mHero.getXform().getPosition(), 0.01);
-    GameObject.prototype.update.call(this.mBrain);
-  }
-
-  // Pan camera to object
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.L)) {
-    this.mFocusObj = this.mLMinion;
-    this.mChoice = 'L';
-    this.mCamera.panTo(this.mLMinion.getXform().getXPos(), this.mLMinion.getXform().getYPos());
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.R)) {
-    this.mFocusObj = this.mRMinion;
-    this.mChoice = 'R';
-    this.mCamera.panTo(this.mRMinion.getXform().getXPos(), this.mRMinion.getXform().getYPos());
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.P)) {
-    this.mFocusObj = this.mPortal;
-    this.mChoice = 'P';
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.H)) {
-    this.mFocusObj = this.mHero;
-    this.mChoice = 'H';
-  }
-
-  // zoom
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.N)) {
-    this.mCamera.zoomBy(1 - zoomDelta);
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.M)) {
-    this.mCamera.zoomBy(1 + zoomDelta);
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.J)) {
-    this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 - zoomDelta);
-  }
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.K)) {
-    this.mCamera.zoomTowards(this.mFocusObj.getXform().getPosition(), 1 + zoomDelta);
-  }
-
-  // interaction with the WC bound
-  this.mCamera.clampAtBoundary(this.mBrain.getXform(), 0.9);
-  this.mCamera.clampAtBoundary(this.mPortal.getXform(), 0.8);
-  this.mCamera.panWith(this.mHero.getXform(), 0.9);
-
-  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Q)) {
-    this.mCamera.shake(-2, -2, 20, 30);
-  }
-
-  this.mMsg.setText(msg + this.mChoice);
 };

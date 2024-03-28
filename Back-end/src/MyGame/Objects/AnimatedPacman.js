@@ -41,27 +41,20 @@ AnimatedPacman.prototype.update = function () {
 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Up)) {
         this.lastDirection = 'Up';
-        //this.mPacman.setTexture(this.originalSpriteTexture);
         this.mPacman.setTexture(this.flippedSpriteTexture);
-        //xform.setRotationInRad(-Math.PI / 2);
-        //xform.incYPos(this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
         this.lastDirection = 'Down';
-        //xform.setRotationInRad(-Math.PI / 2);
         this.mPacman.setTexture(this.flippedSpriteTexture);
 
-        //xform.incYPos(-this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Left)) {
         this.lastDirection = 'Left';
         this.mPacman.setTexture(this.originalSpriteTexture);
-        //xform.incXPos(-this.kDelta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Right)) {
         this.lastDirection = 'Right';
         this.mPacman.setTexture(this.flippedSpriteTexture);
-        //xform.incXPos(this.kDelta);
     }
 
 
@@ -72,7 +65,6 @@ AnimatedPacman.prototype.update = function () {
             break;
         case 'Left':
             xform.incXPos(-this.kDelta);
-            //xform.setRotationInRad(Math.PI);
             break;
         case 'Up':
             xform.incYPos(this.kDelta);
