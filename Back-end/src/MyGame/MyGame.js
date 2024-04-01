@@ -20,16 +20,19 @@ function MyGame() {
   this.mPellets = [];
 
   this.mCamera = null;
-
+  
+  this.kFont = "assets/fonts/Consolas-72";
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
-
+    gEngine.Fonts.loadFont(this.kFont);
 };
 
 MyGame.prototype.unloadScene = function () {
-
+    gEngine.Fonts.unloadFont(this.kFont);
+    var nextLevel = new MyGame2();  // next level to be loaded
+    gEngine.Core.startScene(nextLevel);
 };
 
 MyGame.prototype.initialize = function () {
@@ -1515,11 +1518,30 @@ MyGame.prototype.initialize = function () {
 
     this.mPellets.push(pellet);
   };
+  
+  MyGame.prototype.initializeText = function () {
+    this.mLevelText = new FontRenderable("LEVEL");
+    this.mLevelText.setFont(this.kFont);
+    this._initText(this.mLevelText, 800, 55, [1, 1, 1, 1], 36);
+
+    this.mScoreText = new FontRenderable("SCORE");
+    this.mScoreText.setFont(this.kFont);
+    this._initText(this.mScoreText, 330, 55, [1, 1, 1, 1], 36);
+
+    this.mLevelNum = new FontRenderable("01");
+    this.mLevelNum.setFont(this.kFont);
+    this._initText(this.mLevelNum, 940, 55, [1, 1, 1, 1], 36);
+
+    this.mScoreNum = new FontRenderable("00");
+    this.mScoreNum.setFont(this.kFont);
+    this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
+  };
 
   this.initializeBorders();
   this.initializeObstacles();
   this.Maze1Manipulation();
   this.initializePellets();
+  this.initializeText();
   this.totalScore = 0;
   this.pelletCount = this.mPellets.length;
 
@@ -1546,11 +1568,38 @@ MyGame.prototype.draw = function () {
   for (let i = 0; i < this.mPellets.length; i++) {
     this.mPellets[i].draw(vpMatrix);
   }
+  
+  this.mLevelText.draw(vpMatrix);
+  this.mScoreText.draw(vpMatrix);
+  this.mLevelNum.draw(vpMatrix);
+  this.mScoreNum.draw(vpMatrix);
 
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
+        gEngine.GameLoop.stop();
+  }
 
+  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) {
+        this.totalScore += 10;
+        this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+        this.mScoreNum.setFont(this.kFont);
+        this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
+  }
+  
+  if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Down)) {
+        this.totalScore += 10;
+        this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+        this.mScoreNum.setFont(this.kFont);
+        this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
+  }
+};
+
+MyGame.prototype._initText = function (font, posX, posY, color, textH) {
+    font.setColor(color);
+    font.getXform().setPosition(posX, posY);
+    font.setTextHeight(textH);
 };
