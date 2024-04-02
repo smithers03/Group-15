@@ -20,8 +20,52 @@ function MyGame() {
   this.mPellets = [];
   this.mSprites = [];
 
+  var originalX = 450;
+  var originalY = 650;
+
   this.kMovingPacman = "assets/allPacman.png";
   this.kMovingPacmanRight = "assets/allPacManFlipped.png";
+
+  this.Blinky = [];
+  let bUp = "assets/assets-ghosts/blinky_UP.png";
+  this.Blinky.push(bUp);
+  let bDown = "assets/assets-ghosts/blinky_DOWN.png";
+  this.Blinky.push(bDown);
+  let bLeft = "assets/assets-ghosts/blinky_LEFT.png";
+  this.Blinky.push(bLeft);
+  let bRight = "assets/assets-ghosts/blinky_RIGHT.png";
+  this.Blinky.push(bRight);
+
+ this.Funky = [];
+  let fUp = "assets/assets-ghosts/funky_UP.png";
+  this.Funky.push(fUp);
+  let fDown = "assets/assets-ghosts/funky_DOWN.png";
+  this.Funky.push(fDown);
+  let fLeft = "assets/assets-ghosts/funky_LEFT.png";
+  this.Funky.push(fLeft);
+  let fRight = "assets/assets-ghosts/funky_RIGHT.png";
+  this.Funky.push(fRight);
+
+  this.Inky = [];
+  let iUp = "assets/assets-ghosts/inky_UP.png";
+  this.Inky.push(iUp);
+  let iDown = "assets/assets-ghosts/inky_DOWN.png";
+  this.Inky.push(iDown);
+  let iLeft = "assets/assets-ghosts/inky_LEFT.png";
+  this.Inky.push(iLeft);
+  let iRight = "assets/assets-ghosts/inky_RIGHT.png";
+  this.Inky.push(iRight);
+
+  this.Pinky = [];
+  let pUp = "assets/assets-ghosts/pinky_UP.png";
+  this.Pinky.push(pUp);
+  let pDown = "assets/assets-ghosts/pinky_DOWN.png";
+  this.Pinky.push(pDown);
+  let pLeft = "assets/assets-ghosts/pinky_LEFT.png";
+  this.Pinky.push(pLeft);
+  let pRight = "assets/assets-ghosts/pinky_RIGHT.png";
+  this.Pinky.push(pRight);
+
 
   this.mAnimatedPacman = null; // The animated Pac-Man object
 
@@ -33,11 +77,37 @@ gEngine.Core.inheritPrototype(MyGame, Scene);
 MyGame.prototype.loadScene = function () {
   gEngine.Textures.loadTexture(this.kMovingPacman);
   gEngine.Textures.loadTexture(this.kMovingPacmanRight);
+  for (let i = 0; i < this.Blinky.length; i++) {
+    gEngine.Textures.loadTexture(this.Blinky[i]);
+  }
+  for (let i = 0; i < this.Funky.length; i++) {
+    gEngine.Textures.loadTexture(this.Funky[i]);
+  }
+  for (let i = 0; i < this.Inky.length; i++) {
+    gEngine.Textures.loadTexture(this.Inky[i]);
+  }
+  for (let i = 0; i < this.Pinky.length; i++) {
+    gEngine.Textures.loadTexture(this.Pinky[i]);
+  }
+
 };
 
 MyGame.prototype.unloadScene = function () {
   gEngine.Textures.unloadTexture(this.kMovingPacman);
   gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
+  for (let i = 0; i < this.Blinky.length; i++) {
+    gEngine.Textures.unloadTexture(this.Blinky[i]);
+  }
+  for (let i = 0; i < this.Funky.length; i++) {
+    gEngine.Textures.unloadTexture(this.Funky[i]);
+  }
+  for (let i = 0; i < this.Inky.length; i++) {
+    gEngine.Textures.unloadTexture(this.Inky[i]);
+  }
+  for (let i = 0; i < this.Pinky.length; i++) {
+    gEngine.Textures.unloadTexture(this.Pinky[i]);
+  }
+
 };
 
 MyGame.prototype.initialize = function () {
@@ -1528,6 +1598,11 @@ MyGame.prototype.initialize = function () {
 
   this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 600);
 
+  this.mGhostBlinky = new AnimatedGhost(this.Blinky[0], this.Blinky[1], this.Blinky[2], this.Blinky[3],635, 355)
+  this.mGhostFunky = new AnimatedGhost(this.Funky[0], this.Funky[1], this.Funky[2], this.Funky[3],595, 100)
+  this.mGhostInky = new AnimatedGhost(this.Inky[0], this.Inky[1], this.Inky[2], this.Inky[3],715, 355)
+  this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],450, 550)
+
   this.initializeBorders();
   this.initializeObstacles();
   this.Maze1Manipulation();
@@ -1564,6 +1639,10 @@ MyGame.prototype.draw = function () {
   }
 
   this.mAnimatedPacman.draw(vpMatrix);
+  this.mGhostBlinky.draw(vpMatrix);
+  this.mGhostFunky.draw(vpMatrix);
+  this.mGhostInky.draw(vpMatrix);
+  this.mGhostPinky.draw(vpMatrix);
 
 };
 
@@ -1571,6 +1650,132 @@ MyGame.prototype.draw = function () {
 // anything from this function!
 MyGame.prototype.update = function () {
 
+  const pacOgSize = 22.5;
+
+
+  const resetX = 450;
+  const resetY = 600;
+
+  MyGame.prototype.checkCollisionWithPallets = function () {
+    const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+    const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+    //const pacmanWidth = this.mAnimatedPacman.getXform().getWidth();
+    //const pacmanHeight = this.mAnimatedPacman.getXform().getHeight();
+
+    // Check collision with each pellet
+    for (let i = 0; i < this.mPellets.length; i++) {
+      const pelletX = this.mPellets[i].getXform().getXPos();
+      const pelletY = this.mPellets[i].getXform().getYPos();
+      const pelletWidth = this.mPellets[i].getXform().getWidth();
+      const pelletHeight = this.mPellets[i].getXform().getHeight();
+
+      // Check for overlap with PacMan
+      if (
+          pacmanX < pelletX + pelletWidth &&
+          pacmanX + (20) > pelletX &&
+          pacmanY < pelletY + pelletHeight &&
+          pacmanY + (20) > pelletY
+      ) {
+        // Remove the pellet
+        this.mPellets.splice(i, 1);
+
+        // Return true since collision detected
+        return true;
+      }
+    }
+
+    // No collision detected
+    return false;
+  };
+
+  MyGame.prototype.checkCollisionWithBorders = function () {
+    const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+    const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+    //const pacmanWidth = this.pacManTransform.getWidth();
+    //const pacmanHeight = this.pacManTransform.getHeight();
+
+    // Check collision with each border
+    for (let i = 0; i < this.mBorder.length; i++) {
+      const borderX = this.mBorder[i].getXform().getXPos();
+      const borderY = this.mBorder[i].getXform().getYPos();
+      const borderWidth = this.mBorder[i].getXform().getWidth();
+      const borderHeight = this.mBorder[i].getXform().getHeight();
+
+      // Check for overlap
+      if (
+          pacmanX < borderX + (borderWidth) &&
+          pacmanX + (pacOgSize) > borderX &&
+          pacmanY < borderY + (borderHeight) &&
+          pacmanY + (pacOgSize) > borderY
+      ) {
+        // Collision detected
+        return true;
+      }
+    }
+
+    // No collision detected
+    return false;
+  };
+
+  MyGame.prototype.checkCollisionWithObstacles = function () {
+    const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+    const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+    //const pacmanWidth = this.pacManTransform.getWidth();
+    //const pacmanHeight = this.pacManTransform.getHeight();
+
+    // Check collision with each border
+    for (let i = 0; i < this.mObstacles.length; i++) {
+      const obstacleX = this.mObstacles[i].getXform().getXPos();
+      const obstacleY = this.mObstacles[i].getXform().getYPos();
+      const obstacleWidth = this.mObstacles[i].getXform().getWidth();
+      const obstacleHeight = this.mObstacles[i].getXform().getHeight();
+
+      // Check for overlap
+      if (
+          pacmanX /*- pacmanWidth*/ < (obstacleX + obstacleWidth/3) &&
+          pacmanX + (pacOgSize) > (obstacleX - (obstacleWidth/3)) &&
+          pacmanY /*- pacmanHeight*/ < (obstacleY + obstacleHeight/3) &&
+          pacmanY + (pacOgSize) > (obstacleY - (obstacleHeight/3))
+      ) {
+        // Collision detected
+        console.log("Collision detected - obstacle")
+        return true;
+      }
+    }
+
+    // No collision detected
+    return false;
+  };
+
+
+  console.log("TotalScore : "+this.totalScore);
+  if(this.pelletCount===0) {
+    console.log("Game Over.....")
+  }
+
+  if(this.checkCollisionWithPallets()) {
+    this.totalScore+=10;
+    this.pelletCount--;
+  }
+
+  // Check for collision with borders
+  if (this.checkCollisionWithBorders()) {
+    // If collision, revert to original position
+    this.mAnimatedPacman.getXform().setPosition(this.originalX, this.originalY);
+  }
+
+  // Check for collision with obstacles
+  if (this.checkCollisionWithObstacles()) {
+    // If collision, revert to original position
+    this.mAnimatedPacman.getXform().setPosition(this.originalX, this.originalY);
+  }
+
+  this.originalX = this.mAnimatedPacman.getXform().getXPos();
+  this.originalY = this.mAnimatedPacman.getXform().getYPos();
+
+
   this.mAnimatedPacman.update();
+
+
 
 };
