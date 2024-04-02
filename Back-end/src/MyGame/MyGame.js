@@ -18,6 +18,12 @@ function MyGame() {
   this.mObstacles = [];
   // Array to store pellets
   this.mPellets = [];
+  this.mSprites = [];
+
+  this.kMovingPacman = "assets/allPacman.png";
+  this.kMovingPacmanRight = "assets/allPacManFlipped.png";
+
+  this.mAnimatedPacman = null; // The animated Pac-Man object
 
   this.mCamera = null;
 
@@ -25,11 +31,13 @@ function MyGame() {
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
-
+  gEngine.Textures.loadTexture(this.kMovingPacman);
+  gEngine.Textures.loadTexture(this.kMovingPacmanRight);
 };
 
 MyGame.prototype.unloadScene = function () {
-
+  gEngine.Textures.unloadTexture(this.kMovingPacman);
+  gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
 };
 
 MyGame.prototype.initialize = function () {
@@ -46,6 +54,8 @@ MyGame.prototype.initialize = function () {
   this.mConstColorShader = new SimpleShader(
       "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader
       "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
+
+
 
   MyGame.prototype.initializeBorders = function () {
 
@@ -1516,12 +1526,16 @@ MyGame.prototype.initialize = function () {
     this.mPellets.push(pellet);
   };
 
+  this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 600);
+
   this.initializeBorders();
   this.initializeObstacles();
   this.Maze1Manipulation();
   this.initializePellets();
   this.totalScore = 0;
   this.pelletCount = this.mPellets.length;
+
+
 
 };
 
@@ -1535,6 +1549,8 @@ MyGame.prototype.draw = function () {
   this.mCamera.setupViewProjection();
   var vpMatrix = this.mCamera;
 
+
+
   for (let i = 0; i < this.mBorder.length; i++) {
     this.mBorder[i].draw(vpMatrix);
   }
@@ -1547,10 +1563,14 @@ MyGame.prototype.draw = function () {
     this.mPellets[i].draw(vpMatrix);
   }
 
+  this.mAnimatedPacman.draw(vpMatrix);
+
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
+
+  this.mAnimatedPacman.update();
 
 };
