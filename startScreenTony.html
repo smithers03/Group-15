@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacman Splash Screen</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #images-container {
+            position: absolute;
+            top: calc(50% - 250px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+        img {
+            margin-bottom: 20px; /* Adjust the spacing between the images */
+        }
+        #second-image {
+            position: relative;
+            z-index: 1;
+        }
+
+        #black-rectangle {
+            position: absolute;
+            bottom: 130px;
+            width: 700px;
+            height: 190px;
+            background-color: black;
+            z-index: 2;
+        }
+        #black-rectangle2 {
+            position: absolute;
+            bottom: 10px;
+            width: 50px;
+            height: 190px;
+            left: 0;
+            background-color: black;
+            z-index: 2;
+        }
+        #black-rectangle3 {
+            position: absolute;
+            bottom: 10px;
+            width: 50px;
+            height: 190px;
+            right: 0;
+            background-color: black;
+            z-index: 2;
+        }
+        #flashing-box {
+            position: absolute;
+            bottom: 50px;
+            width: 400px;
+            height: 50px;
+            background-color: black;
+            display: none;
+            z-index: 3;
+        }
+        #controls-button
+        {
+            position: absolute;
+            bottom: 100px;
+            width: 400px;
+            height: 50px;
+            background-color: black;
+            display: none
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="images-container">
+    <img id="first-image" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/11a10a01-ac23-4fea-ad5a-b51f53084159/d5z4y44-5a033ac4-452f-4518-bab5-61adb388a320.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzExYTEwYTAxLWFjMjMtNGZlYS1hZDVhLWI1MWY1MzA4NDE1OVwvZDV6NHk0NC01YTAzM2FjNC00NTJmLTQ1MTgtYmFiNS02MWFkYjM4OGEzMjAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.5BT_5oRLFjxT7L-X0Ibqxe-teVl0469hKl4yREwtJzc" width="500" height="200"/>
+    <img id="second-image" src="https://kristiandixon.files.wordpress.com/2017/06/pacmenu.png?w=642" width="500" height="300"/>
+    <div id="black-rectangle"></div>
+    <div id="black-rectangle2"></div>
+    <div id="black-rectangle3"></div>
+    <div id="flashing-box"></div>
+    <div id="controls-button">PRESS C FOR CONTROLS</div>
+</div>
+
+<div id="pacman-container">
+    <div id="pacman-circle">
+        <div id="pacman-mouth"></div>
+        <div id="eye">
+            <div id="eye-2"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add event listener for key press
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            // Redirect to a new screen (replace "new_screen.html" with the desired URL)
+            window.location.href = "new_screen.html";
+        }
+    });
+
+
+    function toggleOrangeBox() {
+        var orangeBox = document.getElementById("flashing-box");
+        orangeBox.style.display = (orangeBox.style.display === "none") ? "block" : "none";
+
+    }
+
+    setInterval(toggleOrangeBox, 500);
+</script>
+
+</body>
+</html>
