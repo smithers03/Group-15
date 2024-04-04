@@ -1501,7 +1501,7 @@ MyGame2.prototype.draw = function () {
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame2.prototype.update = function () {
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Left)) {
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.One)) {
         gEngine.GameLoop.stop();
   }
   
