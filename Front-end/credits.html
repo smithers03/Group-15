@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta viewport="width=device-width, initial-scale=1.0">
+    <title>Credits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+            color: yellow;
+            font-family: 'Press Start 2P', cursive;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .credits-container {
+            text-align: center;
+            font-size: 20px;
+            width: 100%;
+            position: relative;
+            animation: scrollCredits 20s linear forwards;
+        }
+        @keyframes scrollCredits {
+            from { transform: translateY(100%); }
+            to { transform: translateY(-100%); }
+        }
+        .credits-container p {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="credits-container" id="credits">
+    <p>Ellie Smith - Project Manager</p>
+    <p>Diana Hrisovescu - Graphics Lead</p>
+    <p>Tadhg Brennan - Graphics Product Owner</p>
+    <p>Tara Gallagher - Graphics Lead </p>
+    <p>Vaibhav Nagarjan - Core engine product owner</p>
+    <p>Rand Minck - Core Engine Lead</p>
+    <p>Maaheen Ather - Graphics Team developer</p>
+    <p>Anthony Rowe - Graphics Team Member</p>
+    <p>Hetansh Mahajan - Graphics Team developer</p>
+    <p>Daniel Cunney - Core engine team developer</p>
+    <p>Lev Ganzha - Core Engine Team Developer</p>
+    <p>Surya Satish- core engine team developer</p>
+</div>
+
+</body>
+</html>
