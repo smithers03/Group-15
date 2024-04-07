@@ -1696,7 +1696,7 @@ MyGame.prototype.update = function () {
         this.mPellets.splice(i, 1);
 
         // play the pellet eaten audio
-        gEngine.AudioClips.playACue(this.kPelletChomp); //lol
+        gEngine.AudioClips.playACue(this.kPelletChomp);
 
         // Return true since collision detected
         return true;
