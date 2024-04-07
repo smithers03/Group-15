@@ -66,6 +66,15 @@ function MyGame() {
   let pRight = "assets/assets-ghosts/pinky_RIGHT.png";
   this.Pinky.push(pRight);
 
+  this.kBgClip = "assets/audios/BGClip.mp3";
+  this.kCue = "assets/audios/MyGame_cue.wav";
+  this.kPelletChomp = "assets/audios/Pacman_chomp1.wav";
+  this.kPacmanDeath = "assets/audios/Pacman_death.wav";
+  this.kEatFruit = "assets/audios/Pacman_eatfruit.wav";
+  this.kEatGhost = "assets/audios/Pacman_eatghost.wav";
+  this.kPacmanOpening = "assets/audios/pacman_beginning.wav";
+  this.kCredits = "assets/audios/into.mp3";
+  this.kBing = "assets/audios/BlueLevel_cue.wav";
 
   this.mAnimatedPacman = null; // The animated Pac-Man object
 
@@ -89,6 +98,13 @@ MyGame.prototype.loadScene = function () {
   for (let i = 0; i < this.Pinky.length; i++) {
     gEngine.Textures.loadTexture(this.Pinky[i]);
   }
+  // loads the audios
+  gEngine.AudioClips.loadAudio(this.kBgClip);
+  gEngine.AudioClips.loadAudio(this.kCue);
+  gEngine.AudioClips.loadAudio(this.kPelletChomp);
+  gEngine.AudioClips.loadAudio(this.kPacmanDeath);
+  gEngine.AudioClips.loadAudio(this.kEatFruit);
+  gEngine.AudioClips.loadAudio(this.kEatGhost);
 
 };
 
@@ -1678,6 +1694,9 @@ MyGame.prototype.update = function () {
       ) {
         // Remove the pellet
         this.mPellets.splice(i, 1);
+
+        // play the pellet eaten audio
+        gEngine.AudioClips.playACue(this.kPelletChomp);
 
         // Return true since collision detected
         return true;
