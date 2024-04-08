@@ -40,13 +40,82 @@ function AnimatedGhost(startTexture, downTexture, leftTexture, rightTexture,  at
 }
 gEngine.Core.inheritPrototype(AnimatedGhost, GameObject);
 
-AnimatedGhost.prototype.update = function () {
+AnimatedGhost.prototype.checkCollisionBorder = function (arrBord, gX, gY) {
+    const ghostX = gX;
+    const ghostY = gY;
+    this.bordArr = arrBord;
+    //const pacmanWidth = this.pacManTransform.getWidth();
+    //const pacmanHeight = this.pacManTransform.getHeight();
+
+    // Check collision with each border
+    for (let i = 0; i < this.bordArr.length; i++) {
+        const obstacleX = this.bordArr[i].getXform().getXPos();
+        const obstacleY = this.bordArr[i].getXform().getYPos();
+        const obstacleWidth = this.bordArr[i].getXform().getWidth();
+        const obstacleHeight = this.bordArr[i].getXform().getHeight();
+
+        // Check for overlap
+        if (
+            ghostX /*- ghostWidth*/ < (obstacleX + obstacleWidth/3) &&
+            ghostX + (12.5) > (obstacleX - (obstacleWidth/3)) &&
+            ghostY /*- ghostHeight*/ < (obstacleY + obstacleHeight/3) &&
+            ghostY + (12.5) > (obstacleY - (obstacleHeight/3))
+        ) {
+            // Collision detected
+            //console.log("Collision detected - obstacle")
+            return true;
+        }
+    }
+
+    // No collision detected
+    return false;
+}
+
+AnimatedGhost.prototype.checkCollisionObstacles = function (arrObstacles, gX, gY) {
+    const ghostX = gX;
+    const ghostY = gY;
+    this.ObsclArr = arrObstacles;
+    //const pacmanWidth = this.pacManTransform.getWidth();
+    //const pacmanHeight = this.pacManTransform.getHeight();
+
+    // Check collision with each border
+    for (let i = 0; i < this.ObsclArr.length; i++) {
+        const obstacleX = this.ObsclArr[i].getXform().getXPos();
+        const obstacleY = this.ObsclArr[i].getXform().getYPos();
+        const obstacleWidth = this.ObsclArr[i].getXform().getWidth();
+        const obstacleHeight = this.ObsclArr[i].getXform().getHeight();
+
+        // Check for overlap
+        if (
+            ghostX /*- ghostWidth*/ < (obstacleX + obstacleWidth/3) &&
+            ghostX + (12.5) > (obstacleX - (obstacleWidth/3)) &&
+            ghostY /*- ghostHeight*/ < (obstacleY + obstacleHeight/3) &&
+            ghostY + (12.5) > (obstacleY - (obstacleHeight/3))
+        ) {
+            // Collision detected
+            //console.log("Collision detected - obstacle")
+            return true;
+        }
+    }
+
+    // No collision detected
+    return false;
+}
+
+AnimatedGhost.prototype.update = function (bArray, oArray) {
     // control by Arrow Keys
     var xform = this.getXform();
     xform.setRotationInRad(0);
+    this.bLoc = bArray;
+    this.oLoc = oArray;
+    var collide =0;
+    var proceed = true
+    //this.tempDirection = "Up";
+    //this.randMove = Math.floor((Math.random() * 4) + 1);
+    //var tempX =0;
+    //var tempY =0;
 
-
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
+    /*if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
         this.lastDirection = 'Up';
         this.mGhost.setTexture(this.startTexture);
     }
@@ -62,6 +131,162 @@ AnimatedGhost.prototype.update = function () {
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
         this.lastDirection = 'Right';
         this.mGhost.setTexture(this.rightTexture);
+    }*/
+    if(this.checkCollisionBorder(this.bLoc, xform.getXPos(), xform.getYPos()))
+    {
+        collide = 1;
+    }
+    else
+    {
+        if(this.checkCollisionObstacles(this.oLoc, xform.getXPos(), xform.getYPos()))
+        {
+            collide = 1;
+        }
+        else
+        {
+            collide = 0;
+        }
+    }
+
+    if(collide === 1) {
+        while(proceed===true)
+        {
+            this.randMove = Math.floor((Math.random() * 4) + 1);
+
+           /* switch (this.randMove) {
+                case 1:
+                    this.tempDirection = 'Up';
+                    //this.mGhost.setTexture(this.startTexture);
+                    break;
+                case 2:
+                    this.lastDirection = 'Down';
+                    this.mGhost.setTexture(this.downTexture);
+                    break;
+                case 3:
+                    this.lastDirection = 'Left';
+                    this.mGhost.setTexture(this.leftTexture);
+                    break;
+                case 4:
+                    this.lastDirection = 'Right';
+                    this.mGhost.setTexture(this.rightTexture);
+                    break;
+                default:
+                    this.lastDirection = 'Up';
+                    this.mGhost.setTexture(this.startTexture);
+                    break;
+            }*/
+
+
+            //Ghost random movement Decider
+            switch (this.randMove) {
+                case 1:
+                    //tempX = xform.getXPos();
+                    //tempY = xform.getYPos()+this.kDelta;
+                    /*if(this.lastDirection==="Up")
+                    {
+                        proceed = true;
+                        break;
+                    }*/
+                    if(this.checkCollisionBorder(this.bLoc, xform.getXPos(), xform.getYPos()+this.kDelta))
+                    {
+                        proceed=true;
+                    }
+                    else if(this.checkCollisionObstacles(this.oLoc, xform.getXPos(), xform.getYPos()+this.kDelta))
+                    {
+                        proceed = true;
+                    }
+                    else{
+                        proceed = false
+                    }
+                    break;
+                case 2:
+                    //tempX = xform.getXPos();
+                    //tempY = xform.getYPos()-this.kDelta;
+                    /*if(this.lastDirection==="Down")
+                    {
+                        proceed = true;
+                        break;
+                    }*/
+                    if(this.checkCollisionBorder(this.bLoc, xform.getXPos(), xform.getYPos()-this.kDelta))
+                    {
+                        proceed=true;
+                    }
+                    else if(this.checkCollisionObstacles(this.oLoc, xform.getXPos(), xform.getYPos()-this.kDelta))
+                    {
+                        proceed = true;
+                    }
+                    else{
+                        proceed = false
+                    }
+                    break;
+                case 3:
+                    //tempX = xform.getXPos()-this.kDelta;
+                    //tempY = xform.getYPos();
+                    /*if(this.lastDirection==="Left")
+                    {
+                        proceed = true;
+                        break;
+                    }*/
+                    if(this.checkCollisionBorder(this.bLoc, xform.getXPos()-this.kDelta, xform.getYPos()))
+                    {
+                        proceed=true;
+                    }
+                    else if(this.checkCollisionObstacles(this.oLoc, xform.getXPos()-this.kDelta, xform.getYPos()))
+                    {
+                        proceed = true;
+                    }
+                    else{
+                        proceed = false
+                    }
+                    break;
+                case 4:
+                    //tempX = xform.getXPos()+this.kDelta;
+                    //tempY = xform.getYPos();
+                    /*if(this.lastDirection==="Right")
+                    {
+                        proceed = true;
+                        break;
+                    }*/
+                    if(this.checkCollisionBorder(this.bLoc, xform.getXPos()+this.kDelta, xform.getYPos()))
+                    {
+                        proceed=true;
+                    }
+                    else if(this.checkCollisionObstacles(this.oLoc, xform.getXPos()+this.kDelta, xform.getYPos()))
+                    {
+                        proceed = true;
+                    }
+                    else{
+                        proceed = false
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    switch (this.randMove) {
+        case 1:
+            this.lastDirection = 'Up';
+            this.mGhost.setTexture(this.startTexture);
+            break;
+        case 2:
+            this.lastDirection = 'Down';
+            this.mGhost.setTexture(this.downTexture);
+            break;
+        case 3:
+            this.lastDirection = 'Left';
+            this.mGhost.setTexture(this.leftTexture);
+            break;
+        case 4:
+            this.lastDirection = 'Right';
+            this.mGhost.setTexture(this.rightTexture);
+            break;
+        default:
+            this.lastDirection = 'Up';
+            this.mGhost.setTexture(this.startTexture);
+            break;
     }
 
 
