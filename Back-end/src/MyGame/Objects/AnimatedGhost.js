@@ -37,6 +37,8 @@ function AnimatedGhost(startTexture, downTexture, leftTexture, rightTexture,  at
 
     this.setSpeed(0.3);
     this.lastDirection = null; // 'Right', 'Left', 'Up', 'Down'
+    this.ogX = this.getXform().getXPos();
+    this.ogY = this.getXform().getYPos();
 }
 gEngine.Core.inheritPrototype(AnimatedGhost, GameObject);
 
@@ -49,17 +51,17 @@ AnimatedGhost.prototype.checkCollisionBorder = function (arrBord, gX, gY) {
 
     // Check collision with each border
     for (let i = 0; i < this.bordArr.length; i++) {
-        const obstacleX = this.bordArr[i].getXform().getXPos();
-        const obstacleY = this.bordArr[i].getXform().getYPos();
-        const obstacleWidth = this.bordArr[i].getXform().getWidth();
-        const obstacleHeight = this.bordArr[i].getXform().getHeight();
+        const borderX = this.bordArr[i].getXform().getXPos();
+        const borderY = this.bordArr[i].getXform().getYPos();
+        const borderWidth = this.bordArr[i].getXform().getWidth();
+        const borderHeight = this.bordArr[i].getXform().getHeight();
 
         // Check for overlap
         if (
-            ghostX /*- ghostWidth*/ < (obstacleX + obstacleWidth/3) &&
-            ghostX + (12.5) > (obstacleX - (obstacleWidth/3)) &&
-            ghostY /*- ghostHeight*/ < (obstacleY + obstacleHeight/3) &&
-            ghostY + (12.5) > (obstacleY - (obstacleHeight/3))
+            ghostX < borderX + (borderWidth) &&
+            ghostX + (17.5) > borderX &&
+            ghostY < borderY + (borderHeight) &&
+            ghostY + (17.5) > borderY
         ) {
             // Collision detected
             //console.log("Collision detected - obstacle")
@@ -88,9 +90,9 @@ AnimatedGhost.prototype.checkCollisionObstacles = function (arrObstacles, gX, gY
         // Check for overlap
         if (
             ghostX /*- ghostWidth*/ < (obstacleX + obstacleWidth/3) &&
-            ghostX + (12.5) > (obstacleX - (obstacleWidth/3)) &&
+            ghostX + (17.5) > (obstacleX - (obstacleWidth/3)) &&
             ghostY /*- ghostHeight*/ < (obstacleY + obstacleHeight/3) &&
-            ghostY + (12.5) > (obstacleY - (obstacleHeight/3))
+            ghostY + (17.5) > (obstacleY - (obstacleHeight/3))
         ) {
             // Collision detected
             //console.log("Collision detected - obstacle")
@@ -134,12 +136,17 @@ AnimatedGhost.prototype.update = function (bArray, oArray) {
     }*/
     if(this.checkCollisionBorder(this.bLoc, xform.getXPos(), xform.getYPos()))
     {
+        //use original x form values here
+        xform.setXPos(this.ogX);
+        xform.setYPos(this.ogY);
         collide = 1;
     }
     else
     {
         if(this.checkCollisionObstacles(this.oLoc, xform.getXPos(), xform.getYPos()))
         {
+            xform.setXPos(this.ogX);
+            xform.setYPos(this.ogY);
             collide = 1;
         }
         else
@@ -152,30 +159,6 @@ AnimatedGhost.prototype.update = function (bArray, oArray) {
         while(proceed===true)
         {
             this.randMove = Math.floor((Math.random() * 4) + 1);
-
-           /* switch (this.randMove) {
-                case 1:
-                    this.tempDirection = 'Up';
-                    //this.mGhost.setTexture(this.startTexture);
-                    break;
-                case 2:
-                    this.lastDirection = 'Down';
-                    this.mGhost.setTexture(this.downTexture);
-                    break;
-                case 3:
-                    this.lastDirection = 'Left';
-                    this.mGhost.setTexture(this.leftTexture);
-                    break;
-                case 4:
-                    this.lastDirection = 'Right';
-                    this.mGhost.setTexture(this.rightTexture);
-                    break;
-                default:
-                    this.lastDirection = 'Up';
-                    this.mGhost.setTexture(this.startTexture);
-                    break;
-            }*/
-
 
             //Ghost random movement Decider
             switch (this.randMove) {
@@ -289,6 +272,8 @@ AnimatedGhost.prototype.update = function (bArray, oArray) {
             break;
     }
 
+    this.ogX = xform.getXPos();
+    this.ogY = xform.getYPos();
 
     switch (this.lastDirection) {
         case 'Right':
@@ -307,6 +292,8 @@ AnimatedGhost.prototype.update = function (bArray, oArray) {
             //xform.setRotationInRad(-Math.PI / 2);
             break;
     }
+
+    //this.prevForm = xform;
 
     //this.mGhost.updateAnimation();
 };

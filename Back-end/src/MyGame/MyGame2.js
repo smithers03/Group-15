@@ -18,18 +18,126 @@ function MyGame2() {
     this.mObstacles = [];
     // Array to store pellets
     this.mPellets = [];
+    this.mSprites = [];
+
+    this.pacStartX = 450;
+    this.pacStartY = 575;
+    this.BlinkyStX = 635;
+    this.BlinkyStY = 530;
+    this.InkyStX = 715;
+    this.InkyStY = 355;
+    this.PinkyStX = 450;
+    this.PinkyStY = 520;
+    this.FunkyStX = 595;
+    this.FunkyStY = 100;
+
+    this.originalX = 450;
+    this.originalY = 575;
+
+    this.kFont = "assets/fonts/Consolas-72";
+
+    this.kMovingPacman = "assets/allPacman.png";
+    this.kMovingPacmanRight = "assets/allPacManFlipped.png";
+
+    this.Blinky = [];
+    let bUp = "assets/assets-ghosts/blinky_UP.png";
+    this.Blinky.push(bUp);
+    let bDown = "assets/assets-ghosts/blinky_DOWN.png";
+    this.Blinky.push(bDown);
+    let bLeft = "assets/assets-ghosts/blinky_LEFT.png";
+    this.Blinky.push(bLeft);
+    let bRight = "assets/assets-ghosts/blinky_RIGHT.png";
+    this.Blinky.push(bRight);
+
+    this.Funky = [];
+    let fUp = "assets/assets-ghosts/funky_UP.png";
+    this.Funky.push(fUp);
+    let fDown = "assets/assets-ghosts/funky_DOWN.png";
+    this.Funky.push(fDown);
+    let fLeft = "assets/assets-ghosts/funky_LEFT.png";
+    this.Funky.push(fLeft);
+    let fRight = "assets/assets-ghosts/funky_RIGHT.png";
+    this.Funky.push(fRight);
+
+    this.Inky = [];
+    let iUp = "assets/assets-ghosts/inky_UP.png";
+    this.Inky.push(iUp);
+    let iDown = "assets/assets-ghosts/inky_DOWN.png";
+    this.Inky.push(iDown);
+    let iLeft = "assets/assets-ghosts/inky_LEFT.png";
+    this.Inky.push(iLeft);
+    let iRight = "assets/assets-ghosts/inky_RIGHT.png";
+    this.Inky.push(iRight);
+
+    this.Pinky = [];
+    let pUp = "assets/assets-ghosts/pinky_UP.png";
+    this.Pinky.push(pUp);
+    let pDown = "assets/assets-ghosts/pinky_DOWN.png";
+    this.Pinky.push(pDown);
+    let pLeft = "assets/assets-ghosts/pinky_LEFT.png";
+    this.Pinky.push(pLeft);
+    let pRight = "assets/assets-ghosts/pinky_RIGHT.png";
+    this.Pinky.push(pRight);
+
+    this.kBgClip = "assets/audios/BGClip.mp3";
+    this.kCue = "assets/audios/MyGame_cue.wav";
+    this.kPelletChomp = "assets/audios/Pacman_chomp1.wav";
+    this.kPacmanDeath = "assets/audios/Pacman_death.wav";
+    this.kEatFruit = "assets/audios/Pacman_eatfruit.wav";
+    this.kEatGhost = "assets/audios/Pacman_eatghost.wav";
+    this.kPacmanOpening = "assets/audios/pacman_beginning.wav";
+    this.kCredits = "assets/audios/into.mp3";
+    this.kBing = "assets/audios/BlueLevel_cue.wav";
+
+    this.mAnimatedPacman = null; // The animated Pac-Man object
 
     this.mCamera = null;
-
 }
 gEngine.Core.inheritPrototype(MyGame2, Scene);
 
 MyGame2.prototype.loadScene = function () {
-
+    //gEngine.Fonts.loadFont(this.kFont);
+    gEngine.Textures.loadTexture(this.kMovingPacman);
+    gEngine.Textures.loadTexture(this.kMovingPacmanRight);
+    for (let i = 0; i < this.Blinky.length; i++) {
+        gEngine.Textures.loadTexture(this.Blinky[i]);
+    }
+    for (let i = 0; i < this.Funky.length; i++) {
+        gEngine.Textures.loadTexture(this.Funky[i]);
+    }
+    for (let i = 0; i < this.Inky.length; i++) {
+        gEngine.Textures.loadTexture(this.Inky[i]);
+    }
+    for (let i = 0; i < this.Pinky.length; i++) {
+        gEngine.Textures.loadTexture(this.Pinky[i]);
+    }
+    // loads the audios
+    gEngine.AudioClips.loadAudio(this.kBgClip);
+    gEngine.AudioClips.loadAudio(this.kCue);
+    gEngine.AudioClips.loadAudio(this.kPelletChomp);
+    gEngine.AudioClips.loadAudio(this.kPacmanDeath);
+    gEngine.AudioClips.loadAudio(this.kEatFruit);
+    gEngine.AudioClips.loadAudio(this.kEatGhost);
 };
 
 MyGame2.prototype.unloadScene = function () {
-
+    //gEngine.Fonts.unloadFont(this.kFont);
+    gEngine.Textures.unloadTexture(this.kMovingPacman);
+    gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
+    for (let i = 0; i < this.Blinky.length; i++) {
+        gEngine.Textures.unloadTexture(this.Blinky[i]);
+    }
+    for (let i = 0; i < this.Funky.length; i++) {
+        gEngine.Textures.unloadTexture(this.Funky[i]);
+    }
+    for (let i = 0; i < this.Inky.length; i++) {
+        gEngine.Textures.unloadTexture(this.Inky[i]);
+    }
+    for (let i = 0; i < this.Pinky.length; i++) {
+        gEngine.Textures.unloadTexture(this.Pinky[i]);
+    }
+    var nextLevel = new MyGame3();  // next level to be loaded
+    gEngine.Core.startScene(nextLevel);
 };
 
 MyGame2.prototype.initialize = function () {
@@ -1344,6 +1452,34 @@ MyGame2.prototype.initialize = function () {
 
     };
 
+    MyGame2.prototype.Maze1Manipulation = function()
+    {
+        let mtempRU = new Renderable(this.mConstColorShader);
+        mtempRU.setColor([0.0, 0.0, 0.0, 1]);
+        mtempRU.getXform().setPosition(980, 280);
+        mtempRU.getXform().setSize(50, 50);
+
+        // this.mtempRU.draw(vpMatrix);
+        this.mBorder.push(mtempRU)
+
+        let mtempLU = new Renderable(this.mConstColorShader);
+        mtempLU.setColor([0.0, 0.0, 0.0, 1]);
+        mtempLU.getXform().setPosition(300, 280);
+        mtempLU.getXform().setSize(50, 50);
+
+        // this.mtempLU.draw(vpMatrix);
+        this.mBorder.push(mtempLU)
+
+        let mtempMid = new Renderable(this.mConstColorShader);
+        mtempMid.setColor([0.0, 0.0, 0.0, 1]);
+        mtempMid.getXform().setPosition(650,410);
+        mtempMid.getXform().setSize(190, 25);
+
+        // this.mtempMid.draw(vpMatrix);
+        this.mBorder.push(mtempMid)
+
+    };
+
 
     const routeSize = 15;
 
@@ -1439,9 +1575,36 @@ MyGame2.prototype.initialize = function () {
         this.mPellets.push(pellet);
     };
 
+    /*MyGame2.prototype.initializeText = function () {
+        this.mLevelText = new FontRenderable("LEVEL");
+        this.mLevelText.setFont(this.kFont);
+        this._initText(this.mLevelText, 800, 55, [1, 1, 1, 1], 36);
+
+        this.mScoreText = new FontRenderable("SCORE");
+        this.mScoreText.setFont(this.kFont);
+        this._initText(this.mScoreText, 330, 55, [1, 1, 1, 1], 36);
+
+        this.mLevelNum = new FontRenderable("01");
+        this.mLevelNum.setFont(this.kFont);
+        this._initText(this.mLevelNum, 940, 55, [1, 1, 1, 1], 36);
+
+        this.mScoreNum = new FontRenderable("00");
+        this.mScoreNum.setFont(this.kFont);
+        this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
+    };*/
+
+    this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 575);
+
+    this.mGhostBlinky = new AnimatedGhost(this.Blinky[0], this.Blinky[1], this.Blinky[2], this.Blinky[3],635, 530)
+    this.mGhostFunky = new AnimatedGhost(this.Funky[0], this.Funky[1], this.Funky[2], this.Funky[3],595, 100)
+    this.mGhostInky = new AnimatedGhost(this.Inky[0], this.Inky[1], this.Inky[2], this.Inky[3],715, 355)
+    this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],450, 520)
+
     this.initializeBorders();
     this.initializeObstacles();
+    this.Maze1Manipulation();
     this.initializePellets();
+    //this.initializeText();
     this.totalScore = 0;
     this.pelletCount = this.mPellets.length;
 
@@ -1457,6 +1620,8 @@ MyGame2.prototype.draw = function () {
     this.mCamera.setupViewProjection();
     var vpMatrix = this.mCamera;
 
+
+
     for (let i = 0; i < this.mBorder.length; i++) {
         this.mBorder[i].draw(vpMatrix);
     }
@@ -1469,10 +1634,230 @@ MyGame2.prototype.draw = function () {
         this.mPellets[i].draw(vpMatrix);
     }
 
+    this.mAnimatedPacman.draw(vpMatrix);
+    this.mGhostBlinky.draw(vpMatrix);
+    this.mGhostFunky.draw(vpMatrix);
+    this.mGhostInky.draw(vpMatrix);
+    this.mGhostPinky.draw(vpMatrix);
+
+    /*this.mLevelText.draw(vpMatrix);
+    this.mScoreText.draw(vpMatrix);
+    this.mLevelNum.draw(vpMatrix);
+    this.mScoreNum.draw(vpMatrix);*/
+
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame2.prototype.update = function () {
+    const pacOgSize = 22.5;
 
+
+    const resetX = 450;
+    const resetY = 600;
+
+    MyGame2.prototype.checkCollisionWithPallets = function () {
+        const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+        const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+        //const pacmanWidth = this.mAnimatedPacman.getXform().getWidth();
+        //const pacmanHeight = this.mAnimatedPacman.getXform().getHeight();
+
+        // Check collision with each pellet
+        for (let i = 0; i < this.mPellets.length; i++) {
+            const pelletX = this.mPellets[i].getXform().getXPos();
+            const pelletY = this.mPellets[i].getXform().getYPos();
+            const pelletWidth = this.mPellets[i].getXform().getWidth();
+            const pelletHeight = this.mPellets[i].getXform().getHeight();
+
+            // Check for overlap with PacMan
+            if (
+                pacmanX < pelletX + pelletWidth &&
+                pacmanX + (20) > pelletX &&
+                pacmanY < pelletY + pelletHeight &&
+                pacmanY + (20) > pelletY
+            ) {
+                // Remove the pellet
+                this.mPellets.splice(i, 1);
+
+                // play the pellet eaten audio
+                gEngine.AudioClips.playACue(this.kPelletChomp);
+
+                // Return true since collision detected
+                return true;
+            }
+        }
+
+        // No collision detected
+        return false;
+    };
+
+    MyGame2.prototype.checkCollisionWithBorders = function () {
+        const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+        const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+        //const pacmanWidth = this.pacManTransform.getWidth();
+        //const pacmanHeight = this.pacManTransform.getHeight();
+
+        // Check collision with each border
+        for (let i = 0; i < this.mBorder.length; i++) {
+            const borderX = this.mBorder[i].getXform().getXPos();
+            const borderY = this.mBorder[i].getXform().getYPos();
+            const borderWidth = this.mBorder[i].getXform().getWidth();
+            const borderHeight = this.mBorder[i].getXform().getHeight();
+
+            // Check for overlap
+            if (
+                pacmanX < borderX + (borderWidth) &&
+                pacmanX + (pacOgSize) > borderX &&
+                pacmanY < borderY + (borderHeight) &&
+                pacmanY + (pacOgSize) > borderY
+            ) {
+                // Collision detected
+                return true;
+            }
+        }
+
+        // No collision detected
+        return false;
+    };
+
+    MyGame2.prototype.checkCollisionWithObstacles = function () {
+        const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+        const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+        //const pacmanWidth = this.pacManTransform.getWidth();
+        //const pacmanHeight = this.pacManTransform.getHeight();
+
+        // Check collision with each border
+        for (let i = 0; i < this.mObstacles.length; i++) {
+            const obstacleX = this.mObstacles[i].getXform().getXPos();
+            const obstacleY = this.mObstacles[i].getXform().getYPos();
+            const obstacleWidth = this.mObstacles[i].getXform().getWidth();
+            const obstacleHeight = this.mObstacles[i].getXform().getHeight();
+
+            // Check for overlap
+            if (
+                pacmanX /*- pacmanWidth*/ < (obstacleX + obstacleWidth/3) &&
+                pacmanX + (pacOgSize) > (obstacleX - (obstacleWidth/3)) &&
+                pacmanY /*- pacmanHeight*/ < (obstacleY + obstacleHeight/3) &&
+                pacmanY + (pacOgSize) > (obstacleY - (obstacleHeight/3))
+            ) {
+                // Collision detected
+                console.log("Collision detected - obstacle")
+                return true;
+            }
+        }
+
+        // No collision detected
+        return false;
+    };
+
+    MyGame2.prototype.collisionGhost = function (mGhost)
+    {
+        const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+        const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+
+        this.tempGhost = mGhost;
+        this.collide = false;
+
+        var ghX = this.tempGhost.getXform().getXPos();
+        var ghY = this.tempGhost.getXform().getYPos();
+
+        if(
+            (pacmanX+7.5)>(ghX-7.5) &&
+            (pacmanY+7.5)>(ghY-7.5) &&
+            (pacmanX-7.5)<(ghX+7.5) &&
+            (pacmanY-7.5)<(ghY+7.5)
+        )
+        {
+            this.collide = true;
+        }
+
+        return this.collide;
+
+    }
+
+    MyGame2.prototype.checkCollisionWithGhost = function (){
+        if(this.collisionGhost(this.mGhostBlinky)){
+            return true;
+        }
+        if(this.collisionGhost(this.mGhostFunky)){
+            return true;
+        }
+        if(this.collisionGhost(this.mGhostInky)){
+            return true;
+        }
+        if(this.collisionGhost(this.mGhostPinky)){
+            return true;
+        }
+        return false;
+    }
+
+
+    console.log("TotalScore : "+this.totalScore);
+    if(this.pelletCount===0) {
+        console.log("Game Over.....")
+    }
+
+    if(this.checkCollisionWithPallets()) {
+        this.totalScore+=10;
+        this.pelletCount--;
+        /* this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+         this.mScoreNum.setFont(this.kFont);
+         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);*/
+    }
+
+    // Check for collision with borders
+    if (this.checkCollisionWithBorders()) {
+        // If collision, revert to original position
+        this.mAnimatedPacman.getXform().setPosition(this.originalX, this.originalY);
+    }
+
+    // Check for collision with obstacles
+    if (this.checkCollisionWithObstacles()) {
+        // If collision, revert to original position
+        this.mAnimatedPacman.getXform().setPosition(this.originalX, this.originalY);
+    }
+
+    if(this.checkCollisionWithGhost()){
+        this.mAnimatedPacman.getXform().setPosition(this.pacStartX, this.pacStartY);
+        this.mGhostBlinky.getXform().setPosition(this.BlinkyStX, this.BlinkyStY);
+        this.mGhostFunky.getXform().setPosition(this.FunkyStX, this.FunkyStY);
+        this.mGhostInky.getXform().setPosition(this.InkyStX, this.InkyStY);
+        this.mGhostPinky.getXform().setPosition(this.PinkyStX, this.PinkyStY);
+    }
+
+
+    if(this.mAnimatedPacman.getXform().getXPos()>(1000+10))
+    {
+        this.mAnimatedPacman.getXform().setXPos(280);
+    }
+    if(this.mAnimatedPacman.getXform().getXPos()<(280-10))
+    {
+        this.mAnimatedPacman.getXform().setXPos(1000);
+    }
+
+    this.originalX = this.mAnimatedPacman.getXform().getXPos();
+    this.originalY = this.mAnimatedPacman.getXform().getYPos();
+
+
+    this.mAnimatedPacman.update();
+    this.mGhostBlinky.update(this.mBorder, this.mObstacles);
+    this.mGhostPinky.update(this.mBorder, this.mObstacles);
+    this.mGhostInky.update(this.mBorder, this.mObstacles);
+    this.mGhostFunky.update(this.mBorder, this.mObstacles);
+
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Three)) {
+        gEngine.GameLoop.stop();
+    }
+
+    if (this.pelletCount === 0)
+    {
+        gEngine.GameLoop.stop();
+    }
+
+};
+
+MyGame2.prototype._initText = function (font, posX, posY, color, textH) {
+    font.setColor(color);
+    font.getXform().setPosition(posX, posY);
+    font.setTextHeight(textH);
 };
