@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function runSequence() {
-        fadeOutText("Group 15 presents...", () => fadeInText("PAC-MAN"));
+        fadeInText("Group 15 presents..."), () => fadeOutText("Group 15 presents...", () => fadeInText("PAC-MAN"));
     }
 
     runSequence();

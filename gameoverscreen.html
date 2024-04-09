@@ -57,9 +57,18 @@
 </div>
 
 <script>
+    // Add event listener for key press
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            // Redirect to a new screen (replace "new_screen.html" with the desired URL)
+            window.location.href = "Back-end/game.html";
+        }
+    });
+
     function showGameOverScreen() {
         document.getElementById("gameOverScreen").style.display = "flex";
     }
+
 </script>
 
 </body>
