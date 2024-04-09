@@ -34,7 +34,7 @@ function MyGame2() {
     this.originalX = 450;
     this.originalY = 575;
 
-    this.kFont = "assets/fonts/Consolas-72";
+    this.kFont = "assets/fonts/system-default-font";
 
     this.kMovingPacman = "assets/allPacman.png";
     this.kMovingPacmanRight = "assets/allPacManFlipped.png";
@@ -1575,7 +1575,7 @@ MyGame2.prototype.initialize = function () {
         this.mPellets.push(pellet);
     };
 
-    /*MyGame2.prototype.initializeText = function () {
+    MyGame2.prototype.initializeText = function () {
         this.mLevelText = new FontRenderable("LEVEL");
         this.mLevelText.setFont(this.kFont);
         this._initText(this.mLevelText, 800, 55, [1, 1, 1, 1], 36);
@@ -1584,14 +1584,14 @@ MyGame2.prototype.initialize = function () {
         this.mScoreText.setFont(this.kFont);
         this._initText(this.mScoreText, 330, 55, [1, 1, 1, 1], 36);
 
-        this.mLevelNum = new FontRenderable("01");
+        this.mLevelNum = new FontRenderable("02");
         this.mLevelNum.setFont(this.kFont);
         this._initText(this.mLevelNum, 940, 55, [1, 1, 1, 1], 36);
 
         this.mScoreNum = new FontRenderable("00");
         this.mScoreNum.setFont(this.kFont);
         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
-    };*/
+    };
 
     this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 575);
 
@@ -1604,7 +1604,7 @@ MyGame2.prototype.initialize = function () {
     this.initializeObstacles();
     this.Maze1Manipulation();
     this.initializePellets();
-    //this.initializeText();
+    this.initializeText();
     this.totalScore = 0;
     this.pelletCount = this.mPellets.length;
 
@@ -1640,10 +1640,10 @@ MyGame2.prototype.draw = function () {
     this.mGhostInky.draw(vpMatrix);
     this.mGhostPinky.draw(vpMatrix);
 
-    /*this.mLevelText.draw(vpMatrix);
+    this.mLevelText.draw(vpMatrix);
     this.mScoreText.draw(vpMatrix);
     this.mLevelNum.draw(vpMatrix);
-    this.mScoreNum.draw(vpMatrix);*/
+    this.mScoreNum.draw(vpMatrix);
 
 };
 
@@ -1800,9 +1800,9 @@ MyGame2.prototype.update = function () {
     if(this.checkCollisionWithPallets()) {
         this.totalScore+=10;
         this.pelletCount--;
-        /* this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+         this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
          this.mScoreNum.setFont(this.kFont);
-         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);*/
+         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
     }
 
     // Check for collision with borders

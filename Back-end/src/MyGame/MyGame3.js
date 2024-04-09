@@ -34,7 +34,7 @@ function MyGame3() {
     this.originalX = 450;
     this.originalY = 610;
 
-    this.kFont = "assets/fonts/Consolas-72";
+    this.kFont = "assets/fonts/system-default-font";
 
     this.kMovingPacman = "assets/allPacman.png";
     this.kMovingPacmanRight = "assets/allPacManFlipped.png";
@@ -96,7 +96,7 @@ function MyGame3() {
 gEngine.Core.inheritPrototype(MyGame3, Scene);
 
 MyGame3.prototype.loadScene = function () {
-    //gEngine.Fonts.loadFont(this.kFont);
+    gEngine.Fonts.loadFont(this.kFont);
     gEngine.Textures.loadTexture(this.kMovingPacman);
     gEngine.Textures.loadTexture(this.kMovingPacmanRight);
     for (let i = 0; i < this.Blinky.length; i++) {
@@ -121,7 +121,7 @@ MyGame3.prototype.loadScene = function () {
 };
 
 MyGame3.prototype.unloadScene = function () {
-    //gEngine.Fonts.unloadFont(this.kFont);
+    gEngine.Fonts.unloadFont(this.kFont);
     gEngine.Textures.unloadTexture(this.kMovingPacman);
     gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
     for (let i = 0; i < this.Blinky.length; i++) {
@@ -1162,7 +1162,7 @@ MyGame3.prototype.initialize = function () {
         this.mPellets.push(pellet);
     };
 
-    /*MyGame3.prototype.initializeText = function () {
+    MyGame3.prototype.initializeText = function () {
         this.mLevelText = new FontRenderable("LEVEL");
         this.mLevelText.setFont(this.kFont);
         this._initText(this.mLevelText, 800, 55, [1, 1, 1, 1], 36);
@@ -1171,14 +1171,14 @@ MyGame3.prototype.initialize = function () {
         this.mScoreText.setFont(this.kFont);
         this._initText(this.mScoreText, 330, 55, [1, 1, 1, 1], 36);
 
-        this.mLevelNum = new FontRenderable("01");
+        this.mLevelNum = new FontRenderable("03");
         this.mLevelNum.setFont(this.kFont);
         this._initText(this.mLevelNum, 940, 55, [1, 1, 1, 1], 36);
 
         this.mScoreNum = new FontRenderable("00");
         this.mScoreNum.setFont(this.kFont);
         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
-    };*/
+    };
 
     this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 610);
 
@@ -1191,7 +1191,7 @@ MyGame3.prototype.initialize = function () {
     this.initializeObstacles();
     this.Maze1Manipulation();
     this.initializePellets();
-    //this.initializeText();
+    this.initializeText();
     this.totalScore = 0;
     this.pelletCount = this.mPellets.length;
 
@@ -1227,10 +1227,10 @@ MyGame3.prototype.draw = function () {
     this.mGhostInky.draw(vpMatrix);
     this.mGhostPinky.draw(vpMatrix);
 
-    /*this.mLevelText.draw(vpMatrix);
+    this.mLevelText.draw(vpMatrix);
     this.mScoreText.draw(vpMatrix);
     this.mLevelNum.draw(vpMatrix);
-    this.mScoreNum.draw(vpMatrix);*/
+    this.mScoreNum.draw(vpMatrix);
 
 };
 
@@ -1387,9 +1387,9 @@ MyGame3.prototype.update = function () {
     if(this.checkCollisionWithPallets()) {
         this.totalScore+=10;
         this.pelletCount--;
-        /*this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+        this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
          this.mScoreNum.setFont(this.kFont);
-         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);*/
+         this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
     }
 
     // Check for collision with borders

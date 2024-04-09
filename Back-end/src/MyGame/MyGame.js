@@ -34,7 +34,7 @@ function MyGame() {
   this.originalX = 450;
   this.originalY = 650;
 
-  this.kFont = "assets/fonts/Consolas-72";
+  this.kFont = "assets/fonts/system-default-font";
 
   this.kMovingPacman = "assets/allPacman.png";
   this.kMovingPacmanRight = "assets/allPacManFlipped.png";
@@ -98,7 +98,7 @@ function MyGame() {
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
-  //gEngine.Fonts.loadFont(this.kFont);
+  gEngine.Fonts.loadFont(this.kFont);
   gEngine.Textures.loadTexture(this.kMovingPacman);
   gEngine.Textures.loadTexture(this.kMovingPacmanRight);
   for (let i = 0; i < this.Blinky.length; i++) {
@@ -128,7 +128,7 @@ MyGame.prototype.loadScene = function () {
 };
 
 MyGame.prototype.unloadScene = function () {
-  //gEngine.Fonts.unloadFont(this.kFont);
+  gEngine.Fonts.unloadFont(this.kFont);
   gEngine.Textures.unloadTexture(this.kMovingPacman);
   gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
   for (let i = 0; i < this.Blinky.length; i++) {
@@ -163,7 +163,7 @@ MyGame.prototype.initialize = function () {
       "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
 
   // Play the background audio
-  gEngine.AudioClips.playACue(this.kBackground);
+  gEngine.AudioClips.playACue(this.kBackground, 1, true);
 
 
   MyGame.prototype.initializeBorders = function () {
@@ -1235,7 +1235,7 @@ MyGame.prototype.initialize = function () {
   this.initializeObstacles();
   this.Maze1Manipulation();
   this.initializePellets();
-  //this.initializeText();
+  this.initializeText();
   this.totalScore = 0;
   this.pelletCount = this.mPellets.length;
 
@@ -1273,10 +1273,10 @@ MyGame.prototype.draw = function () {
   this.mGhostInky.draw(vpMatrix);
   this.mGhostPinky.draw(vpMatrix);
 
-  /*this.mLevelText.draw(vpMatrix);
+  this.mLevelText.draw(vpMatrix);
   this.mScoreText.draw(vpMatrix);
   this.mLevelNum.draw(vpMatrix);
-  this.mScoreNum.draw(vpMatrix);*/
+  this.mScoreNum.draw(vpMatrix);
 
 };
 
@@ -1400,11 +1400,16 @@ MyGame.prototype.update = function () {
         (pacmanY+7.5)>(ghY-7.5) &&
         (pacmanX-7.5)<(ghX+7.5) &&
         (pacmanY-7.5)<(ghY+7.5)
-    )
-    {
+    ) {
       this.collide = true;
-    }
+      gEngine.AudioClips.playACue(this.kPacmanDeath);
 
+      // Delay the redirection to the game over screen
+      setTimeout(() => {
+        window.location.href = "../gameoverscreen.html";
+      }, 2000); // Adjust the delay time as needed (in milliseconds)
+
+    }
     return this.collide;
 
   }
@@ -1433,9 +1438,9 @@ MyGame.prototype.update = function () {
   if(this.checkCollisionWithPallets()) {
     this.totalScore+=10;
     this.pelletCount--;
-   /* this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+    this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
     this.mScoreNum.setFont(this.kFont);
-    this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);*/
+    this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
   }
 
   // Check for collision with borders
