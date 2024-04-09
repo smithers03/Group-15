@@ -1,4 +1,6 @@
 function showGameOverScreen() {
+
+
     document.getElementById("gameOverScreen").style.display = "flex";
 }
 

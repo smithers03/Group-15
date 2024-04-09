@@ -1356,6 +1356,11 @@ MyGame3.prototype.update = function () {
         )
         {
             this.collide = true;
+            // Delay the redirection to the game over screen
+            setTimeout(() => {
+                window.location.href = "../gameoverscreen.html";
+            }, 700); // Adjust the delay time as needed (in milliseconds)
+            pause;
         }
 
         return this.collide;
@@ -1387,7 +1392,7 @@ MyGame3.prototype.update = function () {
     if(this.checkCollisionWithPallets()) {
         this.totalScore+=10;
         this.pelletCount--;
-        this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+        this.mScoreNum = new FontRenderable(JSON.stringify(this.pelletCount));
          this.mScoreNum.setFont(this.kFont);
          this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
     }
@@ -1436,7 +1441,7 @@ MyGame3.prototype.update = function () {
         gEngine.GameLoop.stop();
     }
 
-    if (this.pelletCount === 0)
+    if (this.totalScore === 5970)
     {
         gEngine.GameLoop.stop();
     }

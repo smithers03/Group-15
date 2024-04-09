@@ -1229,7 +1229,7 @@ MyGame.prototype.initialize = function () {
   this.mGhostBlinky = new AnimatedGhost(this.Blinky[0], this.Blinky[1], this.Blinky[2], this.Blinky[3],635, 560)
   this.mGhostFunky = new AnimatedGhost(this.Funky[0], this.Funky[1], this.Funky[2], this.Funky[3],595, 100)
   this.mGhostInky = new AnimatedGhost(this.Inky[0], this.Inky[1], this.Inky[2], this.Inky[3],715, 355)
-  this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],450, 550)
+  this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],350, 550)
 
   this.initializeBorders();
   this.initializeObstacles();
@@ -1402,13 +1402,12 @@ MyGame.prototype.update = function () {
         (pacmanY-7.5)<(ghY+7.5)
     ) {
       this.collide = true;
-      gEngine.AudioClips.playACue(this.kPacmanDeath);
 
       // Delay the redirection to the game over screen
       setTimeout(() => {
         window.location.href = "../gameoverscreen.html";
-      }, 2000); // Adjust the delay time as needed (in milliseconds)
-
+      }, 700); // Adjust the delay time as needed (in milliseconds)
+      pause;
     }
     return this.collide;
 
@@ -1487,7 +1486,7 @@ MyGame.prototype.update = function () {
     gEngine.GameLoop.stop();
   }
 
-  if (this.pelletCount === 0)
+  if (this.totalScore === 3650)
   {
     gEngine.GameLoop.stop();
   }

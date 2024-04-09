@@ -1598,7 +1598,7 @@ MyGame2.prototype.initialize = function () {
     this.mGhostBlinky = new AnimatedGhost(this.Blinky[0], this.Blinky[1], this.Blinky[2], this.Blinky[3],635, 530)
     this.mGhostFunky = new AnimatedGhost(this.Funky[0], this.Funky[1], this.Funky[2], this.Funky[3],595, 100)
     this.mGhostInky = new AnimatedGhost(this.Inky[0], this.Inky[1], this.Inky[2], this.Inky[3],715, 355)
-    this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],450, 520)
+    this.mGhostPinky = new AnimatedGhost(this.Pinky[0], this.Pinky[1], this.Pinky[2], this.Pinky[3],400, 520)
 
     this.initializeBorders();
     this.initializeObstacles();
@@ -1769,6 +1769,11 @@ MyGame2.prototype.update = function () {
         )
         {
             this.collide = true;
+            // Delay the redirection to the game over screen
+            setTimeout(() => {
+                window.location.href = "../gameoverscreen.html";
+            }, 700); // Adjust the delay time as needed (in milliseconds)
+            pause;
         }
 
         return this.collide;
@@ -1849,7 +1854,7 @@ MyGame2.prototype.update = function () {
         gEngine.GameLoop.stop();
     }
 
-    if (this.pelletCount === 0)
+    if (this.totalScore === 3770)
     {
         gEngine.GameLoop.stop();
     }
