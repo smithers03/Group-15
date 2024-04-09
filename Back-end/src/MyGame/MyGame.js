@@ -75,6 +75,7 @@ function MyGame() {
   this.kPacmanOpening = "assets/audios/pacman_beginning.wav";
   this.kCredits = "assets/audios/into.mp3";
   this.kBing = "assets/audios/BlueLevel_cue.wav";
+  this.kBackground = "assets/audios/backgroundMusic.wav";
 
   this.mAnimatedPacman = null; // The animated Pac-Man object
 
@@ -105,6 +106,10 @@ MyGame.prototype.loadScene = function () {
   gEngine.AudioClips.loadAudio(this.kPacmanDeath);
   gEngine.AudioClips.loadAudio(this.kEatFruit);
   gEngine.AudioClips.loadAudio(this.kEatGhost);
+  gEngine.AudioClips.loadAudio(this.kPacmanOpening);
+  gEngine.AudioClips.loadAudio(this.kCredits);
+  gEngine.AudioClips.loadAudio(this.kBing);
+  gEngine.AudioClips.loadAudio(this.kBackground);
 
 };
 
@@ -141,6 +146,8 @@ MyGame.prototype.initialize = function () {
       "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader
       "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
 
+  // Play the background audio
+  gEngine.AudioClips.playACue(this.kBackground);
 
 
   MyGame.prototype.initializeBorders = function () {
