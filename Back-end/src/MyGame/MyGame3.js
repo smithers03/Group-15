@@ -19,6 +19,7 @@ function MyGame3() {
     // Array to store pellets
     this.mPellets = [];
     this.mSprites = [];
+    this.lives = 3;
 
     this.pacStartX = 450;
     this.pacStartY = 610;
@@ -1356,11 +1357,14 @@ MyGame3.prototype.update = function () {
         )
         {
             this.collide = true;
-            // Delay the redirection to the game over screen
-            setTimeout(() => {
-                window.location.href = "../gameoverscreen.html";
-            }, 700); // Adjust the delay time as needed (in milliseconds)
-            pause;
+            this.lives--;
+            if (this.lives < 1) {
+                // Delay the redirection to the game over screen
+                setTimeout(() => {
+                    window.location.href = "../gameoverscreen.html";
+                }, 700); // Adjust the delay time as needed (in milliseconds)
+                pause;
+            }
         }
 
         return this.collide;
