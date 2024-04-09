@@ -1392,7 +1392,7 @@ MyGame3.prototype.update = function () {
     if(this.checkCollisionWithPallets()) {
         this.totalScore+=10;
         this.pelletCount--;
-        this.mScoreNum = new FontRenderable(JSON.stringify(this.pelletCount));
+        this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
          this.mScoreNum.setFont(this.kFont);
          this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
     }
