@@ -73,7 +73,7 @@ function MyGame() {
   this.kEatFruit = "assets/audios/Pacman_eatfruit.wav";
   this.kEatGhost = "assets/audios/Pacman_eatghost.wav";
   this.kPacmanOpening = "assets/audios/pacman_beginning.wav";
-  this.kCredits = "assets/audios/into.mp3";
+  this.kCredits = "assets/audios/into.wav";
   this.kBing = "assets/audios/BlueLevel_cue.wav";
   this.kBackground = "assets/audios/backgroundMusic.wav";
 

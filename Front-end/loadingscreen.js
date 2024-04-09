@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('pacmanLoading');
     const ctx = canvas.getContext('2d');
 
+    // Define the audio file path
+    const audioPath = "Front-end/audio/into.wav";
+
+    // Create an Audio object
+    const audio = new Audio(audioPath);
 
     canvas.width = 800;
     canvas.height = 600;
@@ -11,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const pacManSize = 30;
     let mouthOpenness = 0.2;
     let increasingMouth = true;
-
 
     function drawText(text, opacity) {
         ctx.fillStyle = `rgba(255, 255, 0, ${opacity})`; //
@@ -93,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pacManX < canvas.width + pacManSize) {
                 requestAnimationFrame(animate); // Continue animation until Pac-Man exits the screen
             } else {
+                // Play the credits music when Pac-Man exits the screen
+                audio.play();
                 //redirect to credit roll
                 window.location.href = "credits.html";
             }
@@ -102,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function runSequence() {
         fadeInText("Group 15 presents..."), () => fadeOutText("Group 15 presents...", () => fadeInText("PAC-MAN"));
+
     }
 
     runSequence();
