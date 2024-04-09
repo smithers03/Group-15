@@ -20,8 +20,21 @@ function MyGame() {
   this.mPellets = [];
   this.mSprites = [];
 
-  var originalX = 450;
-  var originalY = 650;
+  this.pacStartX = 450;
+  this.pacStartY = 650;
+  this.BlinkyStX = 635;
+  this.BlinkyStY = 560;
+  this.InkyStX = 715;
+  this.InkyStY = 355;
+  this.PinkyStX = 450;
+  this.PinkyStY = 550;
+  this.FunkyStX = 395;
+  this.FunkyStY = 100;
+
+  this.originalX = 450;
+  this.originalY = 650;
+
+  this.kFont = "assets/fonts/Consolas-72";
 
   this.kMovingPacman = "assets/allPacman.png";
   this.kMovingPacmanRight = "assets/allPacManFlipped.png";
@@ -85,6 +98,7 @@ function MyGame() {
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () {
+  //gEngine.Fonts.loadFont(this.kFont);
   gEngine.Textures.loadTexture(this.kMovingPacman);
   gEngine.Textures.loadTexture(this.kMovingPacmanRight);
   for (let i = 0; i < this.Blinky.length; i++) {
@@ -114,6 +128,7 @@ MyGame.prototype.loadScene = function () {
 };
 
 MyGame.prototype.unloadScene = function () {
+  //gEngine.Fonts.unloadFont(this.kFont);
   gEngine.Textures.unloadTexture(this.kMovingPacman);
   gEngine.Textures.unloadTexture(this.kMovingPacmanRight);
   for (let i = 0; i < this.Blinky.length; i++) {
@@ -128,7 +143,8 @@ MyGame.prototype.unloadScene = function () {
   for (let i = 0; i < this.Pinky.length; i++) {
     gEngine.Textures.unloadTexture(this.Pinky[i]);
   }
-
+  var nextLevel = new MyGame2();  // next level to be loaded
+  gEngine.Core.startScene(nextLevel);
 };
 
 MyGame.prototype.initialize = function () {
@@ -511,959 +527,546 @@ MyGame.prototype.initialize = function () {
       yLower += 10;
     }
 
+    ///////////////////MIDDLE BOX  LEFT AND RIGHT//////////////////////////
 
-
-    /*let mUppSq = new Renderable(this.mConstColorShader);
-    mUppSq.setColor([0.0, 0.0, 0.6, 1]);
-    mUppSq.getXform().setPosition(xRight, yUpper);
-    mUppSq.getXform().setSize(15, 15);
-    let mLowSq = new Renderable(this.mConstColorShader);
-    mLowSq.setColor([0.0, 0.0, 0.6, 1]);
-    mLowSq.getXform().setPosition(xLeft, yUpper);
-    mLowSq.getXform().setSize(15, 15);
-
-    // this.mUppSq.draw(vpMatrix);
-    // this.mLowSq.draw(vpMatrix);
-    this.mBorder.push(mUppSq)
-    this.mBorder.push(mLowSq)*/
-
-  }
-
-  MyGame.prototype.initializeObstacles = function (){
-    // Middle Box - Daniel
-
-    var xRight = 740;
-    var xLeft = 540;
-    var yUpper = 430;
+    var xRight = 748;
+    var xLeft = 533;
+    var yUpperL = 430;
+    var yUpper = 420;
 
     for (let i = 0; i <= 4; i++){
-      let mUppSq = new Renderable(this.mConstColorShader);
-      mUppSq.setColor([0.0, 0.0, 0.6, 1]);
-      mUppSq.getXform().setPosition(xRight, yUpper);
-      mUppSq.getXform().setSize(15, 15);
-      let mLowSq = new Renderable(this.mConstColorShader);
-      mLowSq.setColor([0.0, 0.0, 0.6, 1]);
-      mLowSq.getXform().setPosition(xLeft, yUpper);
-      mLowSq.getXform().setSize(15, 15);
+      let mbl = new Renderable(this.mConstColorShader);
+      mbl.setColor([0.0, 0.0, 0.6, 1]);
+      mbl.getXform().setPosition(xLeft, yUpperL);
+      mbl.getXform().setSize(15, 15);
 
-      // this.mUppSq.draw(vpMatrix);
-      // this.mLowSq.draw(vpMatrix);
-      this.mObstacles.push(mUppSq);
-      this.mObstacles.push(mLowSq);
+      let mbr = new Renderable(this.mConstColorShader);
+      mbr.setColor([0.0, 0.0, 0.6, 1]);
+      mbr.getXform().setPosition(xRight, yUpper);
+      mbr.getXform().setSize(15, 15);
 
-      mUppSq = new Renderable(this.mConstColorShader);
-      mUppSq.setColor([0.0, 0.0, 0.0, 1]);
-      mUppSq.getXform().setPosition(xRight, yUpper);
-      mUppSq.getXform().setSize(5, 5);
-      mLowSq = new Renderable(this.mConstColorShader);
-      mLowSq.setColor([0.0, 0.0, 0.0, 1]);
-      mLowSq.getXform().setPosition(xLeft, yUpper);
-      mLowSq.getXform().setSize(5, 5);
+      this.mBorder.push(mbl);
+      this.mBorder.push(mbr);
 
-      // this.mUppSq.draw(vpMatrix);
-      // this.mLowSq.draw(vpMatrix);
-      this.mObstacles.push(mUppSq);
-      this.mObstacles.push(mLowSq);
+      let mblb = new Renderable(this.mConstColorShader);
+      mblb.setColor([0.0, 0.0, 0.0, 1]);
+      mblb.getXform().setPosition(xLeft, yUpperL);
+      mblb.getXform().setSize(5, 5);
+
+      let mbrb = new Renderable(this.mConstColorShader);
+      mbrb.setColor([0.0, 0.0, 0.0, 1]);
+      mbrb.getXform().setPosition(xRight, yUpper);
+      mbrb.getXform().setSize(5, 5);
+
+      this.mBorder.push(mblb);
+      this.mBorder.push(mbrb);
 
       yUpper -= 10;
+      yUpperL -= 10;
     }
+
+
+
+
+//////////////// MIDDLE BOX TOP LEFT AND BOTTOM  ///////////////////
+//
     var yLower = 380;
-    var xLeft = 540;
+    var xLeft = 535;
     var yUpper = 430;
-    for (let i = 0; i <= 20; i++){
-      let mUppSq = new Renderable(this.mConstColorShader);
-      mUppSq.setColor([0.0, 0.0, 0.6, 1]);
-      mUppSq.getXform().setPosition(xLeft, yUpper);
-      mUppSq.getXform().setSize(15, 15);
-      let mLowSq = new Renderable(this.mConstColorShader);
-      mLowSq.setColor([0.0, 0.0, 0.6, 1]);
-      mLowSq.getXform().setPosition(xLeft, yLower);
-      mLowSq.getXform().setSize(15, 15);
+    var xRight = 533;
 
-      // this.mUppSq.draw(vpMatrix);
-      // this.mLowSq.draw(vpMatrix);
-      this.mObstacles.push(mUppSq);
-      this.mObstacles.push(mLowSq);
+    for (let i = 0; i <= 8; i++){
+      let mbtl = new Renderable(this.mConstColorShader);
+      mbtl.setColor([0.0, 0.0, 0.6, 1]);
+      mbtl.getXform().setPosition(xLeft, yUpper);
+      mbtl.getXform().setSize(15, 15);
 
-      mUppSq = new Renderable(this.mConstColorShader);
-      mUppSq.setColor([0.0, 0.0, 0.0, 1]);
-      mUppSq.getXform().setPosition(xLeft, yUpper);
-      mUppSq.getXform().setSize(5, 5);
-      mLowSq = new Renderable(this.mConstColorShader);
-      mLowSq.setColor([0.0, 0.0, 0.0, 1]);
-      mLowSq.getXform().setPosition(xLeft, yLower);
-      mLowSq.getXform().setSize(5, 5);
 
-      // this.mUppSq.draw(vpMatrix);
-      // this.mLowSq.draw(vpMatrix);
-      this.mObstacles.push(mUppSq);
-      this.mObstacles.push(mLowSq);
+      this.mBorder.push(mbtl);
+
+      let mbtlb = new Renderable(this.mConstColorShader);
+      mbtlb.setColor([0.0, 0.0, 0.0, 1]);
+      mbtlb.getXform().setPosition(xLeft, yUpper);
+      mbtlb.getXform().setSize(5, 5);
+
+      this.mBorder.push(mbtlb);
 
       xLeft += 10;
     }
 
-    // Bottom-left Corner - Daniel
-
-    var x1,y1,x2,y2;
-
-    // Obstacle 1
-    x1 = 480;
-    y1 = 355;
-
-    let mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(35, 65);
-    let mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1);
-    mBlackSq1.getXform().setSize(25, 55);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-
-    // Obstacles 2 & 3
-    y1 = 205;
-    x1 = 640;
-    y2 = 330;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(215, 25);
-    let mBlueSq2 = new Renderable(this.mConstColorShader);
-    mBlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq2.getXform().setPosition(x1, y2);
-    mBlueSq2.getXform().setSize(215, 15);
-
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1);
-    mBlackSq1.getXform().setSize(205, 15);
-    let mBlackSq2 = new Renderable(this.mConstColorShader);
-    mBlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq2.getXform().setPosition(x1, y2);
-    mBlackSq2.getXform().setSize(205, 5);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlueSq2.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    //this.mBlackSq2.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-    this.mObstacles.push(mBlueSq2);
-    this.mObstacles.push(mBlackSq2);
-
-    x1 = 640;
-    y1 = 157.5;
-    y2 = 287.5;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(35, 70);
-    mBlueSq2 = new Renderable(this.mConstColorShader);
-    mBlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq2.getXform().setPosition(x1, y2);
-    mBlueSq2.getXform().setSize(35, 70);
-
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1+5);
-    mBlackSq1.getXform().setSize(25, 70);
-    mBlackSq2 = new Renderable(this.mConstColorShader);
-    mBlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq2.getXform().setPosition(x1, y2+5);
-    mBlackSq2.getXform().setSize(25, 70);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlueSq2.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    //this.mBlackSq2.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-    this.mObstacles.push(mBlueSq2);
-    this.mObstacles.push(mBlackSq2);
-
-    // Obstacle 4
-    y1 = 270;
-    x1 = 525;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(125, 35);
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1);
-    mBlackSq1.getXform().setSize(115, 25);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-
-    // Obstacle 5
-    y1 = 270;
-    x1 = 377.5;
-    x2 = 410;
-    y2 = 222.5;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(100, 35);
-    mBlueSq2 = new Renderable(this.mConstColorShader);
-    mBlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq2.getXform().setPosition(x2, y2);
-    mBlueSq2.getXform().setSize(35, 60);
-
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1);
-    mBlackSq1.getXform().setSize(90, 25);
-    mBlackSq2 = new Renderable(this.mConstColorShader);
-    mBlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq2.getXform().setPosition(x2, y2+5);
-    mBlackSq2.getXform().setSize(25, 60);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlueSq2.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    //this.mBlackSq2.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-    this.mObstacles.push(mBlueSq2);
-    this.mObstacles.push(mBlackSq2);
-
-    // Obstacle 6
-    y1 = 205;
-    x1 = 325;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(65, 25);
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1-2, y1);
-    mBlackSq1.getXform().setSize(60, 15);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-
-    // Obstacle 7
-    y1 = 140;
-    x1 = 457.5;
-    y2 = 187.5;
-    x2 = 480;
-
-    mBlueSq1 = new Renderable(this.mConstColorShader);
-    mBlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq1.getXform().setPosition(x1, y1);
-    mBlueSq1.getXform().setSize(260, 35);
-    mBlueSq2 = new Renderable(this.mConstColorShader);
-    mBlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    mBlueSq2.getXform().setPosition(x2, y2);
-    mBlueSq2.getXform().setSize(35, 60);
-
-    mBlackSq1 = new Renderable(this.mConstColorShader);
-    mBlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq1.getXform().setPosition(x1, y1);
-    mBlackSq1.getXform().setSize(250, 25);
-    mBlackSq2 = new Renderable(this.mConstColorShader);
-    mBlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    mBlackSq2.getXform().setPosition(x2, y2-5);
-    mBlackSq2.getXform().setSize(25, 60);
-
-    //this.mBlueSq1.draw(vpMatrix);
-    //this.mBlueSq2.draw(vpMatrix);
-    //this.mBlackSq1.draw(vpMatrix);
-    //this.mBlackSq2.draw(vpMatrix);
-    this.mObstacles.push(mBlueSq1);
-    this.mObstacles.push(mBlackSq1);
-    this.mObstacles.push(mBlueSq2);
-    this.mObstacles.push(mBlackSq2);
-
-
-    /////////////////////// Maaheen's Top Right Corner ///////////////////////////
-
-    //Top Right Square//
-
-    var x = 900;
-    var yBottom = 580;
-    var yTop = 635;
-    var y = 607.5;
-
-
-    let trSquareTRTop = new Renderable(this.mConstColorShader);
-    trSquareTRTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTRTop.getXform().setPosition(x, y);
-    trSquareTRTop.getXform().setSize(95, 60);
-    //this.trSquareTRTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareTRTop);
-
-    let trSquareTRBottom = new Renderable(this.mConstColorShader);
-    trSquareTRBottom.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTRBottom.getXform().setPosition(x, y);
-    trSquareTRBottom.getXform().setSize(85, 50);
-    //this.trSquareTRBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareTRBottom);
-
-    /* var xLeft = 855;
-     var xRight = 950;
-     var y = 607.5;
-
-
-     let trSquareTRLeft = new Renderable(this.mConstColorShader);
-     trSquareTRLeft.setColor([0.0, 0.0, 0.6, 1]);
-     trSquareTRLeft.getXform().setPosition(xLeft, y);
-     trSquareTRLeft.getXform().setSize(5, 60);
-     //trSquareTRLeft.draw(vpMatrix);
-     this.mObstacles.push(trSquareTRLeft);
-
-     let trSquareTRRight = new Renderable(this.mConstColorShader);
-     trSquareTRRight.setColor([0.0, 0.0, 0.6, 1]);
-     trSquareTRRight.getXform().setPosition(xRight, y);
-     trSquareTRRight.getXform().setSize(5, 60);
-     //this.trSquareTRRight.draw(vpMatrix);
-     this.mObstacles.push(trSquareTRRight);
-   */
-
-
-    //Bottom Right Rectangle//
-
-    var x = 900;
-    var yBottom = 520;
-    var yTop = 545;
-
-
-    let trSquareBRTop = new Renderable(this.mConstColorShader);
-    trSquareBRTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTop.getXform().setPosition(x, yTop);
-    trSquareBRTop.getXform().setSize(95, 5);
-    //this.trSquareBRTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTop);
-
-    let trSquareBRBottom = new Renderable(this.mConstColorShader);
-    trSquareBRBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRBottom.getXform().setPosition(x, yBottom);
-    trSquareBRBottom.getXform().setSize(95, 5);
-    //this.trSquareBRBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRBottom);
-
-    var xLeft = 855;
-    var xRight = 950;
-    var y = 532.5;
-
-
-    let trSquareBRLeft = new Renderable(this.mConstColorShader);
-    trSquareBRLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRLeft.getXform().setPosition(xLeft, y);
-    trSquareBRLeft.getXform().setSize(5, 30);
-    //this.trSquareBRLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRLeft);
-
-    let trSquareBRRight = new Renderable(this.mConstColorShader);
-    trSquareBRRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRRight.getXform().setPosition(xRight, y);
-    trSquareBRRight.getXform().setSize(5, 30);
-    //this.trSquareBRRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRRight);
-
-
-//   //Top Left Rectangle//
-
-
-    var x = 760;
-    var yBottom = 580;
-    var yTop = 635;
-    var y = 607.5;
-
-    let trSquareTLTop = new Renderable(this.mConstColorShader);
-    trSquareTLTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTop.getXform().setPosition(x, y);
-    trSquareTLTop.getXform().setSize(105, 60);
-    //this.trSquareTLTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTop);
-
-    let trSquareTLBottom = new Renderable(this.mConstColorShader);
-    trSquareTLBottom.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLBottom.getXform().setPosition(x, y);
-    trSquareTLBottom.getXform().setSize(95, 50);
-    //this.trSquareTLBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLBottom);
-
-    /* var xLeft = 710;
-     var xRight = 815;
-     var y = 607.5;
-
-
-     let trSquareTRLeft1 = new Renderable(this.mConstColorShader);
-     trSquareTRLeft1.setColor([0.0, 0.0, 0.6, 1]);
-     trSquareTRLeft1.getXform().setPosition(xLeft, y);
-     trSquareTRLeft1.getXform().setSize(5, 60);
-     //this.trSquareTRLeft.draw(vpMatrix);
-     this.mObstacles.push(trSquareTRLeft1);
-
-     let trSquareTRRight1 = new Renderable(this.mConstColorShader);
-     trSquareTRRight1.setColor([0.0, 0.0, 0.6, 1]);
-     trSquareTRRight1.getXform().setPosition(xRight, y);
-     trSquareTRRight1.getXform().setSize(5, 60);
-     //this.trSquareTRRight.draw(vpMatrix);
-     this.mObstacles.push(trSquareTRRight1);  */
-
-
-    //Top Middle Rectangle//
-
-    var x = 650;
-    var yBottom = 580;
-
-    let trSquareMBottom = new Renderable(this.mConstColorShader);
-    trSquareMBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareMBottom.getXform().setPosition(x, yBottom);
-    trSquareMBottom.getXform().setSize(30, 5);
-    //this.trSquareMBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareMBottom);
-
-    var xLeft = 635;
-    var xRight = 665;
-    var y = 625;
-
-
-    let trSquareMLeft = new Renderable(this.mConstColorShader);
-    trSquareMLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareMLeft.getXform().setPosition(xLeft, y);
-    trSquareMLeft.getXform().setSize(5, 95);
-    //this.trSquareMLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareMLeft);
-
-    let trSquareMRight = new Renderable(this.mConstColorShader);
-    trSquareMRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareMRight.getXform().setPosition(xRight, y);
-    trSquareMRight.getXform().setSize(5, 95);
-    //this.trSquareMRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareMRight);
-
-
-    //Bottom Right T Head//
-
-    var x = 800;
-    var yTop = 540;
-    var yBottom = 425;
-
-    let trSquareBRTTop = new Renderable(this.mConstColorShader);
-    trSquareBRTTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTTop.getXform().setPosition(x, yTop);
-    trSquareBRTTop.getXform().setSize(30, 5);
-    //this.trSquareBRTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTTop);
-
-    let trSquareBRTBottom = new Renderable(this.mConstColorShader);
-    trSquareBRTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTBottom.getXform().setPosition(x, yBottom);
-    trSquareBRTBottom.getXform().setSize(30, 5);
-    //this.trSquareBRTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTBottom);
-
-    var xLeft = 787;
-    var xRight = 815;
-    var y = 482.5;
-
-
-    let trSquareBRTLeft = new Renderable(this.mConstColorShader);
-    trSquareBRTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTLeft.getXform().setPosition(xLeft, y);
-    trSquareBRTLeft.getXform().setSize(5, 120);
-    //this.trSquareBRTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTLeft);
-
-    let trSquareBRTRight = new Renderable(this.mConstColorShader);
-    trSquareBRTRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTRight.getXform().setPosition(xRight, y);
-    trSquareBRTRight.getXform().setSize(5, 120);
-    //this.trSquareBRTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTRight);
-
-
-    //Bottom Right T Tail//
-
-    var x = 748;
-    var yTop = 487;
-    var yBottom = 465;
-
-    let trSquareTLTTop = new Renderable(this.mConstColorShader);
-    trSquareTLTTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTTop.getXform().setPosition(x, yTop);
-    trSquareTLTTop.getXform().setSize(82, 5);
-    //this.trSquareTLTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTTop);
-
-    let trSquareTLTBottom = new Renderable(this.mConstColorShader);
-    trSquareTLTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTBottom.getXform().setPosition(x, yBottom);
-    trSquareTLTBottom.getXform().setSize(82, 5);
-    //this.trSquareTLTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTBottom);
-
-    var xLeft = 564;
-    var xRight = 735;
-    var y = 527.5;
-
-
-    let trSquareTLTLeft = new Renderable(this.mConstColorShader);
-    trSquareTLTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTLeft.getXform().setPosition(xLeft, y);
-    trSquareTLTLeft.getXform().setSize(5, 30);
-    //this.trSquareTLTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTLeft);
-
-    let trSquareTLTRight = new Renderable(this.mConstColorShader);
-    trSquareTLTRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTRight.getXform().setPosition(xRight, y);
-    trSquareTLTRight.getXform().setSize(5, 30);
-    //this.trSquareTLTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTRight);
-
-
-
-
-    //Top Left T Head//
-
-    var x = 650;
-    var yTop = 540;
-    var yBottom = 515;
-
-    trSquareTLTTop = new Renderable(this.mConstColorShader);
-    trSquareTLTTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTTop.getXform().setPosition(x, yTop);
-    trSquareTLTTop.getXform().setSize(170, 5);
-    //this.trSquareTLTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTTop);
-
-    trSquareTLTBottom = new Renderable(this.mConstColorShader);
-    trSquareTLTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTBottom.getXform().setPosition(x, yBottom);
-    trSquareTLTBottom.getXform().setSize(170, 5);
-    //this.trSquareTLTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTBottom);
-
-    var xLeft = 708;
-    var xRight = 787;
-    var y = 476;
-
-
-    trSquareTLTLeft = new Renderable(this.mConstColorShader);
-    trSquareTLTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTLeft.getXform().setPosition(xLeft, y);
-    trSquareTLTLeft.getXform().setSize(5, 27);
-    //this.trSquareTLTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTLeft);
-
-    trSquareTLTRight = new Renderable(this.mConstColorShader);
-    trSquareTLTRight.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLTRight.getXform().setPosition(xRight, y);
-    trSquareTLTRight.getXform().setSize(5, 17);
-    //this.trSquareTLTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTRight);
-
-    //Top Left T Tail//
-
-    var x = 650;
-    var yTop = 515;
-    var yBottom = 465;
-
-    trSquareTLTTop = new Renderable(this.mConstColorShader);
-    trSquareTLTTop.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLTTop.getXform().setPosition(x, yTop);
-    trSquareTLTTop.getXform().setSize(30, 5);
-    //this.trSquareTLTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTTop);
-
-    trSquareTLTBottom = new Renderable(this.mConstColorShader);
-    trSquareTLTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTBottom.getXform().setPosition(x, yBottom);
-    trSquareTLTBottom.getXform().setSize(30, 5);
-    //this.trSquareTLTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTBottom);
-
-    var xLeft = 633;
-    var xRight = 667;
-    var y = 490;
-
-
-    trSquareTLTLeft = new Renderable(this.mConstColorShader);
-    trSquareTLTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTLeft.getXform().setPosition(xLeft, y);
-    trSquareTLTLeft.getXform().setSize(5, 55);
-    //this.trSquareTLTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTLeft);
-
-    trSquareTLTRight = new Renderable(this.mConstColorShader);
-    trSquareTLTRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTRight.getXform().setPosition(xRight, y);
-    trSquareTLTRight.getXform().setSize(5, 55);
-    //this.trSquareTLTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTRight);
-
-    //Maaheen Part//
-    //Middle Right Rectangle//
-
-    var x = 800;
-    var yTop = 382;
-    var yBottom = 325;
-
-    trSquareBRTTop = new Renderable(this.mConstColorShader);
-    trSquareBRTTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTTop.getXform().setPosition(x, yTop);
-    trSquareBRTTop.getXform().setSize(30, 5);
-    //this.trSquareBRTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTTop);
-
-    trSquareBRTBottom = new Renderable(this.mConstColorShader);
-    trSquareBRTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTBottom.getXform().setPosition(x, yBottom);
-    trSquareBRTBottom.getXform().setSize(30, 5);
-    //this.trSquareBRTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTBottom);
-
-    var xLeft = 787;
-    var xRight = 815;
-    var y = 353.5;
-
-    trSquareBRTLeft = new Renderable(this.mConstColorShader);
-    trSquareBRTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTLeft.getXform().setPosition(xLeft, y);
-    trSquareBRTLeft.getXform().setSize(5, 62);
-    //this.trSquareBRTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTLeft);
-
-    trSquareBRTRight = new Renderable(this.mConstColorShader);
-    trSquareBRTRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTRight.getXform().setPosition(xRight, y);
-    trSquareBRTRight.getXform().setSize(5, 62);
-    //this.trSquareBRTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTRight);
-
-
-
-    //**Hetansh Code bottom right
-
-
-    var centerX = 640;
-    var centerY = 360;
-
-    //obstacle 7 mirrored
-    // Adjusted coordinates for mirrored obstacle in the bottom right
-    var ob7x1 = centerX + (centerX - 457.5); // New x1 for the mirrored position of mBlueSq1 and mBlackSq1
-    var ob7x2 = centerX + (centerX - 480); // New x2 for the mirrored position of mBlueSq2 and mBlackSq2, adjusted for width
-    var ob7y1 = centerY - (360 - 140) ; // Adjust y1 for bottom alignment, subtracting the height to position it from the bottom
-    var ob7y2 = centerY - (360 - 187.5) ; // Adjust y2 similarly, ensuring it's placed above y1 with proper spacing
-
-    let ob7BlueSq1 = new Renderable(this.mConstColorShader);
-    ob7BlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    ob7BlueSq1.getXform().setPosition(ob7x1, ob7y1);
-    ob7BlueSq1.getXform().setSize(260, 35);
-
-    let ob7BlueSq2 = new Renderable(this.mConstColorShader);
-    ob7BlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    ob7BlueSq2.getXform().setPosition(ob7x2, ob7y2);
-    ob7BlueSq2.getXform().setSize(35, 60);
-
-    let ob7BlackSq1 = new Renderable(this.mConstColorShader);
-    ob7BlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    ob7BlackSq1.getXform().setPosition(ob7x1, ob7y1);
-    ob7BlackSq1.getXform().setSize(250, 25);
-
-    let ob7BlackSq2 = new Renderable(this.mConstColorShader);
-    ob7BlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    ob7BlackSq2.getXform().setPosition(ob7x2 , ob7y2 - 5);
-    ob7BlackSq2.getXform().setSize(25, 60);
-
-    //this.ob7BlueSq1.draw(vpMatrix);
-    //this.ob7BlackSq1.draw(vpMatrix);
-    //this.ob7BlueSq2.draw(vpMatrix);
-    //this.ob7BlackSq2.draw(vpMatrix);
-    this.mObstacles.push(ob7BlueSq1);
-    this.mObstacles.push(ob7BlackSq1);
-    this.mObstacles.push(ob7BlueSq2);
-    this.mObstacles.push(ob7BlackSq2);
-
-// Obstacle 4 - Mirror Image (Bottom-Right Corner)
-    var ob4x1 = centerX + (centerX - 525); // New x1 for the mirrored position of mBlueSq1 and mBlackSq1
-    var ob4y1 = centerY - (360 - 270); // Adjust y1 for bottom alignment, subtracting the height to position it from the bottom
-
-    let ob4BlueSq1 = new Renderable(this.mConstColorShader);
-    ob4BlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    ob4BlueSq1.getXform().setPosition(ob4x1, ob4y1);
-    ob4BlueSq1.getXform().setSize(125, 35);
-
-    let ob4BlackSq1 = new Renderable(this.mConstColorShader);
-    ob4BlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    ob4BlackSq1.getXform().setPosition(ob4x1, ob4y1);
-    ob4BlackSq1.getXform().setSize(115, 25);
-
-    //this.ob4BlueSq1.draw(vpMatrix);
-    //this.ob4BlackSq1.draw(vpMatrix);
-    this.mObstacles.push(ob4BlueSq1);
-    this.mObstacles.push(ob4BlackSq1);
-
-// Obstacle 5 - Mirror Image (Bottom-Right Corner)
-    var ob5x1 = centerX + ( centerX - 380); // New x1 for the mirrored position of mBlueSq1 and mBlackSq1
-    var ob5x2 = centerX + ( centerX - 412); // New x2 for the mirrored position of mBlueSq2 and mBlackSq2
-    var ob5y1 = centerY - (360 - 270); // Adjust y1 for bottom alignment, subtracting the height to position it from the bottom
-    var ob5y2 = centerY - (360 - 222.5); // Adjust y2 similarly, ensuring it's placed above y1 with proper spacing
-
-    let ob5BlueSq1 = new Renderable(this.mConstColorShader);
-    ob5BlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    ob5BlueSq1.getXform().setPosition(ob5x1, ob5y1);
-    ob5BlueSq1.getXform().setSize(100, 35);
-
-    let ob5BlueSq2 = new Renderable(this.mConstColorShader);
-    ob5BlueSq2.setColor([0.0, 0.0, 0.6, 1]);
-    ob5BlueSq2.getXform().setPosition(ob5x2, ob5y2);
-    ob5BlueSq2.getXform().setSize(35, 60);
-
-    let ob5BlackSq1 = new Renderable(this.mConstColorShader);
-    ob5BlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    ob5BlackSq1.getXform().setPosition(ob5x1, ob5y1);
-    ob5BlackSq1.getXform().setSize(90, 25);
-
-    let ob5BlackSq2 = new Renderable(this.mConstColorShader);
-    ob5BlackSq2.setColor([0.0, 0.0, 0.0, 1]);
-    ob5BlackSq2.getXform().setPosition(ob5x2, ob5y2 + 5);
-    ob5BlackSq2.getXform().setSize(25, 60);
-
-    //this.ob5BlueSq1.draw(vpMatrix);
-    //this.ob5BlackSq1.draw(vpMatrix);
-    //this.ob5BlueSq2.draw(vpMatrix);
-    //this.ob5BlackSq2.draw(vpMatrix);
-    this.mObstacles.push(ob5BlueSq1);
-    this.mObstacles.push(ob5BlackSq1);
-    this.mObstacles.push(ob5BlueSq2);
-    this.mObstacles.push(ob5BlackSq2);
-
-    // Obstacle 6 - Mirror Image (Bottom-Right Corner)
-    var ob6x1 = centerX - ( centerX - 960); // New x1 for the mirrored position of mBlueSq1 and mBlackSq1
-    var ob6y1 = centerY - (360 - 205); // Adjust y1 for bottom alignment, subtracting the height to position it from the bottom
-
-    let ob6BlueSq1 = new Renderable(this.mConstColorShader);
-    ob6BlueSq1.setColor([0.0, 0.0, 0.6, 1]);
-    ob6BlueSq1.getXform().setPosition(ob6x1, ob6y1);
-    ob6BlueSq1.getXform().setSize(75, 25);
-
-    let ob6BlackSq1 = new Renderable(this.mConstColorShader);
-    ob6BlackSq1.setColor([0.0, 0.0, 0.0, 1]);
-    ob6BlackSq1.getXform().setPosition(ob6x1 - 2, ob6y1);
-    ob6BlackSq1.getXform().setSize(60, 15);
-
-    //this.ob6BlueSq1.draw(vpMatrix);
-    //this.ob6BlackSq1.draw(vpMatrix);
-    this.mObstacles.push(ob6BlueSq1);
-    this.mObstacles.push(ob6BlackSq1);
-
-
-
-    //Tony part
-    //Top Left Square//
-
-    var xMirror = 380;  // Adjust the x-coordinate for the mirror image
-    var yBottomMirror = 580;
-    var yTopMirror = 635;
-    var yMirror = 607.5;
-
-    let trSquareTLTopMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTopMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTopMirror.getXform().setPosition(xMirror, yMirror);
-    trSquareTLTopMirror.getXform().setSize(95, 60);
-    //this.trSquareTLTopMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTopMirror);
-
-    let trSquareTLBottomMirror = new Renderable(this.mConstColorShader);
-    trSquareTLBottomMirror.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLBottomMirror.getXform().setPosition(xMirror, yMirror);
-    trSquareTLBottomMirror.getXform().setSize(85, 50);
-    //this.trSquareTLBottomMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLBottomMirror);
-
-    /* var xLeftMirror = 335;
-    var xRightMirror = 430;
-    var yMirror = 607.5;
-
-    let trSquareTLLeftMirror = new Renderable(this.mConstColorShader);
-    trSquareTLLeftMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLLeftMirror.getXform().setPosition(xLeftMirror, yMirror);
-    trSquareTLLeftMirror.getXform().setSize(5, 60);
-    //this.trSquareTLLeftMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLLeftMirror);
-
-    let trSquareTLRightMirror = new Renderable(this.mConstColorShader);
-    trSquareTLRightMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLRightMirror.getXform().setPosition(xRightMirror, yMirror);
-    trSquareTLRightMirror.getXform().setSize(5, 60);
-    //this.trSquareTLRightMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLRightMirror); */
-
-// Bottom Left Square //
-
-    var xMirror = 380;  // Adjust the x-coordinate for the mirror image
-    var yBottomMirror = 520;
-    var yTopMirror = 545;
-
-    let trSquareBLTopMirror = new Renderable(this.mConstColorShader);
-    trSquareBLTopMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBLTopMirror.getXform().setPosition(xMirror, yTopMirror);
-    trSquareBLTopMirror.getXform().setSize(95, 5);
-    //this.trSquareBLTopMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareBLTopMirror);
-
-    let trSquareBLBottomMirror = new Renderable(this.mConstColorShader);
-    trSquareBLBottomMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBLBottomMirror.getXform().setPosition(xMirror, yBottomMirror);
-    trSquareBLBottomMirror.getXform().setSize(95, 5);
-    //this.trSquareBLBottomMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareBLBottomMirror);
-
-    var xLeftMirror = 335;
-    var xRightMirror = 430;
-    var yMirror = 532.5;
-
-    let trSquareBLLeftMirror = new Renderable(this.mConstColorShader);
-    trSquareBLLeftMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBLLeftMirror.getXform().setPosition(xLeftMirror, yMirror);
-    trSquareBLLeftMirror.getXform().setSize(5, 30);
-    //this.trSquareBLLeftMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareBLLeftMirror);
-
-    let trSquareBLRightMirror = new Renderable(this.mConstColorShader);
-    trSquareBLRightMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBLRightMirror.getXform().setPosition(xRightMirror, yMirror);
-    trSquareBLRightMirror.getXform().setSize(5, 30);
-    //this.trSquareBLRightMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareBLRightMirror);
-
-// Right Square
-    var xMirror = 520;  // Adjust the x-coordinate for the mirror image
-    var yBottomMirror = 580;
-    var yTopMirror = 635;
-    var yMirror = 607.5;
-
-    trSquareTLTopMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTopMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTopMirror.getXform().setPosition(xMirror, yMirror);
-    trSquareTLTopMirror.getXform().setSize(95, 60);
-    //this.trSquareTLTopMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTopMirror);
-
-    trSquareTLBottomMirror = new Renderable(this.mConstColorShader);
-    trSquareTLBottomMirror.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLBottomMirror.getXform().setPosition(xMirror, yMirror);
-    trSquareTLBottomMirror.getXform().setSize(85, 50);
-    //this.trSquareTLBottomMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLBottomMirror);
-
-    /* var xLeftMirror = 475;
-    var xRightMirror = 570;
-    var yMirror = 607.5;
-
-    let trSquareTLLeftMirror = new Renderable(this.mConstColorShader);
-    trSquareTLLeftMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLLeftMirror.getXform().setPosition(xLeftMirror, yMirror);
-    trSquareTLLeftMirror.getXform().setSize(5, 60);
-    //this.trSquareTLLeftMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLLeftMirror);
-
-    let trSquareTLRightMirror = new Renderable(this.mConstColorShader);
-    trSquareTLRightMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLRightMirror.getXform().setPosition(xRightMirror, yMirror);
-    trSquareTLRightMirror.getXform().setSize(5, 60);
-    //this.trSquareTLRightMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLRightMirror); */
-
-
-    //Maaheen Part
-
-    //Bottom Left T Head//
-
-    var x = 480;
-    var yTop = 540;
-    var yBottom = 425;
-
-    trSquareBRTTop = new Renderable(this.mConstColorShader);
-    trSquareBRTTop.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTTop.getXform().setPosition(x, yTop);
-    trSquareBRTTop.getXform().setSize(30, 5);
-    //this.trSquareBRTTop.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTTop);
-
-    trSquareBRTBottom = new Renderable(this.mConstColorShader);
-    trSquareBRTBottom.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTBottom.getXform().setPosition(x, yBottom);
-    trSquareBRTBottom.getXform().setSize(30, 5);
-    //this.trSquareBRTBottom.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTBottom);
-
-    var xLeft = 467.5;
-    var xRight = 495;
-    var y = 482.5;
-
-
-    trSquareBRTLeft = new Renderable(this.mConstColorShader);
-    trSquareBRTLeft.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTLeft.getXform().setPosition(xLeft, y);
-    trSquareBRTLeft.getXform().setSize(5, 120);
-    //this.trSquareBRTLeft.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTLeft);
-
-    trSquareBRTRight = new Renderable(this.mConstColorShader);
-    trSquareBRTRight.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareBRTRight.getXform().setPosition(xRight, y);
-    trSquareBRTRight.getXform().setSize(5, 120);
-    //this.trSquareBRTRight.draw(vpMatrix);
-    this.mObstacles.push(trSquareBRTRight);
-
-
-    // Bottom Left T Tail //
-
-    var xMirror = 545;  // Adjust the x-coordinate for the mirror image
-    var yTopMirror = 487;
-    var yBottomMirror = 465;
-
-    let trSquareTLTTopMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTTopMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTTopMirror.getXform().setPosition(xMirror, yTopMirror);
-    trSquareTLTTopMirror.getXform().setSize(100, 5);
-    //this.trSquareTLTTopMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTTopMirror);
-
-    let trSquareTLTBottomMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTBottomMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTBottomMirror.getXform().setPosition(xMirror, yBottomMirror);
-    trSquareTLTBottomMirror.getXform().setSize(100, 5);
-    //this.trSquareTLTBottomMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTBottomMirror);
-
-    var xLeftMirror = 495;
-    var xRightMirror = 592.5;
-    var yMirror = 476;
-
-    let trSquareTLTLeftMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTLeftMirror.setColor([0.0, 0.0, 0.0, 1]);
-    trSquareTLTLeftMirror.getXform().setPosition(xLeftMirror, yMirror);
-    trSquareTLTLeftMirror.getXform().setSize(5, 17);
-    //this.trSquareTLTLeftMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTLeftMirror);
-
-    let trSquareTLTRightMirror = new Renderable(this.mConstColorShader);
-    trSquareTLTRightMirror.setColor([0.0, 0.0, 0.6, 1]);
-    trSquareTLTRightMirror.getXform().setPosition(xRightMirror, yMirror);
-    trSquareTLTRightMirror.getXform().setSize(5, 27);
-    //this.trSquareTLTRightMirror.draw(vpMatrix);
-    this.mObstacles.push(trSquareTLTRightMirror);
+    for (let i = 0; i <= 21; i++){
+
+      let mbb = new Renderable(this.mConstColorShader);
+      mbb.setColor([0.0, 0.0, 0.6, 1]);
+      mbb.getXform().setPosition(xRight, yLower);
+      mbb.getXform().setSize(15, 15);
+
+      this.mBorder.push(mbb);
+
+      let mbbb = new Renderable(this.mConstColorShader);
+      mbbb.setColor([0.0, 0.0, 0.0, 1]);
+      mbbb.getXform().setPosition(xRight, yLower);
+      mbbb.getXform().setSize(5, 5);
+
+      this.mBorder.push(mbbb);
+
+      xRight += 10;
+    }
+//
+
+    //////////////////////// MIDDLE BOX TOP RIGHT  /////////////
+    var xLeft = 668;
+    var yUpper = 430;
+
+    for (let i = 0; i <= 8; i++) {
+      let mbtr = new Renderable(this.mConstColorShader);
+      mbtr.setColor([0.0, 0.0, 0.6, 1]);
+      mbtr.getXform().setPosition(xLeft, yUpper);
+      mbtr.getXform().setSize(15, 15);
+
+      this.mBorder.push(mbtr);
+
+      let mbtrb = new Renderable(this.mConstColorShader);
+      mbtrb.setColor([0.0, 0.0, 0.0, 1]);
+      mbtrb.getXform().setPosition(xLeft, yUpper);
+      mbtrb.getXform().setSize(5, 5);
+
+      this.mBorder.push(mbtrb);
+
+      xLeft += 10;
+    }
+
+
+  }
+
+  MyGame.prototype.initializeObstacles = function (){
+    ///////////////////// Obstacles ////////////////////
+
+    //////////////// TOP LEFT CORNER UPPER BOX /////////////////
+    let tlcup = new Renderable(this.mConstColorShader);
+    tlcup.setColor([0.0, 0.0, 0.6, 1.0]);
+    tlcup.getXform().setPosition(378,611);
+    tlcup.getXform().setSize(100, 50);
+    this.mObstacles.push(tlcup);
+
+    let tlcupb = new Renderable(this.mConstColorShader);
+    tlcupb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tlcupb.getXform().setPosition(378,611);
+    tlcupb.getXform().setSize(80, 30);
+    this.mObstacles.push(tlcupb);
+
+
+    //////////////// TOP LEFT CORNER LOWER BOX /////////////////
+    let tlclp = new Renderable(this.mConstColorShader);
+    tlclp.setColor([0.0, 0.0, 0.6, 1.0]);
+    tlclp.getXform().setPosition(378,536);
+    tlclp.getXform().setSize(100, 28);
+    this.mObstacles.push(tlclp);
+
+    let tlclpb = new Renderable(this.mConstColorShader);
+    tlclpb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tlclpb.getXform().setPosition(378,536);
+    tlclpb.getXform().setSize(80, 13);
+    this.mObstacles.push(tlclpb);
+
+    //////////////// TOP RIGHT CORNER UPPER BOX /////////////////
+    let trcup = new Renderable(this.mConstColorShader);
+    trcup.setColor([0.0, 0.0, 0.6, 1.0]);
+    trcup.getXform().setPosition(902,611);
+    trcup.getXform().setSize(100, 50);
+    this.mObstacles.push(trcup);
+
+    let trcupb = new Renderable(this.mConstColorShader);
+    trcupb.setColor([0.0, 0.0, 0.0, 1.0]);
+    trcupb.getXform().setPosition(902,611);
+    trcupb.getXform().setSize(80, 30);
+    this.mObstacles.push(trcupb);
+
+
+    //////////////// TOP RIGHT CORNER BOTTOM BOX /////////////////
+    let trcbp = new Renderable(this.mConstColorShader);
+    trcbp.setColor([0.0, 0.0, 0.6, 1.0]);
+    trcbp.getXform().setPosition(902,536);
+    trcbp.getXform().setSize(100, 28);
+    this.mObstacles.push(trcbp);
+
+    let trcbpb = new Renderable(this.mConstColorShader);
+    trcbpb.setColor([0.0, 0.0, 0.0, 1.0]);
+    trcbpb.getXform().setPosition(902,536);
+    trcbpb.getXform().setSize(80, 13);
+    this.mObstacles.push(trcbpb);
+
+    //////////////// TOP LEFT CORNER RIGHT BOX /////////////////
+    let tlcrp = new Renderable(this.mConstColorShader);
+    tlcrp.setColor([0.0, 0.0, 0.6, 1.0]);
+    tlcrp.getXform().setPosition(526,611);
+    tlcrp.getXform().setSize(122, 50);
+    this.mObstacles.push(tlcrp);
+
+    let tlcrpb = new Renderable(this.mConstColorShader);
+    tlcrpb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tlcrpb.getXform().setPosition(526,611);
+    tlcrpb.getXform().setSize(102, 30);
+    this.mObstacles.push(tlcrpb);
+
+    //////////////// TOP RIGHT CORNER LEFT BOX /////////////////
+    let trclp = new Renderable(this.mConstColorShader);
+    trclp.setColor([0.0, 0.0, 0.6, 1.0]);
+    trclp.getXform().setPosition(754,611);
+    trclp.getXform().setSize(122, 50);
+    this.mObstacles.push(trclp);
+
+    let trclpb = new Renderable(this.mConstColorShader);
+    trclpb.setColor([0.0, 0.0, 0.0, 1.0]);
+    trclpb.getXform().setPosition(754,611);
+    trclpb.getXform().setSize(102, 30);
+    this.mObstacles.push(trclpb);
+
+    //////////////// TOP MIDDLE RECTANGLE /////////////////
+    let tmr = new Renderable(this.mConstColorShader);
+    tmr.setColor([0.0, 0.0, 0.6, 1.0]);
+    tmr.getXform().setPosition(640,630);
+    tmr.getXform().setSize(34, 89);
+    this.mObstacles.push(tmr);
+
+    let tmrb = new Renderable(this.mConstColorShader);
+    tmrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tmrb.getXform().setPosition(640,636);
+    tmrb.getXform().setSize(14, 79);
+    this.mObstacles.push(tmrb);
+
+    //////////////////////////// TOP LEFT T TOP ///////////////
+    let tltt = new Renderable(this.mConstColorShader);
+    tltt.setColor([0.0, 0.0, 0.6, 1.0]);
+    tltt.getXform().setPosition(478,486.5);
+    tltt.getXform().setSize(25, 127);
+    this.mObstacles.push(tltt);
+
+    let tlttb = new Renderable(this.mConstColorShader);
+    tlttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tlttb.getXform().setPosition(478,486.5);
+    tlttb.getXform().setSize(10, 110);
+    this.mObstacles.push(tlttb);
+
+    //////////////////////////// TOP LEFT T BOTTOM ///////////////
+    let tltb = new Renderable(this.mConstColorShader);
+    tltb.setColor([0.0, 0.0, 0.6, 1.0]);
+    tltb.getXform().setPosition(536,477);
+    tltb.getXform().setSize(100, 20);
+    this.mObstacles.push(tltb);
+
+    let tltbb = new Renderable(this.mConstColorShader);
+    tltbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tltbb.getXform().setPosition(530,477);
+    tltbb.getXform().setSize(100, 8);
+    this.mObstacles.push(tltbb);
+
+    //////////////////////////// TOP RIGHT T TOP ///////////////
+    let trtt = new Renderable(this.mConstColorShader);
+    trtt.setColor([0.0, 0.0, 0.6, 1.0]);
+    trtt.getXform().setPosition(803,486.5);
+    trtt.getXform().setSize(25, 127);
+    this.mObstacles.push(trtt);
+
+    let trttb = new Renderable(this.mConstColorShader);
+    trttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    trttb.getXform().setPosition(803,486.5);
+    trttb.getXform().setSize(10, 110);
+    this.mObstacles.push(trttb);
+
+    //////////////////////////// TOP RIGHT T BOTTOM ///////////////
+    let trtb = new Renderable(this.mConstColorShader);
+    trtb.setColor([0.0, 0.0, 0.6, 1.0]);
+    trtb.getXform().setPosition(743,477);
+    trtb.getXform().setSize(100, 20);
+    this.mObstacles.push(trtb);
+
+    let trtbb = new Renderable(this.mConstColorShader);
+    trtbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    trtbb.getXform().setPosition(750,477);
+    trtbb.getXform().setSize(100, 8);
+    this.mObstacles.push(trtbb);
+
+    //////////////////////////// TOP MIDDLE T TOP ///////////////
+    let tmtt = new Renderable(this.mConstColorShader);
+    tmtt.setColor([0.0, 0.0, 0.6, 1.0]);
+    tmtt.getXform().setPosition(640.5,536);
+    tmtt.getXform().setSize(229, 26);
+    this.mObstacles.push(tmtt);
+
+    let tmttb = new Renderable(this.mConstColorShader);
+    tmttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tmttb.getXform().setPosition(640.5,536);
+    tmttb.getXform().setSize(209, 10);
+    this.mObstacles.push(tmttb);
+
+    ////////////////////////////// TOP MIDDLE T BOTTOM //////////////////
+    let tmtb = new Renderable(this.mConstColorShader);
+    tmtb.setColor([0.0, 0.0, 0.6, 1.0]);
+    tmtb.getXform().setPosition(640,497);
+    tmtb.getXform().setSize(35, 60);
+    this.mObstacles.push(tmtb);
+
+    let tmtbb = new Renderable(this.mConstColorShader);
+    tmtbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    tmtbb.getXform().setPosition(640,505);
+    tmtbb.getXform().setSize(15, 60);
+    this.mObstacles.push(tmtbb);
+
+    /////////////////////////// MIDDLE LEFT RECTANGLE /////////////
+    let mlr = new Renderable(this.mConstColorShader);
+    mlr.setColor([0.0, 0.0, 0.6, 1.0]);
+    mlr.getXform().setPosition(478,355);
+    mlr.getXform().setSize(25, 64);
+    this.mObstacles.push(mlr);
+
+    let mlrb = new Renderable(this.mConstColorShader);
+    mlrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    mlrb.getXform().setPosition(478,355);
+    mlrb.getXform().setSize(10, 47);
+    this.mObstacles.push(mlrb);
+
+    /////////////////////////// MIDDLE RIGHT RECTANGLE /////////////
+    let mrr = new Renderable(this.mConstColorShader);
+    mrr.setColor([0.0, 0.0, 0.6, 1.0]);
+    mrr.getXform().setPosition(803,355);
+    mrr.getXform().setSize(25, 64);
+    this.mObstacles.push(mrr);
+
+    let mrrb = new Renderable(this.mConstColorShader);
+    mrrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    mrrb.getXform().setPosition(803,355);
+    mrrb.getXform().setSize(10, 47);
+    this.mObstacles.push(mrrb);
+
+    //////////////////////////// BOTTOM MIDDLE MIDDLE T TOP ///////////////
+    let bmmtt = new Renderable(this.mConstColorShader);
+    bmmtt.setColor([0.0, 0.0, 0.6, 1.0]);
+    bmmtt.getXform().setPosition(640.5,330);
+    bmmtt.getXform().setSize(229, 15);
+    this.mObstacles.push(bmmtt);
+
+    let bmmttb = new Renderable(this.mConstColorShader);
+    bmmttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bmmttb.getXform().setPosition(640.5,330);
+    bmmttb.getXform().setSize(212, 5);
+    this.mObstacles.push(bmmttb);
+
+    ////////////////////////////// BOTTOM MIDDLE MIDDLE T BOTTOM //////////////////
+    let bmmtb = new Renderable(this.mConstColorShader);
+    bmmtb.setColor([0.0, 0.0, 0.6, 1.0]);
+    bmmtb.getXform().setPosition(640,290);
+    bmmtb.getXform().setSize(35, 66);
+    this.mObstacles.push(bmmtb);
+
+    let bmmtbb = new Renderable(this.mConstColorShader);
+    bmmtbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bmmtbb.getXform().setPosition(640,297);
+    bmmtbb.getXform().setSize(15, 65);
+    this.mObstacles.push(bmmtbb);
+
+    //////////////////////////// BOTTOM LEFT HORIZONTAL RECTANGLE ///////////////
+    let blhr = new Renderable(this.mConstColorShader);
+    blhr.setColor([0.0, 0.0, 0.6, 1.0]);
+    blhr.getXform().setPosition(526.5,273);
+    blhr.getXform().setSize(121, 29);
+    this.mObstacles.push(blhr);
+
+    let blhrb = new Renderable(this.mConstColorShader);
+    blhrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    blhrb.getXform().setPosition(526.5,273);
+    blhrb.getXform().setSize(101, 13);
+    this.mObstacles.push(blhrb);
+
+
+    //////////////////////////// BOTTOM RIGHT HORIZONTAL RECTANGLE ///////////////
+    let brhr = new Renderable(this.mConstColorShader);
+    brhr.setColor([0.0, 0.0, 0.6, 1.0]);
+    brhr.getXform().setPosition(755,273);
+    brhr.getXform().setSize(121, 29);
+    this.mObstacles.push(brhr);
+
+    let brhrb = new Renderable(this.mConstColorShader);
+    brhrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brhrb.getXform().setPosition(755,273);
+    brhrb.getXform().setSize(101, 13);
+    this.mObstacles.push(brhrb);
+
+
+    /////////////////////// BOTTOM LEFT L SIDE /////////////
+    let blls = new Renderable(this.mConstColorShader);
+    blls.setColor([0.0, 0.0, 0.6, 1.0]);
+    blls.getXform().setPosition(417.5,240);
+    blls.getXform().setSize(25, 90);
+    this.mObstacles.push(blls);
+
+    let bllsb = new Renderable(this.mConstColorShader);
+    bllsb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bllsb.getXform().setPosition(417.5,240);
+    bllsb.getXform().setSize(11, 75);
+    this.mObstacles.push(bllsb);
+
+    //////////////////////////// BOTTOM LEFT L BOTTOM ///////////////
+    let bllb = new Renderable(this.mConstColorShader);
+    bllb.setColor([0.0, 0.0, 0.6, 1.0]);
+    bllb.getXform().setPosition(379,273);
+    bllb.getXform().setSize(102, 29);
+    this.mObstacles.push(bllb);
+
+    let bllbb = new Renderable(this.mConstColorShader);
+    bllbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bllbb.getXform().setPosition(379,273);
+    bllbb.getXform().setSize(85, 13);
+    this.mObstacles.push(bllbb);
+
+    let bllbbgap = new Renderable(this.mConstColorShader);
+    bllbbgap.setColor([0.0, 0.0, 0.0, 1.0]);
+    bllbbgap.getXform().setPosition(417.5,259.5);
+    bllbbgap.getXform().setSize(11, 40);
+    this.mObstacles.push(bllbbgap);
+
+
+    /////////////////////// BOTTOM RIGHT L SIDE /////////////
+    let brls = new Renderable(this.mConstColorShader);
+    brls.setColor([0.0, 0.0, 0.6, 1.0]);
+    brls.getXform().setPosition(864,240);
+    brls.getXform().setSize(25, 90);
+    this.mObstacles.push(brls);
+
+    let brlsb = new Renderable(this.mConstColorShader);
+    brlsb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brlsb.getXform().setPosition(864,240);
+    brlsb.getXform().setSize(11, 75);
+    this.mObstacles.push(brlsb);
+
+    //////////////////////////// BOTTOM RIGHT L BOTTOM ///////////////
+    let brlb = new Renderable(this.mConstColorShader);
+    brlb.setColor([0.0, 0.0, 0.6, 1.0]);
+    brlb.getXform().setPosition(902,273);
+    brlb.getXform().setSize(100, 29);
+    this.mObstacles.push(brlb);
+
+    let brlbb = new Renderable(this.mConstColorShader);
+    brlbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brlbb.getXform().setPosition(902,273);
+    brlbb.getXform().setSize(85, 13);
+    this.mObstacles.push(brlbb);
+
+    let brlbbgap = new Renderable(this.mConstColorShader);
+    brlbbgap.setColor([0.0, 0.0, 0.0, 1.0]);
+    brlbbgap.getXform().setPosition(864,264.5);
+    brlbbgap.getXform().setSize(11, 30);
+    this.mObstacles.push(brlbbgap);
+
+
+
+    ///////////////////// BOTTOM LEFT BORDER HORIZONTAL RECTANGLE ///////////////
+    let blbhr = new Renderable(this.mConstColorShader);
+    blbhr.setColor([0.0, 0.0, 0.6, 1.0]);
+    blbhr.getXform().setPosition(330,210);
+    blbhr.getXform().setSize(80, 29);
+    this.mObstacles.push(blbhr);
+
+    let blbhrb = new Renderable(this.mConstColorShader);
+    blbhrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    blbhrb.getXform().setPosition(327,210);
+    blbhrb.getXform().setSize(70, 13);
+    this.mObstacles.push(blbhrb);
+
+    ///////////////////// BOTTOM RIGHT BORDER HORIZONTAL RECTANGLE ///////////////
+    let brbhr = new Renderable(this.mConstColorShader);
+    brbhr.setColor([0.0, 0.0, 0.6, 1.0]);
+    brbhr.getXform().setPosition(953                                          ,210);
+    brbhr.getXform().setSize(80, 29);
+    this.mObstacles.push(brbhr);
+
+    let brbhrb = new Renderable(this.mConstColorShader);
+    brbhrb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brbhrb.getXform().setPosition(955                                          ,210);
+    brbhrb.getXform().setSize(70, 13);
+    this.mObstacles.push(brbhrb);
+
+
+    ///////////////////// BOTTOM LEFT T HEAD  //////////////////////////
+    let blth = new Renderable(this.mConstColorShader);
+    blth.setColor([0.0, 0.0, 0.6, 1.0]);
+    blth.getXform().setPosition(457,141);
+    blth.getXform().setSize(258, 35);
+    this.mObstacles.push(blth);
+
+    let blthb = new Renderable(this.mConstColorShader);
+    blthb.setColor([0.0, 0.0, 0.0, 1.0]);
+    blthb.getXform().setPosition(457,141);
+    blthb.getXform().setSize(238, 15);
+    this.mObstacles.push(blthb);
+
+    /////////////////////////// BOTTOM LEFT T TAIL /////////////
+    let bltt = new Renderable(this.mConstColorShader);
+    bltt.setColor([0.0, 0.0, 0.6, 1.0]);
+    bltt.getXform().setPosition(478,191);
+    bltt.getXform().setSize(25, 66);
+    this.mObstacles.push(bltt);
+
+    let blttb = new Renderable(this.mConstColorShader);
+    blttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    blttb.getXform().setPosition(478,183);
+    blttb.getXform().setSize(10, 70);
+    this.mObstacles.push(blttb);
+
+
+
+    ///////////////////// BOTTOM RIGHT T HEAD  //////////////////////////
+    let brth = new Renderable(this.mConstColorShader);
+    brth.setColor([0.0, 0.0, 0.6, 1.0]);
+    brth.getXform().setPosition(823,141);
+    brth.getXform().setSize(257, 35);
+    this.mObstacles.push(brth);
+
+    let brthb = new Renderable(this.mConstColorShader);
+    brthb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brthb.getXform().setPosition(823,141);
+    brthb.getXform().setSize(236, 15);
+    this.mObstacles.push(brthb);
+
+
+    /////////////////////////// BOTTOM RIGHT T TAIL /////////////
+    let brtt = new Renderable(this.mConstColorShader);
+    brtt.setColor([0.0, 0.0, 0.6, 1.0]);
+    brtt.getXform().setPosition(803,191);
+    brtt.getXform().setSize(25, 66);
+    this.mObstacles.push(brtt);
+
+    let brttb = new Renderable(this.mConstColorShader);
+    brttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    brttb.getXform().setPosition(803,183);
+    brttb.getXform().setSize(10, 70);
+    this.mObstacles.push(brttb);
+
+    //////////////////////////// BOTTOM  MIDDLE T TOP ///////////////
+    let bmtt = new Renderable(this.mConstColorShader);
+    bmtt.setColor([0.0, 0.0, 0.6, 1.0]);
+    bmtt.getXform().setPosition(640.5,210);
+    bmtt.getXform().setSize(229, 28);
+    this.mObstacles.push(bmtt);
+
+    let bmttb = new Renderable(this.mConstColorShader);
+    bmttb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bmttb.getXform().setPosition(640.5,210);
+    bmttb.getXform().setSize(209, 12);
+    this.mObstacles.push(bmttb);
+
+    ////////////////////////////// BOTTOM  MIDDLE T BOTTOM //////////////////
+    let bmtb = new Renderable(this.mConstColorShader);
+    bmtb.setColor([0.0, 0.0, 0.6, 1.0]);
+    bmtb.getXform().setPosition(640,160);
+    bmtb.getXform().setSize(35, 73);
+    this.mObstacles.push(bmtb);
+
+    let bmtbb = new Renderable(this.mConstColorShader);
+    bmtbb.setColor([0.0, 0.0, 0.0, 1.0]);
+    bmtbb.getXform().setPosition(640,170);
+    bmtbb.getXform().setSize(15, 75);
+    this.mObstacles.push(bmtbb);
 
 
   }
@@ -1500,27 +1103,11 @@ MyGame.prototype.initialize = function () {
 
     let mtempMid = new Renderable(this.mConstColorShader);
     mtempMid.setColor([0.0, 0.0, 0.0, 1]);
-    mtempMid.getXform().setPosition(640,405);
-    mtempMid.getXform().setSize(120, 15);
+    mtempMid.getXform().setPosition(655,415);
+    mtempMid.getXform().setSize(135, 17);
 
     // this.mtempMid.draw(vpMatrix);
     this.mBorder.push(mtempMid)
-
-    let mtempMidHigh = new Renderable(this.mConstColorShader);
-    mtempMidHigh.setColor([0.0, 0.0, 0.0, 1]);
-    mtempMidHigh.getXform().setPosition(650,625);
-    mtempMidHigh.getXform().setSize(15, 75);
-
-    // this.mtempMidHigh.draw(vpMatrix);
-    this.mBorder.push(mtempMidHigh)
-
-    let mtempMidLow = new Renderable(this.mConstColorShader);
-    mtempMidLow.setColor([0.0, 0.0, 0.0, 1]);
-    mtempMidLow.getXform().setPosition(650,490);
-    mtempMidLow.getXform().setSize(15, 30);
-
-    // this.mtempMidLow.draw(vpMatrix);
-    this.mBorder.push(mtempMidLow)
 
   };
 
@@ -1530,7 +1117,7 @@ MyGame.prototype.initialize = function () {
   MyGame.prototype.checkPelletObstacleLoc = function(x,y) {
     for (let i = 0; i < this.mObstacles.length; i++) {
       const obstacleX = this.mObstacles[i].getXform().getXPos() + 5;
-      const obstacleY = this.mObstacles[i].getXform().getYPos() + 5;
+      const obstacleY = this.mObstacles[i].getXform().getYPos() ;
       const obstacleWidth = this.mObstacles[i].getXform().getWidth();
       const obstacleHeight = this.mObstacles[i].getXform().getHeight();
 
@@ -1555,7 +1142,7 @@ MyGame.prototype.initialize = function () {
   MyGame.prototype.checkPelletBorderLoc = function(x,y) {
     for (let i = 0; i < this.mBorder.length; i++) {
       const borderX = this.mBorder[i].getXform().getXPos() + 5;
-      const borderY = this.mBorder[i].getXform().getYPos() + 5;
+      const borderY = this.mBorder[i].getXform().getYPos() ;
       const borderWidth = this.mBorder[i].getXform().getWidth();
       const borderHeight = this.mBorder[i].getXform().getHeight();
 
@@ -1575,7 +1162,7 @@ MyGame.prototype.initialize = function () {
 
   MyGame.prototype.initializePellets = function () {
     var xBound = 290;
-    var yUpper = 662.5;
+    var yUpper = 650;
     var yLower = 80;
 
     // Fill top
@@ -1619,6 +1206,24 @@ MyGame.prototype.initialize = function () {
     this.mPellets.push(pellet);
   };
 
+  MyGame.prototype.initializeText = function () {
+    this.mLevelText = new FontRenderable("LEVEL");
+    this.mLevelText.setFont(this.kFont);
+    this._initText(this.mLevelText, 800, 55, [1, 1, 1, 1], 36);
+
+    this.mScoreText = new FontRenderable("SCORE");
+    this.mScoreText.setFont(this.kFont);
+    this._initText(this.mScoreText, 330, 55, [1, 1, 1, 1], 36);
+
+    this.mLevelNum = new FontRenderable("01");
+    this.mLevelNum.setFont(this.kFont);
+    this._initText(this.mLevelNum, 940, 55, [1, 1, 1, 1], 36);
+
+    this.mScoreNum = new FontRenderable("00");
+    this.mScoreNum.setFont(this.kFont);
+    this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);
+  };
+
   this.mAnimatedPacman = new AnimatedPacman(this.kMovingPacman, this.kMovingPacmanRight, 450, 600);
 
   this.mGhostBlinky = new AnimatedGhost(this.Blinky[0], this.Blinky[1], this.Blinky[2], this.Blinky[3],635, 560)
@@ -1630,6 +1235,7 @@ MyGame.prototype.initialize = function () {
   this.initializeObstacles();
   this.Maze1Manipulation();
   this.initializePellets();
+  //this.initializeText();
   this.totalScore = 0;
   this.pelletCount = this.mPellets.length;
 
@@ -1666,6 +1272,11 @@ MyGame.prototype.draw = function () {
   this.mGhostFunky.draw(vpMatrix);
   this.mGhostInky.draw(vpMatrix);
   this.mGhostPinky.draw(vpMatrix);
+
+  /*this.mLevelText.draw(vpMatrix);
+  this.mScoreText.draw(vpMatrix);
+  this.mLevelNum.draw(vpMatrix);
+  this.mScoreNum.draw(vpMatrix);*/
 
 };
 
@@ -1773,6 +1384,46 @@ MyGame.prototype.update = function () {
     return false;
   };
 
+  MyGame.prototype.collisionGhost = function (mGhost)
+  {
+    const pacmanX = this.mAnimatedPacman.getXform().getXPos();
+    const pacmanY = this.mAnimatedPacman.getXform().getYPos();
+
+    this.tempGhost = mGhost;
+    this.collide = false;
+
+    var ghX = this.tempGhost.getXform().getXPos();
+    var ghY = this.tempGhost.getXform().getYPos();
+
+    if(
+        (pacmanX+7.5)>(ghX-7.5) &&
+        (pacmanY+7.5)>(ghY-7.5) &&
+        (pacmanX-7.5)<(ghX+7.5) &&
+        (pacmanY-7.5)<(ghY+7.5)
+    )
+    {
+      this.collide = true;
+    }
+
+    return this.collide;
+
+  }
+
+  MyGame.prototype.checkCollisionWithGhost = function (){
+    if(this.collisionGhost(this.mGhostBlinky)){
+      return true;
+    }
+    if(this.collisionGhost(this.mGhostFunky)){
+      return true;
+    }
+    if(this.collisionGhost(this.mGhostInky)){
+      return true;
+    }
+    if(this.collisionGhost(this.mGhostPinky)){
+      return true;
+    }
+    return false;
+  }
 
   console.log("TotalScore : "+this.totalScore);
   if(this.pelletCount===0) {
@@ -1782,6 +1433,9 @@ MyGame.prototype.update = function () {
   if(this.checkCollisionWithPallets()) {
     this.totalScore+=10;
     this.pelletCount--;
+   /* this.mScoreNum = new FontRenderable(JSON.stringify(this.totalScore));
+    this.mScoreNum.setFont(this.kFont);
+    this._initText(this.mScoreNum, 470, 55, [1, 1, 1, 1], 36);*/
   }
 
   // Check for collision with borders
@@ -1796,13 +1450,47 @@ MyGame.prototype.update = function () {
     this.mAnimatedPacman.getXform().setPosition(this.originalX, this.originalY);
   }
 
+  if(this.checkCollisionWithGhost()){
+    this.mAnimatedPacman.getXform().setPosition(this.pacStartX, this.pacStartY);
+    this.mGhostBlinky.getXform().setPosition(this.BlinkyStX, this.BlinkyStY);
+    this.mGhostFunky.getXform().setPosition(this.FunkyStX, this.FunkyStY);
+    this.mGhostInky.getXform().setPosition(this.InkyStX, this.InkyStY);
+    this.mGhostPinky.getXform().setPosition(this.PinkyStX, this.PinkyStY);
+  }
+
+
+  if(this.mAnimatedPacman.getXform().getXPos()>(1000+10))
+  {
+    this.mAnimatedPacman.getXform().setXPos(280);
+  }
+  if(this.mAnimatedPacman.getXform().getXPos()<(280-10))
+  {
+    this.mAnimatedPacman.getXform().setXPos(1000);
+  }
+
   this.originalX = this.mAnimatedPacman.getXform().getXPos();
   this.originalY = this.mAnimatedPacman.getXform().getYPos();
 
 
   this.mAnimatedPacman.update();
   this.mGhostBlinky.update(this.mBorder, this.mObstacles);
+  this.mGhostPinky.update(this.mBorder, this.mObstacles);
+  this.mGhostInky.update(this.mBorder, this.mObstacles);
+  this.mGhostFunky.update(this.mBorder, this.mObstacles);
 
+  if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Two)) {
+    gEngine.GameLoop.stop();
+  }
 
+  if (this.pelletCount === 0)
+  {
+    gEngine.GameLoop.stop();
+  }
 
+};
+
+MyGame.prototype._initText = function (font, posX, posY, color, textH) {
+  font.setColor(color);
+  font.getXform().setPosition(posX, posY);
+  font.setTextHeight(textH);
 };
