@@ -1,0 +1,18 @@
+Group-15
+SwEng Project for Group 15 with Qualcomm
+
+1.) To run and view the game, first download the Webstorm IDE (you can get a free trial)
+download for mac: https://www.jetbrains.com/webstorm/download/#section=mac
+download for windows: https://www.jetbrains.com/webstorm/download/#section=windows
+download for linux: https://www.jetbrains.com/webstorm/download/#section=linux
+
+2.) Once downloaded, when you open Webstorm you should see the option "Check out from Version Control"
+on the homepage, click that.
+
+3.) Click "Git"
+
+4.) Import this as the Git Repository URL: https://github.com/smithers03/Group-15
+
+5.) Choose any Directory you want
+
+6.)
