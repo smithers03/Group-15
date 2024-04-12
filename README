@@ -6,6 +6,11 @@ download for mac: https://www.jetbrains.com/webstorm/download/#section=mac
 download for windows: https://www.jetbrains.com/webstorm/download/#section=windows
 download for linux: https://www.jetbrains.com/webstorm/download/#section=linux
 
+    1.1.) IF prompted with installation options like "Create Desktop Shortcut",
+    "Update Context Menu"... check all the boxes on the pop up screen
+
+    1.2.) IF prompted to "Import WebStorm Settings", select "Do not import settings"
+
 2.) Once downloaded, when you open Webstorm you should see the option "Check out from Version Control"
 on the homepage, click that.
 
@@ -17,7 +22,7 @@ on the homepage, click that.
 
 6.) Make sure you are in the Final-Master-Branch branch
 
-7.) Go to the "Front-end" folder
+7.) Go to the "Front-end" folder --> "webgpu" folder --> "finished" folder
 
 8.) Open "index.html"
 
@@ -25,6 +30,10 @@ on the homepage, click that.
 (when you hover over it, it should say "Run index.html")
 
 10.) The game should be running on your browser now.
+
+FOR TESTING: After you have run the game, go to More Tools and Developer Tools
+to see the console. Once you start the game (after the opening start screens),
+testing verification messages will print to the console.
 
 How the game works when you play:
 
