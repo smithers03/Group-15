@@ -131,9 +131,9 @@ Engine_Test.prototype.initialize = function () {
     Engine_Test.prototype.testCamera = function () {
         let cameraWorks = false;
         this.mCamera = new Camera(
-            vec2.fromValues(640, 360),   // center of the WC
-            720,                        // width of WC
-            [280, 0, 720, 720]         // viewport (orgX, orgY, width, height)
+            vec2.fromValues(640, 360),  
+            720,   
+            [280, 0, 720, 720] 
         );
         if (this.mCamera != null && this.mCamera.getWCCenter() != null) {
             cameraWorks = true;
@@ -150,8 +150,8 @@ Engine_Test.prototype.initialize = function () {
         fetch("src/GLSLShaders/SimpleFS.glsl")
             .then(response => {if (!response.ok) shaderWorks = false})
         this.mConstColorShader = new SimpleShader(
-            "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader
-            "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
+            "src/GLSLShaders/SimpleVS.glsl",
+            "src/GLSLShaders/SimpleFS.glsl");
         return shaderWorks;
     }
 
