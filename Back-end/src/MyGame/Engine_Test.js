@@ -13,7 +13,7 @@
 
 function Engine_Test() {
     this.missingAsset = false;
-    this.allTestsPassed = true;
+    this.numTestsPassed = 0;
 
   this.mAssets = [];
 
@@ -62,6 +62,7 @@ function Engine_Test() {
     this.kBackground = "assets/audios/backgroundMusic.wav";
     this.mAssets.push("");
 
+    //Find each asset
     for (let i=0; i<this.mAssets.length; i++) {
         fetch(this.mAssets[i])
             .then(response => {if (!response.ok) this.missingAsset = true})
@@ -69,6 +70,7 @@ function Engine_Test() {
 
     this.mCamera = null;
 }
+//Test Engine Core
 gEngine.Core.inheritPrototype(Engine_Test, Scene);
 
 //Check that the engine can load scenes, textures & audios
@@ -101,7 +103,7 @@ Engine_Test.prototype.loadScene = function () {
 
 };
 
-//Check that the engine can unload and move scenes
+//Unloads Scene and starts level 1
 Engine_Test.prototype.unloadScene = function () {
   gEngine.Fonts.unloadFont(this.mAssets[0]);
   gEngine.Textures.unloadTexture(this.mAssets[1]);
@@ -122,8 +124,10 @@ Engine_Test.prototype.unloadScene = function () {
   gEngine.Core.startScene(nextLevel);
 };
 
+//Individual tests
 Engine_Test.prototype.initialize = function () {
 
+    //Tests all Camera components
     Engine_Test.prototype.testCamera = function () {
         let cameraWorks = false;
         this.mCamera = new Camera(
@@ -131,11 +135,14 @@ Engine_Test.prototype.initialize = function () {
             720,                        // width of WC
             [280, 0, 720, 720]         // viewport (orgX, orgY, width, height)
         );
-        if (this.mCamera != null) cameraWorks = true;
-        this.mCamera.setBackgroundColor([0, 0, 0, 1]);
+        if (this.mCamera != null && this.mCamera.getWCCenter() != null) {
+            cameraWorks = true;
+            this.mCamera.setBackgroundColor([0, 0, 0, 1]);
+        }
         return cameraWorks;
     }
 
+    //Checks for right glsl files
     Engine_Test.prototype.testShader = function () {
         let shaderWorks = true;
         fetch("src/GLSLShaders/SimpleVS.glsl")
@@ -148,6 +155,7 @@ Engine_Test.prototype.initialize = function () {
         return shaderWorks;
     }
 
+     //Tests Renderables, Transform and Shader
      Engine_Test.prototype.testObject = function () {
          let obstacleWorks = false;
          let tmp = new Renderable(this.mConstColorShader);
@@ -158,6 +166,7 @@ Engine_Test.prototype.initialize = function () {
          return obstacleWorks;
      }
 
+     //Tests Fonts, Sprites and Textures
      Engine_Test.prototype.testText = function () {
         let textWorks = false;
         this.mTextTest = new FontRenderable("Test");
@@ -167,36 +176,41 @@ Engine_Test.prototype.initialize = function () {
          return textWorks;
     };
 
-    if (this.missingAsset == true) console.log("Assets Present");
-    else {
-        console.error("Assets Missing");
-        this.allTestsPassed = false;
+    if (this.missingAsset == true) {
+        console.log("-Assets Present");
+        this.numTestsPassed = this.numTestsPassed + 1;
     }
-    if (this.testCamera() == true) console.log("Camera Passed");
-    else {
-        console.error("Camera Failed");
-        this.allTestsPassed = false;
+    else console.error("Assets Missing");
+    if (this.testCamera() == true) {
+        console.log("-Camera Passed");
+        this.numTestsPassed = this.numTestsPassed + 1;
     }
-    if (this.testShader() == true) console.log("Shader Passed");
-    else {
-        console.error("Shader Failed");
-        this.allTestsPassed = false;
+    else console.error("Camera Failed");
+    if (this.testShader() == true) {
+        console.log("-Shader Passed");
+        this.numTestsPassed = this.numTestsPassed + 1;
     }
-    if (this.testObject() == true) console.log("Objects Passed");
-    else {
-        console.error("Objects Failed");
-        this.allTestsPassed = false;
+    else console.error("Shader Failed");
+    if (this.testObject() == true) {
+        console.log("-Objects Passed");
+        this.numTestsPassed = this.numTestsPassed + 1;
     }
-    if (this.testText() == true) console.log("Text Passed");
-    else {
-        console.error("Text Failed");
-        this.allTestsPassed = false;
+    else console.error("Objects Failed");
+    if (this.testText() == true) {
+        console.log("-Text Passed");
+        this.numTestsPassed = this.numTestsPassed + 1;
     }
+    else console.error("Text Failed");
 
 };
 
+//Checks that all tests completed
 Engine_Test.prototype.update = function () {
-    if (this.allTestsPassed) gEngine.GameLoop.stop();
+    if (this.numTestsPassed ==  5) {
+        console.log("--5/5 Tests Passed\n" + "Starting Game");
+        gEngine.GameLoop.stop();
+    }
+    else console.log("-" + this.numTestsPassed + "/5 Tests Passed\n" + "Suspending Game");
 }
 
 //For text initialization
